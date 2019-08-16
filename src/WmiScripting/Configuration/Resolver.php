@@ -8,17 +8,17 @@ use PhpWinTools\WmiScripting\Connection;
 use PhpWinTools\WmiScripting\Support\ComWrapper;
 use PhpWinTools\WmiScripting\Support\VariantWrapper;
 use PhpWinTools\WmiScripting\Support\ComVariantWrapper;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\Locator;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\Property;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\Services;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\ObjectSet;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\Qualifier;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\ObjectPath;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\ObjectItem;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\PropertySet;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\ObjectItemEx;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\QualifierSet;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Locator;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Property;
 use PhpWinTools\WmiScripting\Exceptions\UnresolvableClassException;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Services;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectSet;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Qualifier;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectPath;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectItem;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\PropertySet;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectItemEx;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\QualifierSet;
 
 class Resolver
 {

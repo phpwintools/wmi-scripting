@@ -1,11 +1,11 @@
 <?php
 
-namespace PhpWinTools\WmiScripting\ApiObjects;
+namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
 use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Support\VariantWrapper;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\Property;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\PropertySet;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Property;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\PropertySet;
 
 /**
  * Class SWbemPropertySet

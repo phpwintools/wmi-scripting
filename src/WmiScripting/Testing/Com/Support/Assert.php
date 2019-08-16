@@ -4,11 +4,12 @@ namespace PhpWinTools\WmiScripting\Testing\Com\Support;
 
 use PHPUnit\Framework\TestCase;
 use PhpWinTools\WmiScripting\Configuration\Config;
-use PhpWinTools\WmiScripting\ApiObjects\SWbemLocator;
+use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemLocator;
 use PhpWinTools\WmiScripting\Testing\Com\CallStacks\ComCall;
 use PhpWinTools\WmiScripting\Testing\Com\CallStacks\ComCallStack;
 use PhpWinTools\WmiScripting\Testing\Com\CallStacks\ComTraceSubject;
 use PhpWinTools\WmiScripting\Testing\Com\CallStacks\ApiObjectCallStack;
+
 use function PhpWinTools\WmiScripting\Support\connection;
 
 class Assert

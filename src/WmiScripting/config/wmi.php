@@ -1,25 +1,25 @@
 <?php
 
-use PhpWinTools\WmiScripting\ApiObjects\SWbemObject;
-use PhpWinTools\WmiScripting\ApiObjects\SWbemLocator;
-use PhpWinTools\WmiScripting\ApiObjects\SWbemObjectEx;
-use PhpWinTools\WmiScripting\ApiObjects\SWbemProperty;
-use PhpWinTools\WmiScripting\ApiObjects\SWbemServices;
-use PhpWinTools\WmiScripting\ApiObjects\SWbemObjectSet;
-use PhpWinTools\WmiScripting\ApiObjects\SWbemQualifier;
-use PhpWinTools\WmiScripting\ApiObjects\SWbemObjectPath;
-use PhpWinTools\WmiScripting\ApiObjects\SWbemPropertySet;
-use PhpWinTools\WmiScripting\ApiObjects\SWbemQualifierSet;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\Locator;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\Property;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\Services;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\ObjectSet;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\Qualifier;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\ObjectItem;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\ObjectPath;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\PropertySet;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\ObjectItemEx;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\QualifierSet;
+use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemObject;
+use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemLocator;
+use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemObjectEx;
+use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemProperty;
+use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemServices;
+use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemObjectSet;
+use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemQualifier;
+use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemObjectPath;
+use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemPropertySet;
+use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemQualifierSet;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Locator;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Property;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Services;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectSet;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Qualifier;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectItem;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectPath;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\PropertySet;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectItemEx;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\QualifierSet;
 
 return [
     'api_objects' => [

@@ -2,7 +2,7 @@
 
 namespace PhpWinTools\WmiScripting\Testing\Com\CallStacks;
 
-use PhpWinTools\WmiScripting\ApiObjects\AbstractWbemObject;
+use PhpWinTools\WmiScripting\Support\ApiObjects\AbstractWbemObject;
 
 class ComCall
 {

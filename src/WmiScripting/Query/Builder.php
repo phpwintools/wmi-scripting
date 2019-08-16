@@ -5,7 +5,7 @@ namespace PhpWinTools\WmiScripting\Query;
 use PhpWinTools\WmiScripting\Connection;
 use PhpWinTools\WmiScripting\Win32\Win32Model;
 use PhpWinTools\WmiScripting\Collections\ModelCollection;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\ObjectSet;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectSet;
 
 class Builder
 {

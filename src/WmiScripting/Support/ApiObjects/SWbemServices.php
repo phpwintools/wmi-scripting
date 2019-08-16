@@ -1,14 +1,14 @@
 <?php
 
-namespace PhpWinTools\WmiScripting\ApiObjects;
+namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
 use PhpWinTools\WmiScripting\Connection;
 use PhpWinTools\WmiScripting\Flags\WbemFlags;
 use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Support\ComVariantWrapper;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\Services;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\ObjectSet;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\ObjectItem;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Services;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectSet;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectItem;
 
 /**
  * Class SWbemServices

@@ -11,9 +11,10 @@ use PhpWinTools\WmiScripting\Contracts\HasAttributes;
 use PhpWinTools\WmiScripting\Win32\Models\Classes;
 use PhpWinTools\WmiScripting\Concerns\ComHasAttributes;
 use PhpWinTools\WmiScripting\Collections\ModelCollection;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\ObjectPath;
 use PhpWinTools\WmiScripting\Exceptions\WmiClassNotFoundException;
 use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectPath;
+
 use function PhpWinTools\WmiScripting\Support\connection;
 
 /**

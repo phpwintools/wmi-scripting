@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpWinTools\WmiScripting\Contracts\ApiObjects;
+namespace PhpWinTools\WmiScripting\Support\ApiObjects\Contracts;
 
 use ArrayAccess;
 use PhpWinTools\WmiScripting\Win32\Win32Model;

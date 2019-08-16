@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpWinTools\WmiScripting\ApiObjects;
+namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
 use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Support\VariantWrapper;

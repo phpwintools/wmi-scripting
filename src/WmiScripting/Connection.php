@@ -3,7 +3,7 @@
 namespace PhpWinTools\WmiScripting;
 
 use PhpWinTools\WmiScripting\Configuration\Config;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\Services;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Services;
 
 class Connection
 {

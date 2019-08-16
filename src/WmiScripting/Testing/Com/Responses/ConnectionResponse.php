@@ -3,9 +3,9 @@
 namespace PhpWinTools\WmiScripting\Testing\Com\Responses;
 
 use PhpWinTools\WmiScripting\Configuration\Config;
-use PhpWinTools\WmiScripting\ApiObjects\SWbemLocator;
-use PhpWinTools\WmiScripting\ApiObjects\SWbemServices;
 use PhpWinTools\WmiScripting\Testing\Com\Support\VARIANTFake;
+use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemLocator;
+use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemServices;
 
 class ConnectionResponse extends ApiObjectResponseFactory
 {

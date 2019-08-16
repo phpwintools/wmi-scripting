@@ -4,7 +4,7 @@ namespace PhpWinTools\WmiScripting\Testing\Com\CallStacks;
 
 use PhpWinTools\WmiScripting\Support\ComVariantWrapper;
 use PhpWinTools\WmiScripting\Collections\ArrayCollection;
-use PhpWinTools\WmiScripting\ApiObjects\AbstractWbemObject;
+use PhpWinTools\WmiScripting\Support\ApiObjects\AbstractWbemObject;
 
 class ComCallStack
 {

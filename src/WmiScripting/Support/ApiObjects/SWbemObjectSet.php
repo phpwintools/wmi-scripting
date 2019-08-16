@@ -1,17 +1,17 @@
 <?php
 
-namespace PhpWinTools\WmiScripting\ApiObjects;
+namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
 use Countable;
 use ArrayAccess;
-use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Win32\Win32Model;
+use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Support\VariantWrapper;
 use PhpWinTools\WmiScripting\Support\ComVariantWrapper;
 use PhpWinTools\WmiScripting\Collections\ModelCollection;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\ObjectSet;
 use PhpWinTools\WmiScripting\Collections\ObjectSetCollection;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\ObjectItem;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectSet;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectItem;
 
 /**
  * Class SWbemObjectSet

@@ -5,10 +5,10 @@ namespace PhpWinTools\WmiScripting\Testing\Com\Support;
 use ArrayIterator;
 use IteratorAggregate;
 use PhpWinTools\WmiScripting\Support\VariantWrapper;
-use PhpWinTools\WmiScripting\ApiObjects\SWbemObjectSet;
-use PhpWinTools\WmiScripting\ApiObjects\SWbemPropertySet;
-use PhpWinTools\WmiScripting\ApiObjects\SWbemQualifierSet;
+use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemObjectSet;
 use PhpWinTools\WmiScripting\Testing\Com\CallStacks\ComCallStack;
+use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemPropertySet;
+use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemQualifierSet;
 
 class VARIANTFake extends COMObjectFake implements IteratorAggregate
 {

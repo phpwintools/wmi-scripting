@@ -1,12 +1,12 @@
 <?php
 
-namespace PhpWinTools\WmiScripting\ApiObjects;
+namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
 use PhpWinTools\WmiScripting\Connection;
 use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Support\ComVariantWrapper;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\Locator;
-use PhpWinTools\WmiScripting\Contracts\ApiObjects\Services;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Locator;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Services;
 
 /**
  * Class SWbemLocator

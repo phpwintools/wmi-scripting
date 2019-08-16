@@ -3,10 +3,10 @@
 namespace PhpWinTools\WmiScripting\Collections;
 
 use Illuminate\Support\Collection;
-use PhpWinTools\WmiScripting\Contracts\Arrayable;
 use PhpWinTools\WmiScripting\Win32\Win32Model;
+use PhpWinTools\WmiScripting\Contracts\Arrayable;
 use Illuminate\Support\HigherOrderCollectionProxy;
-use PhpWinTools\WmiScripting\ApiObjects\SWbemObject;
+use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemObject;
 use Illuminate\Contracts\Support\Arrayable as IlluminateArrayable;
 
 /**

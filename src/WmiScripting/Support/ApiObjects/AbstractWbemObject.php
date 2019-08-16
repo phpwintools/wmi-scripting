@@ -1,12 +1,13 @@
 <?php
 
-namespace PhpWinTools\WmiScripting\ApiObjects;
+namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
 use PhpWinTools\WmiScripting\Contracts\Jsonable;
 use PhpWinTools\WmiScripting\Contracts\Arrayable;
 use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Concerns\ComHasAttributes;
 use PhpWinTools\WmiScripting\Support\ComVariantWrapper;
+
 use function PhpWinTools\WmiScripting\Support\resolve;
 
 /**

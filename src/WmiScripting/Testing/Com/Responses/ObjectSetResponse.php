@@ -6,8 +6,8 @@ use ArrayIterator;
 use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Support\VariantWrapper;
 use PhpWinTools\WmiScripting\Testing\Com\Wmi\ModelFake;
-use PhpWinTools\WmiScripting\ApiObjects\SWbemObjectSet;
 use PhpWinTools\WmiScripting\Testing\Com\Support\VARIANTFake;
+use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemObjectSet;
 use PhpWinTools\WmiScripting\Testing\Com\Wmi\ModelFakeCollection;
 
 class ObjectSetResponse extends ApiObjectResponseFactory
