@@ -108,6 +108,7 @@ class ComVariantWrapper implements IteratorAggregate
 
     /**
      * @param $property
+     *
      * @return mixed|AllVariantsInterface|ComWrapper|VariantWrapper
      */
     public function __get($property)
