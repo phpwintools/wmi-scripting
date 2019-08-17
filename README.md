@@ -12,7 +12,7 @@ I will try, but understand this library is subject to major changes until 1.0.0 
 
 #### @Todo: Finish Docs
 
-Basic usage is to call `::query($connection)` on an available model from
+Basic usage is to call `::query($connection = null)` on an available model from
 https://github.com/phpwintools/wmi-scripting/tree/master/src/WmiScripting/Win32/Models.
 
 `LoggedOnUser::query()-get();`
@@ -28,9 +28,13 @@ You can also instantiate Scripting:
 
 `$scripting->query('remote')->loggedOnUser()->get();`
 
+Whether you use `$scripting->query($connection = null)->modelName()` or `::query($connection = null)` you are dropped into a basic query
+builder which currently only allows `select` and `where` clauses. If there are any subject matter experts who would like
+to guide me on how this query builder should look please contact me.
+
 ##### Testing
 
 You can call `Scripting:fack($testCase)->win32Model($class_name);` to create a fake for testing without
-actually connection to a WMI service.
+actually creating a real connection to a WMI service.
 
 #### @Todo: Finish Docs
