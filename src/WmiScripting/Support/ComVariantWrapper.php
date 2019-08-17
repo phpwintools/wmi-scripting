@@ -135,7 +135,7 @@ class ComVariantWrapper implements IteratorAggregate
     /**
      * @param $result
      *
-     * @return ComWrapper|VariantWrapper
+     * @return ComWrapper|VariantWrapper|mixed
      */
     protected function transformResult($result)
     {
