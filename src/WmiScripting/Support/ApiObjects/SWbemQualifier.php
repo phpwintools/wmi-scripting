@@ -2,7 +2,7 @@
 
 namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
-use PhpWinTools\WmiScripting\Support\VariantWrapper;
+use PhpWinTools\Support\COM\VariantWrapper;
 use PhpWinTools\WmiScripting\Support\ApiObjects\VariantInterfaces\QualifierVariant;
 
 class SWbemQualifier extends AbstractWbemObject

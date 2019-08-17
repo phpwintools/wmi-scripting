@@ -1,14 +1,14 @@
 <?php
 
-namespace PhpWinTools\WmiScripting\Support;
+namespace PhpWinTools\Support\COM;
 
 use ArrayIterator;
 use COM as ComExt;
 use IteratorAggregate;
 use VARIANT as VariantExt;
+use PhpWinTools\Support\COM\Testing\COMObjectFake;
 use PhpWinTools\WmiScripting\Configuration\Config;
-use PhpWinTools\WmiScripting\Testing\Support\COMObjectFake;
-use PhpWinTools\WmiScripting\Testing\Support\ComVariantWrapperFake;
+use PhpWinTools\Support\COM\Testing\ComVariantWrapperFake;
 use PhpWinTools\WmiScripting\Support\ApiObjects\VariantInterfaces\AllVariantsInterface;
 
 class ComVariantWrapper implements IteratorAggregate

@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpWinTools\WmiScripting\Support;
+namespace PhpWinTools\Support\COM;
 
 use VARIANT as VariantExt;
 use PhpWinTools\WmiScripting\Configuration\Config;

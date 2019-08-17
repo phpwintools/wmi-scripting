@@ -2,10 +2,10 @@
 
 namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
+use PhpWinTools\Support\COM\ComVariantWrapper;
 use PhpWinTools\WmiScripting\Contracts\Jsonable;
 use PhpWinTools\WmiScripting\Contracts\Arrayable;
 use PhpWinTools\WmiScripting\Concerns\ComHasAttributes;
-use PhpWinTools\WmiScripting\Support\ComVariantWrapper;
 
 /**
  * @link https://docs.microsoft.com/en-us/windows/win32/wmisdk/winmgmt

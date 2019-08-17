@@ -4,11 +4,11 @@ namespace PhpWinTools\WmiScripting\Configuration;
 
 use COM;
 use VARIANT;
+use PhpWinTools\Support\COM\ComWrapper;
 use PhpWinTools\WmiScripting\Connection;
-use PhpWinTools\WmiScripting\Support\ComWrapper;
-use PhpWinTools\WmiScripting\Support\VariantWrapper;
-use PhpWinTools\WmiScripting\Testing\Support\COMFake;
-use PhpWinTools\WmiScripting\Support\ComVariantWrapper;
+use PhpWinTools\Support\COM\VariantWrapper;
+use PhpWinTools\Support\COM\Testing\COMFake;
+use PhpWinTools\Support\COM\ComVariantWrapper;
 use PhpWinTools\WmiScripting\Testing\Support\VARIANTFake;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Locator;
 use PhpWinTools\WmiScripting\Exceptions\UnresolvableClassException;

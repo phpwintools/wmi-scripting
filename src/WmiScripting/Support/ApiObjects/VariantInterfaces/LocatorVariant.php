@@ -2,7 +2,7 @@
 
 namespace PhpWinTools\WmiScripting\Support\ApiObjects\VariantInterfaces;
 
-use PhpWinTools\WmiScripting\Support\ComVariantWrapper;
+use PhpWinTools\Support\COM\ComVariantWrapper;
 
 interface LocatorVariant extends VariantInterface
 {

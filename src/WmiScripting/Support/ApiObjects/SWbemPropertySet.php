@@ -2,7 +2,7 @@
 
 namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
-use PhpWinTools\WmiScripting\Support\VariantWrapper;
+use PhpWinTools\Support\COM\VariantWrapper;
 use function PhpWinTools\WmiScripting\Support\resolve;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Property;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\PropertySet;

@@ -3,11 +3,11 @@
 namespace PhpWinTools\WmiScripting\Configuration;
 
 use Illuminate\Support\Arr;
+use PhpWinTools\Support\COM\ComWrapper;
 use PhpWinTools\WmiScripting\Connection;
-use PhpWinTools\WmiScripting\Support\ComWrapper;
+use PhpWinTools\Support\COM\VariantWrapper;
+use PhpWinTools\Support\COM\ComVariantWrapper;
 use PhpWinTools\WmiScripting\Containers\Connections;
-use PhpWinTools\WmiScripting\Support\VariantWrapper;
-use PhpWinTools\WmiScripting\Support\ComVariantWrapper;
 use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
 use PhpWinTools\WmiScripting\Exceptions\UnresolvableClassException;
 

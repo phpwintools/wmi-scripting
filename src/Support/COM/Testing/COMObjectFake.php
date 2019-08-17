@@ -1,8 +1,10 @@
 <?php
 
-namespace PhpWinTools\WmiScripting\Testing\Support;
+namespace PhpWinTools\Support\COM\Testing;
 
-use PhpWinTools\WmiScripting\Support\VariantWrapper;
+use PhpWinTools\Support\COM\VariantWrapper;
+use PhpWinTools\WmiScripting\Testing\Support\ComResolver;
+use PhpWinTools\WmiScripting\Testing\Support\VARIANTFake;
 use PhpWinTools\WmiScripting\Testing\CallStacks\ComCallStack;
 
 class COMObjectFake
