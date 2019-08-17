@@ -36,9 +36,10 @@ class Config
      * Returns current instance if available and merges any available configuration.
      * This is the method used throughout the library to retrieve configuration.
      *
-     * @param   array           $items
-     * @param   Resolver|null   $resolver
-     * @return  Config
+     * @param array         $items
+     * @param Resolver|null $resolver
+     *
+     * @return Config
      */
     public static function instance(array $items = [], Resolver $resolver = null)
     {
@@ -58,9 +59,10 @@ class Config
      * to the instance will be lost. If it's in test mode it will remain until you explicitly remove it.
      * You should never need to reference this directly except inside of tests.
      *
-     * @param   array           $items
-     * @param   Resolver|null   $resolver
-     * @return  Config
+     * @param array         $items
+     * @param Resolver|null $resolver
+     *
+     * @return Config
      */
     public static function newInstance(array $items = [], Resolver $resolver = null)
     {
@@ -70,9 +72,10 @@ class Config
     /**
      * This merges in a testing configuration. Any instance from this point will use that configuration.
      *
-     * @param   array           $items
-     * @param   Resolver|null   $resolver
-     * @return  Config
+     * @param array         $items
+     * @param Resolver|null $resolver
+     *
+     * @return Config
      */
     public static function testInstance(array $items = [], Resolver $resolver = null)
     {
@@ -88,9 +91,10 @@ class Config
     /**
      * Same as endTest, but also returns a fresh instance.
      *
-     * @param   array           $items
-     * @param   Resolver|null   $resolver
-     * @return  Config
+     * @param array         $items
+     * @param Resolver|null $resolver
+     *
+     * @return Config
      */
     public static function killTestInstance(array $items = [], Resolver $resolver = null)
     {
@@ -116,9 +120,10 @@ class Config
     /**
      * Returns the Resolver if no class is specified otherwise it attempts to resolve the given class.
      *
-     * @param   string|null $class
-     * @param   mixed       ...$parameters
-     * @return  Resolver|mixed|null
+     * @param string|null $class
+     * @param mixed       ...$parameters
+     *
+     * @return Resolver|mixed|null
      */
     public function __invoke(string $class = null, ...$parameters)
     {
@@ -163,8 +168,9 @@ class Config
      * This attempts to get a resolvable item from the stack. Items on the stack are FIFO (First In First Out).
      * This is only ever utilized if using the Config classes' __invoke capability.
      *
-     * @param   $abstract
-     * @return  mixed|null
+     * @param $abstract
+     *
+     * @return mixed|null
      */
     public function resolveFromStack($abstract)
     {
@@ -182,9 +188,10 @@ class Config
     /**
      * Add new resolvable to the end of the stack.
      *
-     * @param   $abstract
-     * @param   $concrete
-     * @return  Config
+     * @param $abstract
+     * @param $concrete
+     *
+     * @return Config
      */
     public function addResolvable($abstract, $concrete)
     {
@@ -196,8 +203,9 @@ class Config
     /**
      * Check stack for resolvable. There may be a chance for caching pointers for resolvable abstracts.
      *
-     * @param   $abstract
-     * @return  bool
+     * @param $abstract
+     *
+     * @return bool
      */
     public function hasResolvable($abstract): bool
     {
@@ -219,9 +227,10 @@ class Config
     }
 
     /**
-     * @param   string                  $abstract_class
-     * @param   string|callable|object  $concrete_class
-     * @return  Config
+     * @param string                 $abstract_class
+     * @param string|callable|object $concrete_class
+     *
+     * @return Config
      */
     public function addApiObject(string $abstract_class, $concrete_class)
     {
@@ -232,8 +241,9 @@ class Config
 
 
     /**
-     * @param   string $class
-     * @return  string
+     * @param string $class
+     *
+     * @return string
      */
     public function getApiObject(string $class)
     {
@@ -249,8 +259,9 @@ class Config
     }
 
     /**
-     * @param   string                  $abstract_class
-     * @param   string|callable|object  $concrete_class
+     * @param string                 $abstract_class
+     * @param string|callable|object $concrete_class
+     *
      * @return Config
      */
     public function addComObject(string $abstract_class, $concrete_class)
@@ -309,8 +320,9 @@ class Config
     }
 
     /**
-     * @param   string      $name
-     * @param   Connection  $connection
+     * @param string     $name
+     * @param Connection $connection
+     *
      * @return Config
      */
     public function addConnection(string $name, Connection $connection): Config
@@ -337,7 +349,8 @@ class Config
     }
 
     /**
-     * @param   string          $name
+     * @param string $name
+     *
      * @return  Connection|null
      */
     public function getConnection(string $name = null)

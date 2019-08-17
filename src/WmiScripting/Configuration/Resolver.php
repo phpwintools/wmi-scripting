@@ -3,13 +3,13 @@
 namespace PhpWinTools\WmiScripting\Configuration;
 
 use COM;
-use PhpWinTools\WmiScripting\Testing\Support\COMFake;
-use PhpWinTools\WmiScripting\Testing\Support\VARIANTFake;
 use VARIANT;
 use PhpWinTools\WmiScripting\Connection;
 use PhpWinTools\WmiScripting\Support\ComWrapper;
 use PhpWinTools\WmiScripting\Support\VariantWrapper;
+use PhpWinTools\WmiScripting\Testing\Support\COMFake;
 use PhpWinTools\WmiScripting\Support\ComVariantWrapper;
+use PhpWinTools\WmiScripting\Testing\Support\VARIANTFake;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Locator;
 use PhpWinTools\WmiScripting\Exceptions\UnresolvableClassException;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Property;

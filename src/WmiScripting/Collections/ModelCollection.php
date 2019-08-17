@@ -18,7 +18,7 @@ class ModelCollection extends Collection
      * @param callable|null $callback
      * @param null|mixed    $default
      *
-     * @return  Win32Model
+     * @return Win32Model
      */
     public function first(callable $callback = null, $default = null)
     {
