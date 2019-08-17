@@ -66,6 +66,7 @@ class ComVariantWrapper implements IteratorAggregate
     {
         try {
             $this->comObject->{$property};
+
             return true;
         } catch (\Exception $exception) {
             return false;

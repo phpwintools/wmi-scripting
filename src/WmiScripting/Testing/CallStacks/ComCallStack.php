@@ -100,6 +100,7 @@ class ComCallStack
                 ) {
                     return $found_detected = true;
                 }
+
                 return $key === $wrapper_call_key || $key === $wrapper_call_key + 1;
             })->values()->map(function ($trace) {
                 return new ComTraceSubject(
