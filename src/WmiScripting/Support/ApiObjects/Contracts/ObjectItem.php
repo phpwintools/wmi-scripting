@@ -2,7 +2,7 @@
 
 namespace PhpWinTools\WmiScripting\Support\ApiObjects\Contracts;
 
-use PhpWinTools\WmiScripting\Win32\Win32Model;
+use PhpWinTools\WmiScripting\Win32Model;
 
 interface ObjectItem extends WbemObject
 {

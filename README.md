@@ -15,7 +15,7 @@ I will try, but understand this library is subject to major changes until 1.0.0 
 Basic usage is to call `::query($connection = null)` on an available model from
 https://github.com/phpwintools/wmi-scripting/tree/master/src/WmiScripting/Win32/Models.
 
-    PhpWinTools\WmiScripting\Win32\Models\LoggedOnUser::query()->get();
+    PhpWinTools\WmiScripting\Models\LoggedOnUser::query()->get();
 
 This returns a collection of logged on users from the default connection (this is local by configuration).
 The `ModelCollection` extends https://github.com/tightenco/collect / [Laravel Collections](https://laravel.com/docs/5.8/collections).

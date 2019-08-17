@@ -4,7 +4,7 @@ namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
 use Countable;
 use ArrayAccess;
-use PhpWinTools\WmiScripting\Win32\Win32Model;
+use PhpWinTools\WmiScripting\Win32Model;
 use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Support\VariantWrapper;
 use PhpWinTools\WmiScripting\Support\ComVariantWrapper;

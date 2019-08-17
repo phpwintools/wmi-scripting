@@ -5,7 +5,7 @@ namespace PhpWinTools\WmiScripting\Testing\Wmi;
 use ReflectionClass;
 use ReflectionProperty;
 use ReflectionException;
-use PhpWinTools\WmiScripting\Win32\Win32Model;
+use PhpWinTools\WmiScripting\Win32Model;
 use PhpWinTools\WmiScripting\Collections\ArrayCollection;
 
 class ModelProperties
