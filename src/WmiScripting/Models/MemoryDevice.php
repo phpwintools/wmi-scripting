@@ -3,9 +3,7 @@
 namespace PhpWinTools\WmiScripting\Models;
 
 /**
- * Class MemoryDevice
- * @package App\Transformers\Com\Wmi\Win32\Providers
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-memorydevice
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-memorydevice
  */
 class MemoryDevice extends SMBIOSMemory
 {

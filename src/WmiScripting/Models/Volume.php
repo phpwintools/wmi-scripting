@@ -5,10 +5,8 @@ namespace PhpWinTools\WmiScripting\Models;
 use PhpWinTools\WmiScripting\Cim\CimStorageVolume;
 
 /**
- * Class Volume
- * @package App\Transformers\Com\Wmi\Win32\Providers
- * Undocumented: https://docs.microsoft.com/en-us/previous-versions/windows/desktop/legacy/aa394515(v%3Dvs.85)
- * https://wutils.com/wmi/root/cimv2/win32_volume/
+ * @link https://docs.microsoft.com/en-us/previous-versions/windows/desktop/legacy/aa394515(v%3Dvs.85)
+ * @link https://wutils.com/wmi/root/cimv2/win32_volume/
  */
 class Volume extends CimStorageVolume
 {

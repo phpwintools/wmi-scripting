@@ -5,9 +5,7 @@ namespace PhpWinTools\WmiScripting\Models;
 use PhpWinTools\WmiScripting\Cim\CimTemperatureSensor;
 
 /**
- * Class TemperatureProbe
- * @package App\Transformers\Com\Wmi\Win32\Providers
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-temperatureprobe
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-temperatureprobe
  */
 class TemperatureProbe extends CimTemperatureSensor
 {

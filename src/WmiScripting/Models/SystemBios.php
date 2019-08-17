@@ -7,9 +7,7 @@ use PhpWinTools\WmiScripting\Query\SystemBiosBuilder;
 use PhpWinTools\WmiScripting\Cim\CimSystemComponent;
 
 /**
- * Class SystemBios
- * @package App\Transformers\Com\Wmi\Win32\Providers
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-systembios
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-systembios
  */
 class SystemBios extends CimSystemComponent
 {

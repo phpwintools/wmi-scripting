@@ -2,14 +2,11 @@
 
 namespace PhpWinTools\WmiScripting\Models;
 
-use PhpWinTools\WmiScripting\Configuration\Config;
-use PhpWinTools\WmiScripting\Query\LogicalDiskBuilder;
 use PhpWinTools\WmiScripting\Cim\CimLogicalDisk;
+use PhpWinTools\WmiScripting\Query\LogicalDiskBuilder;
 
 /**
- * Class LogicalDisk
- * @package App\Transformers\Com\Wmi\Win32Providers
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-logicaldisk
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-logicaldisk
  */
 class LogicalDisk extends CimLogicalDisk
 {

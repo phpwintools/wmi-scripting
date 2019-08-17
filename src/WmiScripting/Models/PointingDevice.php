@@ -5,9 +5,7 @@ namespace PhpWinTools\WmiScripting\Models;
 use PhpWinTools\WmiScripting\Cim\CimPointingDevice;
 
 /**
- * Class PointingDevice
- * @package App\Transformers\Com\Wmi\Win32\Providers
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-pointingdevice
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-pointingdevice
  */
 class PointingDevice extends CimPointingDevice
 {
