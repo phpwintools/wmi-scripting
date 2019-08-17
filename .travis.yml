@@ -7,10 +7,9 @@ php:
   - '7.3'
 
 install:
-  - ./travis/install_dependencies_ubuntu14.sh
   -  apt-get install dotnet-sdk-2.1 -y
-before_script:
 
+before_script:
   - phpenv config-add ./travis/extensions.ini
   - travis_retry composer self-update
   - travis_retry composer install --prefer-source --no-interaction
