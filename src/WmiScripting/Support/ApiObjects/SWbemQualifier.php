@@ -18,7 +18,7 @@ class SWbemQualifier extends AbstractWbemObject
     {
         parent::__construct($variant);
 
-        $this->name = $this->object->Name;
+        $this->name = (string) $this->object->Name;
         $this->value = $this->object->Value;
     }
 }
