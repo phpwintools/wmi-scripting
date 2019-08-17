@@ -25,7 +25,7 @@ class SWbemQualifierSet extends AbstractWbemObject implements QualifierSet
         parent::__construct($variant);
 
         $this->buildQualifiers();
-        $this->count = $this->object->Count;
+        $this->count = (int) $this->object->Count;
     }
 
     protected function buildQualifiers()

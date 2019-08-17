@@ -24,8 +24,8 @@ class SWbemProperty extends AbstractWbemObject implements Property
     {
         parent::__construct($variant);
 
-        $this->name = $this->object->Name;
-        $this->origin = $this->object->Origin;
+        $this->name = (string) $this->object->Name;
+        $this->origin = (string) $this->object->Origin;
         $this->value = $this->detectValue($this->object->Value);
     }
 
