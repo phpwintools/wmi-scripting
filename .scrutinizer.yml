@@ -6,6 +6,5 @@ build:
   nodes:
     analysis:
       tests:
-        external_code_coverage: true
         override:
           - php-scrutinizer-run
