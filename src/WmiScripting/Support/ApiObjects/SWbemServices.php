@@ -33,11 +33,12 @@ class SWbemServices extends AbstractWbemObject implements Services
     }
 
     /**
-     * https://docs.microsoft.com/en-us/windows/win32/wmisdk/swbemservices-instancesof
+     * @link https://docs.microsoft.com/en-us/windows/win32/wmisdk/swbemservices-instancesof
      *
      * @param string $class
-     * @param int $flags
-     * @param null $wbemNamedValueSet
+     * @param int    $flags
+     * @param null   $wbemNamedValueSet
+     *
      * @return SWbemObjectSet
      */
     public function instancesOf(
@@ -52,13 +53,14 @@ class SWbemServices extends AbstractWbemObject implements Services
     }
 
     /**
-     * https://docs.microsoft.com/en-us/windows/win32/wmisdk/wql-sql-for-wmi
-     * https://docs.microsoft.com/en-us/windows/win32/wmisdk/swbemservices-execquery
+     * @link https://docs.microsoft.com/en-us/windows/win32/wmisdk/wql-sql-for-wmi
+     * @link https://docs.microsoft.com/en-us/windows/win32/wmisdk/swbemservices-execquery
      *
      * @param string $query
-     * @param null $query_language
-     * @param int $flags
-     * @param null $wbemNamedValueSet
+     * @param null   $query_language
+     * @param int    $flags
+     * @param null   $wbemNamedValueSet
+     *
      * @return ObjectSet
      */
     public function execQuery(

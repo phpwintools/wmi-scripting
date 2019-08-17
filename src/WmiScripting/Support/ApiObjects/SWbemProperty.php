@@ -28,7 +28,7 @@ class SWbemProperty extends AbstractWbemObject implements Property
     public function toArray(): array
     {
         return [
-            'value' => $this->value,
+            'value'  => $this->value,
             'origin' => $this->origin,
         ];
     }

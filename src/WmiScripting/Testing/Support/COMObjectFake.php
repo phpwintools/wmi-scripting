@@ -19,11 +19,12 @@ class COMObjectFake
     /**
      * @param $method
      * @param $response
+     *
      * @return COMObjectFake|VARIANTFake
      */
     public static function withResponse($method, $response)
     {
-        return (new static)->addResponse($method, $response);
+        return (new static())->addResponse($method, $response);
     }
 
     public function addResponse($method, $response)
@@ -44,7 +45,7 @@ class COMObjectFake
         }
 
 //        if ($type === 'getIterator') {
-////            dd(ApiObjectCallStack::instance());
+//            dd(ApiObjectCallStack::instance());
 //            return new ArrayIterator([
 //                new VariantWrapper(new VARIANTFake()),
 //            ]);

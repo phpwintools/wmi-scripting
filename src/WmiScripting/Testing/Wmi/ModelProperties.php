@@ -35,16 +35,16 @@ class ModelProperties
     protected function setProperties()
     {
         /** @var Win32Model $class */
-        $reflectionClass = new ReflectionClass($class = new $this->class_name);
+        $reflectionClass = new ReflectionClass($class = new $this->class_name());
 
         $this->properties = (new ArrayCollection($reflectionClass->getProperties()))->mapWithKeys(
             function (ReflectionProperty $property) use ($class, $reflectionClass) {
                 return [$property->name => [
-                    'name' => $property->name,
-                    'origin' => $this->getPropertyOrigin($property, $reflectionClass)->getName(),
-                    'cast' => $class->getCast($property->name),
-                    'doc' => $property->getDocComment(),
-                    'value' => $class->getAttribute($property->name),
+                    'name'      => $property->name,
+                    'origin'    => $this->getPropertyOrigin($property, $reflectionClass)->getName(),
+                    'cast'      => $class->getCast($property->name),
+                    'doc'       => $property->getDocComment(),
+                    'value'      => $class->getAttribute($property->name),
                 ]];
             }
         )->diffKeys($class->getHidden())->filter(function ($property) {
@@ -55,9 +55,10 @@ class ModelProperties
     /**
      * Finds the origin of the model property. Could be made slightly more efficient, but haven't figured it out yet.
      *
-     * @param ReflectionProperty $property
-     * @param ReflectionClass $current_class
+     * @param ReflectionProperty   $property
+     * @param ReflectionClass      $current_class
      * @param ReflectionClass|null $previous_class
+     *
      * @return ReflectionClass
      */
     protected function getPropertyOrigin(

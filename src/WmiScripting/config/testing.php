@@ -10,5 +10,5 @@ return [
         'com_class'              => COMFake::class,
         'variant_class'          => VARIANTFake::class,
         ComVariantWrapper::class => ComVariantWrapperFake::class,
-    ]
+    ],
 ];

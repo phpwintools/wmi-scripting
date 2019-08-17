@@ -6,5 +6,4 @@ use PhpWinTools\WmiScripting\Collections\ArrayCollection;
 
 class ModelFake extends ArrayCollection
 {
-
 }

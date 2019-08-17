@@ -11,7 +11,7 @@ class VariantFakeResponseBuilder
 
     protected $parent;
 
-    public function __construct(VARIANTFake $variant, VariantFakeResponseBuilder $parent = null)
+    public function __construct(VARIANTFake $variant, self $parent = null)
     {
         $this->variant = $variant;
         $this->parent = $parent;

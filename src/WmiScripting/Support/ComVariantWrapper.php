@@ -23,7 +23,7 @@ class ComVariantWrapper implements IteratorAggregate
         $this->config = $config ?? Config::instance();
     }
 
-    public static function comToString(ComVariantWrapper $com)
+    public static function comToString(self $com)
     {
         ob_start();
         com_print_typeinfo($com->getComObject());
@@ -119,19 +119,20 @@ class ComVariantWrapper implements IteratorAggregate
      */
     public function __call($method, $arguments)
     {
-        $result = $this->comObject->{$method}(... $arguments);
+        $result = $this->comObject->{$method}(...$arguments);
         // this could fail so add exception
 
         return $this->transformResult($result);
     }
 
-    protected function resolve(string $class = null, ... $parameters)
+    protected function resolve(string $class = null, ...$parameters)
     {
         return ($this->config)($class, $parameters);
     }
 
     /**
      * @param $result
+     *
      * @return ComWrapper|VariantWrapper
      */
     protected function transformResult($result)

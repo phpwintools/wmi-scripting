@@ -15,7 +15,7 @@ class ApiObjectCallStack
 
     public static function instance()
     {
-        return static::$instance ?? new static;
+        return static::$instance ?? new static();
     }
 
     public function add(ApiObjectCall $call)

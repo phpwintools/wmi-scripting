@@ -106,6 +106,6 @@ class SWbemObjectSet extends AbstractWbemObject implements ArrayAccess, Countabl
 
     protected function isWbemObjectEx(ComVariantWrapper $variant)
     {
-        return $variant::getComClassName($variant) === "ISWbemObjectEx";
+        return $variant::getComClassName($variant) === 'ISWbemObjectEx';
     }
 }

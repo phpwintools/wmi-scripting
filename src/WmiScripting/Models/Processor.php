@@ -72,5 +72,4 @@ class Processor extends CimProcessor
 
         parent::__construct($attributes);
     }
-
 }

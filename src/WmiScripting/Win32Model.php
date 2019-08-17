@@ -10,16 +10,13 @@ use PhpWinTools\WmiScripting\Contracts\Arrayable;
 use PhpWinTools\WmiScripting\Contracts\HasAttributes;
 use PhpWinTools\WmiScripting\Concerns\ComHasAttributes;
 use PhpWinTools\WmiScripting\Collections\ModelCollection;
+use function PhpWinTools\WmiScripting\Support\connection;
 use PhpWinTools\WmiScripting\Exceptions\WmiClassNotFoundException;
 use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectPath;
 
-use function PhpWinTools\WmiScripting\Support\connection;
-
 /**
- * Class Provider
- * @package App\Transformers\Com\Wmi\Win32Providers
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-provider
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-provider
  */
 class Win32Model implements Arrayable, Jsonable, HasAttributes
 {
@@ -64,9 +61,9 @@ class Win32Model implements Arrayable, Jsonable, HasAttributes
     }
 
     /**
-     * @param   Connection|string|null $connection
+     * @param Connection|string|null $connection
      *
-     * @return  ModelCollection|Win32Model[]
+     * @return ModelCollection|Win32Model[]
      */
     public static function all($connection = null)
     {
@@ -74,10 +71,10 @@ class Win32Model implements Arrayable, Jsonable, HasAttributes
     }
 
     /**
-     * @param   array           $attributes
-     * @param   ObjectPath|null $objectPath
+     * @param array           $attributes
+     * @param ObjectPath|null $objectPath
      *
-     * @return  Win32Model
+     * @return Win32Model
      */
     public static function newInstance(array $attributes = [], ObjectPath $objectPath = null)
     {
@@ -85,9 +82,9 @@ class Win32Model implements Arrayable, Jsonable, HasAttributes
     }
 
     /**
-     * @param   Connection|string|null $connection
+     * @param Connection|string|null $connection
      *
-     * @return  Builder
+     * @return Builder
      */
     public static function query($connection = null)
     {
@@ -239,7 +236,7 @@ class Win32Model implements Arrayable, Jsonable, HasAttributes
     protected function constantToStringCallback($constant_class)
     {
         return function ($constant) use ($constant_class) {
-            if (trim($type = call_user_func_array($constant_class . "::string", [$constant])) === '') {
+            if (trim($type = call_user_func_array($constant_class . '::string', [$constant])) === '') {
                 return "[{$constant}] - UNKNOWN";
             }
 

@@ -5,12 +5,11 @@ namespace PhpWinTools\WmiScripting\Testing\Support;
 use PHPUnit\Framework\TestCase;
 use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Testing\CallStacks\ComCall;
+use function PhpWinTools\WmiScripting\Support\connection;
 use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemLocator;
 use PhpWinTools\WmiScripting\Testing\CallStacks\ComCallStack;
 use PhpWinTools\WmiScripting\Testing\CallStacks\ComTraceSubject;
 use PhpWinTools\WmiScripting\Testing\CallStacks\ApiObjectCallStack;
-
-use function PhpWinTools\WmiScripting\Support\connection;
 
 class Assert
 {
@@ -45,7 +44,7 @@ class Assert
         $this->testCase::assertEquals(
             $connection,
             $caller->getArguments()[0],
-            $message ?? "Expected connection was not used."
+            $message ?? 'Expected connection was not used.'
         );
     }
 }

@@ -20,9 +20,10 @@ class Win32ModelFactory
 
     /**
      * @param string|Win32Model $class_name
-     * @param int $count
-     * @param array $attributes
-     * @param Generator|null $faker
+     * @param int               $count
+     * @param array             $attributes
+     * @param Generator|null    $faker
+     *
      * @return ModelFakeCollection
      */
     public static function make($class_name, int $count = 1, array $attributes = [], Generator $faker = null)
@@ -33,35 +34,35 @@ class Win32ModelFactory
 
         while ($count) {
             $modelFakes->add(new ModelFake([
-                'properties' => $factory->fillAttributes(new ModelProperties($class_name)),
+                'properties'  => $factory->fillAttributes(new ModelProperties($class_name)),
                 'derivations' => array_filter(class_parents($class_name), function ($parent) {
                     return $parent !== Win32Model::class;
                 }),
                 'qualifiers' => new ArrayCollection([
                     [
-                        'Name' => 'provider',
+                        'Name'  => 'provider',
                         'Value' => 'CIMWin32',
                     ],
                     [
-                        'Name' => 'UUID',
+                        'Name'  => 'UUID',
                         'Value' => $class_name::newInstance()->getAttribute('uuid'),
                     ],
                 ]),
                 'path' => new ArrayCollection([
-                    'authority' => $authority = null,
-                    'class' => $class_name::newInstance()->getWmiClassNameAttribute(),
-                    'display_name' => SWbemServices::WMI_MONIKER
+                    'authority'         => $authority = null,
+                    'class'             => $class_name::newInstance()->getWmiClassNameAttribute(),
+                    'display_name'      => SWbemServices::WMI_MONIKER
                         . '{authenticationLevel=pktPrivacy,impersonationLevel=impersonate}!'
                         . "\\\server\\namespace:{$class_name::newInstance()->getWmiClassNameAttribute()}"
                         . ".DeviceID=\"something:\"",
-                    'is_class' => false,
-                    'is_singleton' => false,
-                    'keys' => [],
-                    'namespace' => Connection::DEFAULT_NAMESPACE,
-                    'parent_namespace' => "Root",
-                    'path' => "\\\server\\namespace:{$class_name::newInstance()->getWmiClassNameAttribute()}"
-                        . ".DeviceID=\"something:\"",
-                    'relative_path' => "some other stuff",
+                    'is_class'          => false,
+                    'is_singleton'      => false,
+                    'keys'              => [],
+                    'namespace'         => Connection::DEFAULT_NAMESPACE,
+                    'parent_namespace'  => "Root",
+                    'path'              => "\\\server\\namespace:"
+                        . "{$class_name::newInstance()->getWmiClassNameAttribute()}.DeviceID=\"something:\"",
+                    'relative_path'     => "some other stuff",
                     'server' => 'server',
                 ]),
             ]));

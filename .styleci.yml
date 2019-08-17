@@ -1,9 +1,16 @@
 preset: recommended
 
+finder:
+  exclude:
+    - "tests"
+
 enabled:
   - length_ordered_imports
   - concat_with_spaces
+  - pre_increment
 
 disabled:
   - alpha_ordered_imports
   - concat_without_spaces
+  - post_increment
+  - simplified_null_return
