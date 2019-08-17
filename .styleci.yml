@@ -1,6 +1,8 @@
 preset: recommended
 
 finder:
+  not-name:
+    - BiosCharacteristics.php
   exclude:
     - "tests"
 
