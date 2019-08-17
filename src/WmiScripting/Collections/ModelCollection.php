@@ -16,7 +16,7 @@ class ModelCollection extends Collection
 {
     /**
      * @param callable|null $callback
-     * @param null          $default
+     * @param null|mixed    $default
      *
      * @return  Win32Model
      */
