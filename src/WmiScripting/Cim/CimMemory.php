@@ -36,5 +36,4 @@ class CimMemory extends CimStorageExtent
     protected $startingAddress;
 
     protected $systemLevelAddress;
-
 }

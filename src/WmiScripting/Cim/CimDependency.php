@@ -18,6 +18,6 @@ class CimDependency extends Win32Model
 
     public static function query($connection = null)
     {
-        return new DependencyBuilder($self = new static, $self->getConnection($connection));
+        return new DependencyBuilder($self = new static(), $self->getConnection($connection));
     }
 }

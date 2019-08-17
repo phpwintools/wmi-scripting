@@ -40,5 +40,4 @@ class CimVideoController extends CimController
     protected $videoMemoryType;
 
     protected $videoProcessor;
-
 }

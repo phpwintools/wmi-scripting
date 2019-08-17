@@ -15,8 +15,9 @@ use Illuminate\Contracts\Support\Arrayable as IlluminateArrayable;
 class ModelCollection extends Collection
 {
     /**
-     * @param   callable|null   $callback
-     * @param   null            $default
+     * @param callable|null $callback
+     * @param null          $default
+     *
      * @return  Win32Model
      */
     public function first(callable $callback = null, $default = null)

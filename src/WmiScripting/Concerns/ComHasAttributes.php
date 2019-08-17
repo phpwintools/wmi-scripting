@@ -26,7 +26,7 @@ trait ComHasAttributes
         'merge_parent_hidden_attributes',
 
         'attribute_casting',
-        'merge_parent_casting'
+        'merge_parent_casting',
     ];
 
     public function getAttribute($attribute, $default = null)
@@ -80,6 +80,7 @@ trait ComHasAttributes
     public function isHidden($key): bool
     {
         $this->trait_hidden_attributes = array_combine($this->trait_hidden_attributes, $this->trait_hidden_attributes);
+
         return array_key_exists($key, $this->trait_hidden_attributes);
     }
 
