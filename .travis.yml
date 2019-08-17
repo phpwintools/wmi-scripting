@@ -1,7 +1,5 @@
 language: php
 
-os: windows
-
 php:
   - '7.1'
   - '7.2'
