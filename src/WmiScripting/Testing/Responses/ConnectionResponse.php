@@ -1,9 +1,9 @@
 <?php
 
-namespace PhpWinTools\WmiScripting\Testing\Com\Responses;
+namespace PhpWinTools\WmiScripting\Testing\Responses;
 
 use PhpWinTools\WmiScripting\Configuration\Config;
-use PhpWinTools\WmiScripting\Testing\Com\Support\VARIANTFake;
+use PhpWinTools\WmiScripting\Testing\Support\VARIANTFake;
 use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemLocator;
 use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemServices;
 

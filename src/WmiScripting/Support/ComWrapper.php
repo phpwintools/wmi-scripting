@@ -3,8 +3,8 @@
 namespace PhpWinTools\WmiScripting\Support;
 
 use COM as ComExt;
-use PhpWinTools\WmiScripting\Testing\Com\Support\COMFake;
 use PhpWinTools\WmiScripting\Configuration\Config;
+use PhpWinTools\WmiScripting\Testing\Support\COMFake;
 use PhpWinTools\WmiScripting\Exceptions\ComWrapperException;
 
 class ComWrapper extends ComVariantWrapper

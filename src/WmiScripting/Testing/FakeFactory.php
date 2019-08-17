@@ -1,13 +1,13 @@
 <?php
 
-namespace PhpWinTools\WmiScripting\Testing\Com;
+namespace PhpWinTools\WmiScripting\Testing;
 
 use PHPUnit\Framework\TestCase;
 use PhpWinTools\WmiScripting\Configuration\Config;
-use PhpWinTools\WmiScripting\Testing\Com\Support\Assert;
-use PhpWinTools\WmiScripting\Testing\Com\Wmi\Win32ModelFactory;
-use PhpWinTools\WmiScripting\Testing\Com\Responses\ObjectSetResponse;
-use PhpWinTools\WmiScripting\Testing\Com\Responses\ConnectionResponse;
+use PhpWinTools\WmiScripting\Testing\Support\Assert;
+use PhpWinTools\WmiScripting\Testing\Wmi\Win32ModelFactory;
+use PhpWinTools\WmiScripting\Testing\Responses\ObjectSetResponse;
+use PhpWinTools\WmiScripting\Testing\Responses\ConnectionResponse;
 
 class FakeFactory
 {

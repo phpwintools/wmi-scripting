@@ -1,9 +1,9 @@
 <?php
 
-namespace PhpWinTools\WmiScripting\Testing\Com\Responses;
+namespace PhpWinTools\WmiScripting\Testing\Responses;
 
 use PhpWinTools\WmiScripting\Support\VariantWrapper;
-use PhpWinTools\WmiScripting\Testing\Com\Support\VARIANTFake;
+use PhpWinTools\WmiScripting\Testing\Support\VARIANTFake;
 
 class VariantFakeResponseBuilder
 {

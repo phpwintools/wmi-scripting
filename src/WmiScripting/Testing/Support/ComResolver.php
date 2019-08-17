@@ -1,11 +1,11 @@
 <?php
 
-namespace PhpWinTools\WmiScripting\Testing\Com\Support;
+namespace PhpWinTools\WmiScripting\Testing\Support;
 
 use PhpWinTools\WmiScripting\Configuration\Config;
-use PhpWinTools\WmiScripting\Testing\Com\CallStacks\ComCallStack;
-use PhpWinTools\WmiScripting\Testing\Com\CallStacks\ApiObjectCall;
-use PhpWinTools\WmiScripting\Testing\Com\CallStacks\ApiObjectCallStack;
+use PhpWinTools\WmiScripting\Testing\CallStacks\ComCallStack;
+use PhpWinTools\WmiScripting\Testing\CallStacks\ApiObjectCall;
+use PhpWinTools\WmiScripting\Testing\CallStacks\ApiObjectCallStack;
 
 class ComResolver
 {

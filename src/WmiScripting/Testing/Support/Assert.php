@@ -1,14 +1,14 @@
 <?php
 
-namespace PhpWinTools\WmiScripting\Testing\Com\Support;
+namespace PhpWinTools\WmiScripting\Testing\Support;
 
 use PHPUnit\Framework\TestCase;
 use PhpWinTools\WmiScripting\Configuration\Config;
+use PhpWinTools\WmiScripting\Testing\CallStacks\ComCall;
 use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemLocator;
-use PhpWinTools\WmiScripting\Testing\Com\CallStacks\ComCall;
-use PhpWinTools\WmiScripting\Testing\Com\CallStacks\ComCallStack;
-use PhpWinTools\WmiScripting\Testing\Com\CallStacks\ComTraceSubject;
-use PhpWinTools\WmiScripting\Testing\Com\CallStacks\ApiObjectCallStack;
+use PhpWinTools\WmiScripting\Testing\CallStacks\ComCallStack;
+use PhpWinTools\WmiScripting\Testing\CallStacks\ComTraceSubject;
+use PhpWinTools\WmiScripting\Testing\CallStacks\ApiObjectCallStack;
 
 use function PhpWinTools\WmiScripting\Support\connection;
 

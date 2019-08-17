@@ -1,14 +1,14 @@
 <?php
 
-namespace PhpWinTools\WmiScripting\Testing\Com\Responses;
+namespace PhpWinTools\WmiScripting\Testing\Responses;
 
 use ArrayIterator;
 use PhpWinTools\WmiScripting\Configuration\Config;
+use PhpWinTools\WmiScripting\Testing\Wmi\ModelFake;
 use PhpWinTools\WmiScripting\Support\VariantWrapper;
-use PhpWinTools\WmiScripting\Testing\Com\Wmi\ModelFake;
-use PhpWinTools\WmiScripting\Testing\Com\Support\VARIANTFake;
+use PhpWinTools\WmiScripting\Testing\Support\VARIANTFake;
+use PhpWinTools\WmiScripting\Testing\Wmi\ModelFakeCollection;
 use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemObjectSet;
-use PhpWinTools\WmiScripting\Testing\Com\Wmi\ModelFakeCollection;
 
 class ObjectSetResponse extends ApiObjectResponseFactory
 {

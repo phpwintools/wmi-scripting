@@ -8,7 +8,7 @@ use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Configuration\Resolver;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Locator;
 use PhpWinTools\WmiScripting\Exceptions\UnresolvableClassException;
-use PhpWinTools\WmiScripting\Testing\Com\Support\ComVariantWrapperFake;
+use PhpWinTools\WmiScripting\Testing\Support\ComVariantWrapperFake;
 
 class ConfigurationTest extends TestCase
 {

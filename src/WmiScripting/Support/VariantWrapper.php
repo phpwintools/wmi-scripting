@@ -4,7 +4,7 @@ namespace PhpWinTools\WmiScripting\Support;
 
 use VARIANT as VariantExt;
 use PhpWinTools\WmiScripting\Configuration\Config;
-use PhpWinTools\WmiScripting\Testing\Com\Support\VARIANTFake;
+use PhpWinTools\WmiScripting\Testing\Support\VARIANTFake;
 use PhpWinTools\WmiScripting\Exceptions\VariantWrapperException;
 
 class VariantWrapper extends ComVariantWrapper

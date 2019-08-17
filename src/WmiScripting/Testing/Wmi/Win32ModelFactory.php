@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpWinTools\WmiScripting\Testing\Com\Wmi;
+namespace PhpWinTools\WmiScripting\Testing\Wmi;
 
 use Faker\Factory;
 use Faker\Generator;

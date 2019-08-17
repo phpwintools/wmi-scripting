@@ -1,12 +1,12 @@
 <?php
 
-namespace PhpWinTools\WmiScripting\Testing\Com\Support;
+namespace PhpWinTools\WmiScripting\Testing\Support;
 
 use ArrayIterator;
 use IteratorAggregate;
 use PhpWinTools\WmiScripting\Support\VariantWrapper;
+use PhpWinTools\WmiScripting\Testing\CallStacks\ComCallStack;
 use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemObjectSet;
-use PhpWinTools\WmiScripting\Testing\Com\CallStacks\ComCallStack;
 use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemPropertySet;
 use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemQualifierSet;
 

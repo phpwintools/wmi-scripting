@@ -3,8 +3,8 @@
 namespace PhpWinTools\WmiScripting;
 
 use PHPUnit\Framework\TestCase;
+use PhpWinTools\WmiScripting\Testing\FakeFactory;
 use PhpWinTools\WmiScripting\Configuration\Config;
-use PhpWinTools\WmiScripting\Testing\Com\FakeFactory;
 use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
 use PhpWinTools\WmiScripting\Exceptions\InvalidConfigArgumentException;
 

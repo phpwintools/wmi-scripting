@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpWinTools\WmiScripting\Testing\Com\CallStacks;
+namespace PhpWinTools\WmiScripting\Testing\CallStacks;
 
 use PhpWinTools\WmiScripting\Support\ApiObjects\AbstractWbemObject;
 

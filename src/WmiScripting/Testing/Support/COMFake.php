@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpWinTools\WmiScripting\Testing\Com\Support;
+namespace PhpWinTools\WmiScripting\Testing\Support;
 
 class COMFake extends COMObjectFake
 {

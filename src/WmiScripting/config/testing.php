@@ -1,9 +1,9 @@
 <?php
 
+use PhpWinTools\WmiScripting\Testing\Support\COMFake;
 use PhpWinTools\WmiScripting\Support\ComVariantWrapper;
-use PhpWinTools\WmiScripting\Testing\Com\Support\COMFake;
-use PhpWinTools\WmiScripting\Testing\Com\Support\VARIANTFake;
-use PhpWinTools\WmiScripting\Testing\Com\Support\ComVariantWrapperFake;
+use PhpWinTools\WmiScripting\Testing\Support\VARIANTFake;
+use PhpWinTools\WmiScripting\Testing\Support\ComVariantWrapperFake;
 
 return [
     'com' => [

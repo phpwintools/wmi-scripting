@@ -7,8 +7,8 @@ use COM as ComExt;
 use IteratorAggregate;
 use VARIANT as VariantExt;
 use PhpWinTools\WmiScripting\Configuration\Config;
-use PhpWinTools\WmiScripting\Testing\Com\Support\COMObjectFake;
-use PhpWinTools\WmiScripting\Testing\Com\Support\ComVariantWrapperFake;
+use PhpWinTools\WmiScripting\Testing\Support\COMObjectFake;
+use PhpWinTools\WmiScripting\Testing\Support\ComVariantWrapperFake;
 
 class ComVariantWrapper implements IteratorAggregate
 {
