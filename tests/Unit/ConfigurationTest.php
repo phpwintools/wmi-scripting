@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
 use Tests\TestCase;
 use PhpWinTools\WmiScripting\Connection;
 use PhpWinTools\WmiScripting\Configuration\Config;
@@ -84,6 +85,14 @@ class ConfigurationTest extends TestCase
 
         $this->assertInstanceOf(Config::class, $config);
         $this->assertNotEquals($config, Config::newInstance());
+    }
+
+    /** @test */
+    public function it_throws_an_exception_when_trying_set_a_default_connection_that_doesnt_exist()
+    {
+        $this->expectException(InvalidConnectionException::class);
+
+        Config::instance()->setDefaultConnection('i do not exist');
     }
 
     /** @test */
