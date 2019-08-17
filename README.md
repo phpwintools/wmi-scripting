@@ -13,7 +13,7 @@ I will try, but understand this library is subject to major changes until 1.0.0 
 #### @Todo: Finish Docs
 
 Basic usage is to call `::query($connection = null)` on an available model from
-https://github.com/phpwintools/wmi-scripting/tree/master/src/WmiScripting/Win32/Models.
+https://github.com/phpwintools/wmi-scripting/tree/master/src/WmiScripting/Models.
 
     PhpWinTools\WmiScripting\Models\LoggedOnUser::query()->get();
 
