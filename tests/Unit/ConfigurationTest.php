@@ -19,7 +19,7 @@ class ConfigurationTest extends TestCase
     }
 
     /** @test */
-    public function it_ends_existing_instances_when_for_testing_is_called()
+    public function it_ends_existing_instances_when_a_test_instance_begins()
     {
         $config = Config::killTestInstance(['test' => 'nothing']);
         $this->assertEquals($config, Config::instance(), "Config::instance() didn't return like config.");
