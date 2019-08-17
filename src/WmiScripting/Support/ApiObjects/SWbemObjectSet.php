@@ -41,7 +41,10 @@ class SWbemObjectSet extends AbstractWbemObject implements ArrayAccess, Countabl
         $this->buildSet();
     }
 
-    public function count()
+    /**
+     * @return int
+     */
+    public function count(): int
     {
         return $this->count;
     }
