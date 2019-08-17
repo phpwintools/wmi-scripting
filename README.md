@@ -1,6 +1,10 @@
 # Wmi-Scripting
 <p align="center">
 <a href="https://travis-ci.org/phpwintools/wmi-scripting"><img src="https://travis-ci.org/phpwintools/wmi-scripting.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/phpwintools/wmi-scripting"><img src="https://poser.pugx.org/phpwintools/wmi-scripting/v/stable.svg" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/phpwintools/wmi-scripting"><img src="https://poser.pugx.org/phpwintools/wmi-scripting/v/unstable.svg" alt="Latest Unstable Version"></a>
+<a href="https://packagist.org/packages/phpwintools/wmi-scripting"><img src="https://img.shields.io/github/license/phpwintools/wmi-scripting" alt="License"></a>
+
 </p>
 
 ### Current Version: 0.0.1alpha
