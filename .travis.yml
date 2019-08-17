@@ -1,4 +1,6 @@
 language: php
+mono:
+  - latest
 
 php:
   - '7.1'
