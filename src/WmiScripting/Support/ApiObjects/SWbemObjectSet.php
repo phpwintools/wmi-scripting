@@ -5,13 +5,14 @@ namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 use Countable;
 use ArrayAccess;
 use PhpWinTools\WmiScripting\Win32Model;
-use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Support\VariantWrapper;
 use PhpWinTools\WmiScripting\Support\ComVariantWrapper;
 use PhpWinTools\WmiScripting\Collections\ModelCollection;
 use PhpWinTools\WmiScripting\Collections\ObjectSetCollection;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectSet;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectItem;
+
+use function PhpWinTools\WmiScripting\Support\resolve;
 
 /**
  * Class SWbemObjectSet
@@ -27,9 +28,9 @@ class SWbemObjectSet extends AbstractWbemObject implements ArrayAccess, Countabl
 
     protected $resolve_property_sets = [];
 
-    public function __construct(VariantWrapper $variant, array $resolve_property_sets = [], Config $config = null)
+    public function __construct(VariantWrapper $variant, array $resolve_property_sets = [])
     {
-        parent::__construct($variant, $config);
+        parent::__construct($variant);
 
         $this->count = $variant->Count;
         $this->resolve_property_sets = $resolve_property_sets;
@@ -95,11 +96,11 @@ class SWbemObjectSet extends AbstractWbemObject implements ArrayAccess, Countabl
             }
 
             if ($is_object_ex) {
-                $wbemObject = $this->make()->objectItemEx($item, $this->resolve_property_sets, $this->config);
+                $wbemObject = resolve()->objectItemEx($item, $this->resolve_property_sets);
             }
 
             if (is_null($wbemObject)) {
-                $wbemObject = $this->make()->objectItem($item, $this->resolve_property_sets, $this->config);
+                $wbemObject = resolve()->objectItem($item, $this->resolve_property_sets);
             }
 
             $this->set->add($wbemObject);

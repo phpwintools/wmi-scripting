@@ -4,11 +4,13 @@ namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
 use PhpWinTools\WmiScripting\Connection;
 use PhpWinTools\WmiScripting\Flags\WbemFlags;
-use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Support\ComVariantWrapper;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Services;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectSet;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectItem;
+
+use function PhpWinTools\WmiScripting\Support\resolve;
+use function PhpWinTools\WmiScripting\Support\connection;
 
 /**
  * Class SWbemServices
@@ -21,14 +23,13 @@ class SWbemServices extends AbstractWbemObject implements Services
 
     protected $resolve_property_sets = [];
 
-    public function __construct(ComVariantWrapper $object = null, Connection $connection = null, Config $config = null)
+    public function __construct(ComVariantWrapper $object = null, Connection $connection = null)
     {
-        $config = $config ?? Config::instance();
-        $connection = $connection ?? $config->getConnection();
-        $object = $object ?? $config()->comWrapper(
-            $config()->comClass(static::WMI_MONIKER . "\\\\{$connection->getServer()}\\{$connection->getNamespace()}")
+        $connection = connection($connection);
+        $object = $object ?? resolve()->comWrapper(
+            resolve()->comClass(static::WMI_MONIKER . "\\\\{$connection->getServer()}\\{$connection->getNamespace()}")
         );
-        parent::__construct($object, $config);
+        parent::__construct($object);
 
         $this->resolve_property_sets['services'] = $this;
         $this->resolve_property_sets['property_names'] = [];
@@ -47,10 +48,9 @@ class SWbemServices extends AbstractWbemObject implements Services
         $flags = WbemFlags::RETURN_IMMEDIATELY,
         $wbemNamedValueSet = null
     ): ObjectSet {
-        return $this->make()->objectSet(
+        return resolve()->objectSet(
             $this->object->InstancesOf($class, $flags, $wbemNamedValueSet),
-            $this->resolve_property_sets,
-            $this->config
+            $this->resolve_property_sets
         );
     }
 
@@ -70,16 +70,15 @@ class SWbemServices extends AbstractWbemObject implements Services
         $flags = WbemFlags::RETURN_IMMEDIATELY,
         $wbemNamedValueSet = null
     ): ObjectSet {
-        return $this->make()->objectSet(
+        return resolve()->objectSet(
             $this->object->ExecQuery($query, $query_language, $flags, $wbemNamedValueSet),
-            $this->resolve_property_sets,
-            $this->config
+            $this->resolve_property_sets
         );
     }
 
     public function get(string $object_path, $flags = null, $wbemNamedValueSet = null): ObjectItem
     {
-        return $this->make()->objectItem($this->object->Get($object_path, $flags, $wbemNamedValueSet));
+        return resolve()->objectItem($this->object->Get($object_path, $flags, $wbemNamedValueSet));
     }
 
     public function resolvePropertySets(array $property_set_names): Services

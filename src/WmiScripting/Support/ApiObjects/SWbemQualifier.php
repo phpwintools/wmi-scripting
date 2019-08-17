@@ -2,7 +2,6 @@
 
 namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
-use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Support\VariantWrapper;
 
 /**
@@ -16,9 +15,9 @@ class SWbemQualifier extends AbstractWbemObject
 
     protected $value;
 
-    public function __construct(VariantWrapper $variant, Config $config = null)
+    public function __construct(VariantWrapper $variant)
     {
-        parent::__construct($variant, $config);
+        parent::__construct($variant);
 
         $this->name = $variant->Name;
         $this->value = $variant->Value;

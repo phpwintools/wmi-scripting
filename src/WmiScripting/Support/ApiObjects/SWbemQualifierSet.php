@@ -2,9 +2,9 @@
 
 namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
-use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Support\VariantWrapper;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\QualifierSet;
+use function PhpWinTools\WmiScripting\Support\resolve;
 
 /**
  * Class WbemQualifierSet
@@ -17,9 +17,9 @@ class SWbemQualifierSet extends AbstractWbemObject implements QualifierSet
 
     protected $qualifiers = [];
 
-    public function __construct(VariantWrapper $variant, Config $config = null)
+    public function __construct(VariantWrapper $variant)
     {
-        parent::__construct($variant, $config);
+        parent::__construct($variant);
 
         $this->buildQualifiers();
         $this->count = $variant->Count;
@@ -28,7 +28,7 @@ class SWbemQualifierSet extends AbstractWbemObject implements QualifierSet
     protected function buildQualifiers()
     {
         foreach ($this->object as $item) {
-            $this->qualifiers[$item->Name] = $this->make()->qualifier($item, $this->config);
+            $this->qualifiers[$item->Name] = resolve()->qualifier($item);
         }
     }
 }
