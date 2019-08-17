@@ -19,7 +19,7 @@ class CimLogicalDisk extends CimStorageExtent
 
     protected $attribute_casting = [
         'freeSpace' => 'int',
-        'size' => 'int',
+        'size'      => 'int',
     ];
 
     public function getFreeSpace(int $decimal_places = 2, array $byte_suffixes = null)
