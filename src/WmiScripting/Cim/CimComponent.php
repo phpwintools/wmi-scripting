@@ -3,12 +3,9 @@
 namespace PhpWinTools\WmiScripting\Cim;
 
 use PhpWinTools\WmiScripting\Win32Model;
-use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Query\ComponentBuilder;
 
 /**
- * Class CimComponent
- * @package App\Transformers\Com\Wmi\Win32\Cim
  * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-component
  */
 class CimComponent extends Win32Model
