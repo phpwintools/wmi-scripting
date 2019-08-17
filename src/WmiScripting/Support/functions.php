@@ -27,7 +27,7 @@ namespace PhpWinTools\WmiScripting\Support {
     function connection($connection = null, $default = null, Config $config = null)
     {
         if (is_null($connection) && is_null($default)) {
-            $connection = core($config)->getConnection();
+            return core($config)->getConnection();
         }
 
         if (is_string($connection) && trim($connection) !== '') {
