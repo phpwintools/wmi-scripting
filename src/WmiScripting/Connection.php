@@ -2,9 +2,8 @@
 
 namespace PhpWinTools\WmiScripting;
 
-use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Services;
-
 use function PhpWinTools\WmiScripting\Support\resolve;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Services;
 
 class Connection
 {

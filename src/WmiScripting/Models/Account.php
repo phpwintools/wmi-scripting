@@ -6,9 +6,7 @@ use PhpWinTools\WmiScripting\Cim\CimLogicalElement;
 use PhpWinTools\WmiScripting\MappingStrings\SidType;
 
 /**
- * Class Account
- * @package App\Transformers\Com\Wmi\Win32\Providers
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-account
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-account
  */
 class Account extends CimLogicalElement
 {

@@ -246,11 +246,7 @@ trait ComHasAttributes
     {
         $casts = $this->getCasts();
 
-        if ($this->hasCast($attribute)) {
-            return $casts[$attribute];
-        }
-
-        return null;
+        return $casts[$attribute] ?? null;
     }
 
     public function hasCast($attribute): bool

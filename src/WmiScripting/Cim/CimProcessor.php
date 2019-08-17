@@ -28,5 +28,4 @@ class CimProcessor extends CimLogicalDevice
     protected $uniqueId;
 
     protected $upgradeMethod;
-
 }

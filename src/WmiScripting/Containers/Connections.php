@@ -34,8 +34,9 @@ class Connections extends Container
     }
 
     /**
-     * @param string $key
-     * @param mixed|Connection|null
+     * @param string                $key
+     * @param mixed|Connection|null $default
+     *
      * @return Connection|null
      */
     public function get($key, $default = null)

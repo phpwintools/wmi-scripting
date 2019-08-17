@@ -15,14 +15,14 @@ class SidType extends Mappings
     const COMPUTER = 9;
 
     const STRING_ARRAY = [
-        self::USER => 'User',
-        self::GROUP => 'Group',
-        self::DOMAIN => 'Domain',
-        self::ALIAS => 'Alias',
-        self::WELL_KNOWN_GROUP => 'Well Known Group',
-        self::DELETED_ACCOUNT => 'Deleted Account',
-        self::INVALID => 'Invalid',
-        self::UNKNOWN => 'Unknown',
-        self::COMPUTER => 'Computer',
+        self::USER              => 'User',
+        self::GROUP             => 'Group',
+        self::DOMAIN            => 'Domain',
+        self::ALIAS             => 'Alias',
+        self::WELL_KNOWN_GROUP  => 'Well Known Group',
+        self::DELETED_ACCOUNT   => 'Deleted Account',
+        self::INVALID           => 'Invalid',
+        self::UNKNOWN           => 'Unknown',
+        self::COMPUTER          => 'Computer',
     ];
 }
