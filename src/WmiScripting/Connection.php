@@ -2,8 +2,9 @@
 
 namespace PhpWinTools\WmiScripting;
 
-use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Services;
+
+use function PhpWinTools\WmiScripting\Support\resolve;
 
 class Connection
 {
@@ -68,7 +69,7 @@ class Connection
     public function connect(): Services
     {
         if (is_null($this->services)) {
-            $this->services = (Config::instance())()->locator()->connectServer($this);
+            $this->services = resolve()->locator()->connectServer($this);
         }
 
         return $this->services;
