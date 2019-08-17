@@ -1,9 +1,8 @@
-php:
-  preset: recommended
-  risky: true
+preset: recommended
+risky: true
 
-  finder:
-    exclude:
-      - vendor
-      - tests
-    name: "*.php"
+finder:
+  exclude:
+    - vendor
+    - tests
+  name: "*.php"
