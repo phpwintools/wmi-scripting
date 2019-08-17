@@ -1,5 +1,5 @@
 sudo: required
-dist: trusty
+dist: xenial
 language: php
 dotnet: 2.2
 
@@ -9,7 +9,6 @@ php:
   - '7.3'
 
 before_script:
-  - phpenv config-add ./travis/extensions.ini
   - travis_retry composer self-update
   - travis_retry composer install --no-interaction
 
