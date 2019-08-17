@@ -7,10 +7,12 @@ php:
   - '7.2'
   - '7.3'
 
+install:
+  - ./travis/install_dependencies_ubuntu14.sh
+
 before_script:
-  - ./.travis/install_dependencies_ubuntu14.sh
-  - pecl install com_dotnet
-  - phpenv config-add ./.travis/extensions.ini
+
+  - phpenv config-add ./travis/extensions.ini
   - travis_retry composer self-update
   - travis_retry composer install --prefer-source --no-interaction
 
