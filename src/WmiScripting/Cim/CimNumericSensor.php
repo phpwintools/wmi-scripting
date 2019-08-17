@@ -40,5 +40,4 @@ class CimNumericSensor extends CimSensor
     protected $upperThresholdFatal;
 
     protected $upperThresholdNonCritical;
-
 }

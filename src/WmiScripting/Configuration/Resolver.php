@@ -3,19 +3,21 @@
 namespace PhpWinTools\WmiScripting\Configuration;
 
 use COM;
+use PhpWinTools\WmiScripting\Testing\Support\COMFake;
+use PhpWinTools\WmiScripting\Testing\Support\VARIANTFake;
 use VARIANT;
 use PhpWinTools\WmiScripting\Connection;
 use PhpWinTools\WmiScripting\Support\ComWrapper;
 use PhpWinTools\WmiScripting\Support\VariantWrapper;
 use PhpWinTools\WmiScripting\Support\ComVariantWrapper;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Locator;
-use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Property;
 use PhpWinTools\WmiScripting\Exceptions\UnresolvableClassException;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Property;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Services;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectSet;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Qualifier;
-use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectPath;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectItem;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectPath;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\PropertySet;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectItemEx;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\QualifierSet;
@@ -32,13 +34,14 @@ class Resolver
 
     /**
      * @param string|callable|object $resolvable
-     * @param mixed ...$parameters
+     * @param mixed                  ...$parameters
+     *
      * @return mixed
      */
     public function make($resolvable, ...$parameters)
     {
         if (is_callable($resolvable)) {
-            return $resolvable(... $parameters);
+            return $resolvable(...$parameters);
         }
 
         if (is_object($resolvable)) {
@@ -69,8 +72,9 @@ class Resolver
     }
 
     /**
-     * @param $com
+     * @param COM|COMFake $com
      * @param Config|null $config
+     *
      * @return ComVariantWrapper
      */
     public function comVariantWrapper($com, Config $config = null)
@@ -79,8 +83,9 @@ class Resolver
     }
 
     /**
-     * @param COM $com
+     * @param COM|COMFake $com
      * @param Config|null $config
+     *
      * @return ComWrapper
      */
     public function comWrapper($com, Config $config = null)
@@ -89,8 +94,9 @@ class Resolver
     }
 
     /**
-     * @param VARIANT $variant
-     * @param Config|null $config
+     * @param VARIANT|VARIANTFake $variant
+     * @param Config|null         $config
+     *
      * @return VariantWrapper
      */
     public function variantWrapper($variant, Config $config = null)
@@ -100,7 +106,8 @@ class Resolver
 
     /**
      * @param ComVariantWrapper|null $wrapper
-     * @param Config|null $config
+     * @param Config|null            $config
+     *
      * @return Locator
      */
     public function locator(ComVariantWrapper $wrapper = null, Config $config = null)
@@ -120,8 +127,9 @@ class Resolver
 
     /**
      * @param VariantWrapper $variant
-     * @param array $resolve
-     * @param Config|null $config
+     * @param array          $resolve
+     * @param Config|null    $config
+     *
      * @return ObjectItemEx
      */
     public function objectItemEx(VariantWrapper $variant, array $resolve = [], Config $config = null)
@@ -136,7 +144,8 @@ class Resolver
 
     /**
      * @param VariantWrapper $variant
-     * @param Config|null $config
+     * @param Config|null    $config
+     *
      * @return ObjectPath
      */
     public function objectPath(VariantWrapper $variant, Config $config = null)
@@ -146,8 +155,9 @@ class Resolver
 
     /**
      * @param VariantWrapper $variant
-     * @param array $resolve
-     * @param Config|null $config
+     * @param array          $resolve
+     * @param Config|null    $config
+     *
      * @return ObjectSet
      */
     public function objectSet(VariantWrapper $variant, array $resolve = [], Config $config = null)
@@ -157,7 +167,8 @@ class Resolver
 
     /**
      * @param VariantWrapper $variant
-     * @param Config|null $config
+     * @param Config|null    $config
+     *
      * @return Property
      */
     public function property(VariantWrapper $variant, Config $config = null)
@@ -167,8 +178,9 @@ class Resolver
 
     /**
      * @param VariantWrapper $variant
-     * @param array $resolve
-     * @param Config|null $config
+     * @param array          $resolve
+     * @param Config|null    $config
+     *
      * @return PropertySet
      */
     public function propertySet(VariantWrapper $variant, array $resolve = [], Config $config = null)
@@ -183,7 +195,8 @@ class Resolver
 
     /**
      * @param VariantWrapper $variant
-     * @param Config|null $config
+     * @param Config|null    $config
+     *
      * @return Qualifier
      */
     public function qualifier(VariantWrapper $variant, Config $config = null)
@@ -193,7 +206,8 @@ class Resolver
 
     /**
      * @param VariantWrapper $variant
-     * @param Config|null $config
+     * @param Config|null    $config
+     *
      * @return QualifierSet
      */
     public function qualifierSet(VariantWrapper $variant, Config $config = null)
@@ -203,8 +217,9 @@ class Resolver
 
     /**
      * @param ComVariantWrapper|null $com
-     * @param Connection|null $connection
-     * @param Config|null $config
+     * @param Connection|null        $connection
+     * @param Config|null            $config
+     *
      * @return Services
      */
     public function services(ComVariantWrapper $com = null, Connection $connection = null, Config $config = null)

@@ -8,5 +8,4 @@ namespace PhpWinTools\WmiScripting\Cim;
  */
 class CimStorageVolume extends CimStorageExtent
 {
-
 }

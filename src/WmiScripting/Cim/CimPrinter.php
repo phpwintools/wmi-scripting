@@ -72,5 +72,4 @@ class CimPrinter extends CimLogicalDevice
     protected $timeOfLastReset;
 
     protected $verticalResolution;
-
 }

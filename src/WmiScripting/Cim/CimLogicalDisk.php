@@ -36,6 +36,7 @@ class CimLogicalDisk extends CimStorageExtent
     {
         $byte_suffixes = $byte_suffixes ?? $this->byte_suffixes;
         $factor = floor((strlen($bytes) - 1) / 3);
+
         return sprintf("%.{$decimal_places}f", $bytes / pow(1024, $factor)) . ' ' . $byte_suffixes[(int) $factor] ?? '';
     }
 }

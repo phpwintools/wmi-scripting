@@ -34,5 +34,4 @@ class CimProcess extends CimLogicalElement
     protected $userModeTime;
 
     protected $workingSetSize;
-
 }
