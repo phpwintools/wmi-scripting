@@ -52,6 +52,7 @@ class SWbemObjectSet extends AbstractWbemObject implements ArrayAccess, Countabl
     {
         $this->set = $this->set->map(function (ObjectItem $item) use ($model) {
             $item->instantiateWin32Model($model);
+
             return $item;
         });
 
