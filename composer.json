@@ -2,7 +2,19 @@
     "name": "phpwintools/wmi-scripting",
     "type": "library",
     "description": "A PHP package for using WMI tools.",
-    "keywords": ["not quite ready for public use"],
+    "keywords": [
+        "windows",
+        "management",
+        "instrumentation",
+        "Windows Management Instrumentation",
+        "win",
+        "win32",
+        "wmi",
+        "scripting",
+        "com",
+        "dotnet",
+        "php"
+    ],
     "license": "MIT",
     "version": "0.0.1-alpha",
     "authors": [
@@ -23,7 +35,7 @@
         "phpunit/phpunit": "^7.5"
     },
     "suggest": {
-        "ext-com_dotnet": "Required for library to work, but cannot be required due to TravisCI :("
+        "ext-com_dotnet": "Required for the library to work, but cannot be required due to TravisCI :("
     },
     "autoload": {
         "psr-4": {
