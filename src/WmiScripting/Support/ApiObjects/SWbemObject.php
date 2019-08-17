@@ -3,10 +3,11 @@
 namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
 use PhpWinTools\WmiScripting\Win32Model;
-use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Models\Classes;
 use PhpWinTools\WmiScripting\Support\VariantWrapper;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectItem;
+
+use function PhpWinTools\WmiScripting\Support\resolve;
 
 /**
  * Class SWbemObject
@@ -25,19 +26,15 @@ class SWbemObject extends AbstractWbemObject implements ObjectItem
 
     protected $path;
 
-    public function __construct(VariantWrapper $variant, array $resolve_property_sets = [], Config $config = null)
+    public function __construct(VariantWrapper $variant, array $resolve_property_sets = [])
     {
-        parent::__construct($variant, $config);
+        parent::__construct($variant);
 
         $this->buildDerivations();
 
-        $this->propertySet = $this->make()->propertySet(
-            $this->object->Properties_,
-            $resolve_property_sets,
-            $this->config
-        );
-        $this->qualifierSet = $this->make()->qualifierSet($this->object->Qualifiers_, $this->config);
-        $this->path = $this->make()->objectPath($this->object->Path_, $this->config);
+        $this->propertySet = resolve()->propertySet($this->object->Properties_, $resolve_property_sets);
+        $this->qualifierSet = resolve()->qualifierSet($this->object->Qualifiers_);
+        $this->path = resolve()->objectPath($this->object->Path_);
 
         $this->instantiateWin32Model();
     }

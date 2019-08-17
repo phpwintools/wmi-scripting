@@ -2,10 +2,11 @@
 
 namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
-use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Support\VariantWrapper;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Property;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\PropertySet;
+
+use function PhpWinTools\WmiScripting\Support\resolve;
 
 /**
  * Class SWbemPropertySet
@@ -19,9 +20,9 @@ class SWbemPropertySet extends AbstractWbemObject implements PropertySet
 
     protected $resolve_property_sets;
 
-    public function __construct(VariantWrapper $variant, array $resolve_property_sets = [], Config $config = null)
+    public function __construct(VariantWrapper $variant, array $resolve_property_sets = [])
     {
-        parent::__construct($variant, $config);
+        parent::__construct($variant);
 
         $this->resolve_property_sets = $resolve_property_sets;
         $this->buildProperties();
@@ -47,7 +48,7 @@ class SWbemPropertySet extends AbstractWbemObject implements PropertySet
     {
         foreach ($this->object as $item) {
             $this->properties[$item->Name] = $this->resolveProperty(
-                $this->make()->property($item, $this->config),
+                resolve()->property($item),
                 $item->Name
             );
         }

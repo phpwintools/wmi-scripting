@@ -3,10 +3,12 @@
 namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
 use PhpWinTools\WmiScripting\Connection;
-use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Support\ComVariantWrapper;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Locator;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Services;
+
+use function PhpWinTools\WmiScripting\Support\resolve;
+use function PhpWinTools\WmiScripting\Support\connection;
 
 /**
  * Class SWbemLocator
@@ -17,19 +19,18 @@ class SWbemLocator extends AbstractWbemObject implements Locator
 {
     const SCRIPTING = 'WbemScripting';
 
-    public function __construct(ComVariantWrapper $object = null, Config $config = null)
+    public function __construct(ComVariantWrapper $object = null)
     {
-        $config = $config ?? Config::instance();
-        $object = $object ?? $config()->comWrapper($config()->comClass(self::SCRIPTING . '.SWbemLocator'), $config);
+        $object = $object ?? resolve()->comWrapper(resolve()->comClass(self::SCRIPTING . '.SWbemLocator'));
 
-        parent::__construct($object, $config);
+        parent::__construct($object);
     }
 
     public function connectServer(Connection $connection = null): Services
     {
-        $connection = $connection ?? $this->config->getConnection();
+        $connection = connection($connection);
 
-        return $this->make()->services(
+        return resolve()->services(
             $this->object->ConnectServer(
                 $connection->getServer(),
                 $connection->getNamespace(),
@@ -39,8 +40,7 @@ class SWbemLocator extends AbstractWbemObject implements Locator
                 $connection->getAuthority(),
                 $connection->getSecurityFlags()
             ),
-            $connection,
-            $this->config
+            $connection
         );
     }
 }

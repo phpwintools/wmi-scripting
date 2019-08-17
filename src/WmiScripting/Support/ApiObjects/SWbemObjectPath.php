@@ -35,9 +35,9 @@ class SWbemObjectPath extends AbstractWbemObject implements ObjectPath
 
     protected $server;
 
-    public function __construct(VariantWrapper $variant, Config $config = null)
+    public function __construct(VariantWrapper $variant)
     {
-        parent::__construct($variant, $config);
+        parent::__construct($variant);
 
         $this->authority = $this->object->Authority;
         $this->class = $this->object->Class;
