@@ -3,9 +3,7 @@
 namespace PhpWinTools\WmiScripting\Cim;
 
 /**
- * Class CimController
- * @package App\Transformers\Com\Wmi\Win32\Cim
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-controller
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-controller
  */
 class CimController extends CimLogicalDevice
 {

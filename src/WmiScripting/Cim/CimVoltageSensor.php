@@ -3,9 +3,7 @@
 namespace PhpWinTools\WmiScripting\Cim;
 
 /**
- * Class CimVoltageSensor
- * @package App\Transformers\Com\Wmi\Win32\Cim
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-voltagesensor
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-voltagesensor
  */
 class CimVoltageSensor extends CimNumericSensor
 {

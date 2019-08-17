@@ -3,9 +3,7 @@
 namespace PhpWinTools\WmiScripting\Cim;
 
 /**
- * Class CimSystemComponent
- * @package App\Transformers\Com\Wmi\Win32\Cim
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-systemcomponent
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-systemcomponent
  */
 class CimSystemComponent extends CimComponent
 {

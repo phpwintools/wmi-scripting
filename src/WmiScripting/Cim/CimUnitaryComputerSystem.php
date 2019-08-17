@@ -3,9 +3,7 @@
 namespace PhpWinTools\WmiScripting\Cim;
 
 /**
- * Class CimUnitaryComputerSystem
- * @package App\Transformers\Com\Wmi\Win32\Cim
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-unitarycomputersystem
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-unitarycomputersystem
  */
 class CimUnitaryComputerSystem extends CimComputerSystem
 {

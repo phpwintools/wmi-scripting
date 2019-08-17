@@ -3,9 +3,7 @@
 namespace PhpWinTools\WmiScripting\Cim;
 
 /**
- * Class CimSCSIController
- * @package App\Transformers\Com\Wmi\Win32\Cim
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-scsicontroller
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-scsicontroller
  */
 class CimSCSIController extends CimController
 {
