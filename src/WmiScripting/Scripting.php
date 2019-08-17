@@ -66,7 +66,7 @@ class Scripting
 
     /**
      * @param string                 $name
-     * @param Connection|string|null $connection
+     * @param Connection|array|null  $connection
      *
      * @throws InvalidConnectionException
      *
@@ -99,7 +99,7 @@ class Scripting
 
     /**
      * @param string                 $name
-     * @param Connection|string|null $connection
+     * @param Connection|array|null  $connection
      *
      * @throws InvalidConnectionException
      *
