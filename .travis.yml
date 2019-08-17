@@ -8,8 +8,9 @@ php:
   - '7.3'
 
 before_script:
-  - ./build/install_dependencies_ubuntu14.sh
+  - ./.travis/install_dependencies_ubuntu14.sh
   - pecl install com_dotnet
+  - phpenv config-add ./.travis/extensions.ini
   - travis_retry composer self-update
   - travis_retry composer install --prefer-source --no-interaction
 
