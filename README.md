@@ -15,18 +15,16 @@ I will try, but understand this library is subject to major changes until 1.0.0 
 Basic usage is to call `::query($connection = null)` on an available model from
 https://github.com/phpwintools/wmi-scripting/tree/master/src/WmiScripting/Win32/Models.
 
-`LoggedOnUser::query()-get();`
+    LoggedOnUser::query()-get();
 
 This returns a collection of logged on users from the default connection (this is local by configuration).
 The `ModelCollection` extends https://github.com/tightenco/collect / [Laravel Collections](https://laravel.com/docs/5.8/collections).
 
 You can also instantiate Scripting:
 
-`$scripting = new Scripting;`
-
-`$scripting->addConnection('remote', Connection::defaultNamespace('server', 'user', 'password'));`
-
-`$scripting->query('remote')->loggedOnUser()->get();`
+    $scripting = new Scripting;
+    $scripting->addConnection('remote', Connection::defaultNamespace('server', 'user', 'password'));
+    $scripting->query('remote')->loggedOnUser()->get();
 
 Whether you use `$scripting->query($connection = null)->modelName()` or `::query($connection = null)` you are dropped into a basic query
 builder which currently only allows `select` and `where` clauses. If there are any subject matter experts who would like
