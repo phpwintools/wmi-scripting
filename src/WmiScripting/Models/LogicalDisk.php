@@ -46,7 +46,7 @@ class LogicalDisk extends CimLogicalDisk
 
     public static function query($connection = null)
     {
-        return new LogicalDiskBuilder($self = new static, $self->getConnection($connection));
+        return new LogicalDiskBuilder($self = new static(), $self->getConnection($connection));
     }
 
     public function getVolumeName()

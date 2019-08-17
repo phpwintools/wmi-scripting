@@ -21,5 +21,5 @@ interface Services extends WbemObject
 
     public function get(string $object_path, $flags = null, $wbemNamedValueSet = null): ObjectItem;
 
-    public function resolvePropertySets(array $property_set_names): Services;
+    public function resolvePropertySets(array $property_set_names): self;
 }

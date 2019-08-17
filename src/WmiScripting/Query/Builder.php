@@ -58,7 +58,8 @@ class Builder
     }
 
     /**
-     * @param $query
+     * @param string $query
+     *
      * @return ObjectSet
      */
     public function execQuery($query): ObjectSet

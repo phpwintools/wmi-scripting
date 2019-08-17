@@ -25,7 +25,7 @@ class ComCallStack
      */
     public static function instance()
     {
-        return static::$instance ?? new static;
+        return static::$instance ?? new static();
     }
 
     public static function current()
@@ -112,16 +112,16 @@ class ComCallStack
             });
 
             return [
-                'responder' => $backtrace[0],
-                'caller' => $backtrace[1] ?? null,
-                'detected_caller' => $backtrace[2] ?? null,
+                'responder'         => $backtrace[0],
+                'caller'            => $backtrace[1] ?? null,
+                'detected_caller'   => $backtrace[2] ?? null,
             ];
         }
 
         return [
-            'responder' => null,
-            'caller' => null,
-            'detected_caller' => null,
+            'responder'         => null,
+            'caller'            => null,
+            'detected_caller'   => null,
         ];
     }
 }

@@ -38,6 +38,7 @@ class ComResolver
         $called = $current->getMethod();
 
         $this->apiCallStack->add(new ApiObjectCall($class_context, $called, $current->getArguments()));
+
         return ($this->config)("{$class_context}.{$called}");
     }
 }

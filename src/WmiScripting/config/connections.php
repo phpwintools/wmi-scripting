@@ -12,6 +12,6 @@ return [
           'locale'          => null,
           'authority'       => null,
           'security_flags'  => null,
-      ]
-  ]
+      ],
+  ],
 ];

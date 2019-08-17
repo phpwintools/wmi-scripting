@@ -8,9 +8,9 @@ namespace PhpWinTools\WmiScripting\Support {
     use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
 
     /**
-     * @param   Config|null $config
+     * @param Config|null $config
      *
-     * @return  Config
+     * @return Config
      */
     function core(Config $config = null)
     {
@@ -18,11 +18,11 @@ namespace PhpWinTools\WmiScripting\Support {
     }
 
     /**
-     * @param   Connection|string|null  $connection
-     * @param   Connection|string|null  $default
-     * @param   Config|null             $config
+     * @param Connection|string|null $connection
+     * @param Connection|string|null $default
+     * @param Config|null            $config
      *
-     * @return  Connection|string|null
+     * @return Connection|string|null
      */
     function connection($connection = null, $default = null, Config $config = null)
     {
@@ -46,10 +46,10 @@ namespace PhpWinTools\WmiScripting\Support {
     }
 
     /**
-     * @param   string|null $class
-     * @param   mixed       $parameters
+     * @param string|null $class
+     * @param mixed       $parameters
      *
-     * @return  Resolver|mixed|null
+     * @return Resolver|mixed|null
      */
     function resolve(string $class = null, ...$parameters)
     {

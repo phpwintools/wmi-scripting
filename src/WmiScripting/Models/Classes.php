@@ -8,6 +8,7 @@ abstract class Classes
 {
     /**
      * Computer System Hardware Classes.
+     *
      * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/computer-system-hardware-classes
      */
     const BIOS = 'Win32_BIOS';
@@ -46,6 +47,7 @@ abstract class Classes
 
     /**
      * Operating System Classes.
+     *
      * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/operating-system-classes
      */
     const ACCOUNT = 'Win32_Account';

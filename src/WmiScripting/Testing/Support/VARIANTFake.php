@@ -34,7 +34,7 @@ class VARIANTFake extends COMObjectFake implements IteratorAggregate
         $this->stack->add('iterator');
 
         $standard = new ArrayIterator([
-            new VariantWrapper(new VARIANTFake()),
+            new VariantWrapper(new self()),
         ]);
 
         if (ComCallStack::current()->getCaller()->getClass() === SWbemObjectSet::class) {

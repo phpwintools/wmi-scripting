@@ -28,5 +28,4 @@ class PointingDevice extends CimPointingDevice
     protected $sampleRate;
 
     protected $synch;
-
 }

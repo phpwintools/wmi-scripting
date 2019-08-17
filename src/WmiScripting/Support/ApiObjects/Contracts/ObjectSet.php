@@ -15,5 +15,5 @@ interface ObjectSet extends WbemObject, ArrayAccess
      */
     public function getSet(): ModelCollection;
 
-    public function instantiateModels(Win32Model $model): ObjectSet;
+    public function instantiateModels(Win32Model $model): self;
 }

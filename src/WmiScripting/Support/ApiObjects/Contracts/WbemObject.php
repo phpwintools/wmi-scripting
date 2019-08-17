@@ -7,5 +7,4 @@ use PhpWinTools\WmiScripting\Contracts\HasAttributes;
 
 interface WbemObject extends HasAttributes, Jsonable
 {
-
 }
