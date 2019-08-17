@@ -9,7 +9,7 @@ use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
 
 use function PhpWinTools\WmiScripting\Support\connection;
 
-class FunctionTest extends TestCase
+class ConnectionTest extends TestCase
 {
     /** @var Config */
     protected $config;
