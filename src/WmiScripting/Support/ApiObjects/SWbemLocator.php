@@ -25,11 +25,6 @@ class SWbemLocator extends AbstractWbemObject implements Locator
         parent::__construct($object, $config);
     }
 
-    public static function connectLocal(): Services
-    {
-        return (new self)->connectServer();
-    }
-
     public function connectServer(Connection $connection = null): Services
     {
         $connection = $connection ?? $this->config->getConnection();
