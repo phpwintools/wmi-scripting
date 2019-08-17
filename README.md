@@ -24,7 +24,7 @@ You can also instantiate Scripting:
 
 `$scripting = new Scripting;`
 
-`$scripting->addConnection('remote', Connection::defaultNamespace('server', 'user', 'password');`
+`$scripting->addConnection('remote', Connection::defaultNamespace('server', 'user', 'password'));`
 
 `$scripting->query('remote')->loggedOnUser()->get();`
 
