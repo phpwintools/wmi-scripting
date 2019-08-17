@@ -5,10 +5,7 @@ namespace PhpWinTools\WmiScripting\Cim;
 use PhpWinTools\WmiScripting\Win32Model;
 
 /**
- * Class ManagedSystemElement
- * @package App\Transformers\Com\Wmi\Win32\Cim
- *
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-managedsystemelement
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-managedsystemelement
  */
 class CimManagedSystemElement extends Win32Model
 {

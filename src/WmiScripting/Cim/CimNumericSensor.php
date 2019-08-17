@@ -2,6 +2,9 @@
 
 namespace PhpWinTools\WmiScripting\Cim;
 
+/**
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-numericsensor
+ */
 class CimNumericSensor extends CimSensor
 {
     protected $uuid = '{9565979C-7D80-11D2-AAD3-006008C78BC7}';

@@ -3,9 +3,7 @@
 namespace PhpWinTools\WmiScripting\Cim;
 
 /**
- * Class CimProcess
- * @package App\Transformers\Com\Wmi\Win32\Cim
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-process
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-process
  */
 class CimProcess extends CimLogicalElement
 {

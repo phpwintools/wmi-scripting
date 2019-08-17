@@ -3,9 +3,7 @@
 namespace PhpWinTools\WmiScripting\Cim;
 
 /**
- * Class LogicalDevice
- * @package App\Transformers\Com\Wmi\Win32\Cim
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-logicaldevice
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-logicaldevice
  */
 class CimLogicalDevice extends CimLogicalElement
 {

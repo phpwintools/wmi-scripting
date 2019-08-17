@@ -3,9 +3,7 @@
 namespace PhpWinTools\WmiScripting\Cim;
 
 /**
- * Class StorageExtent
- * @package App\Transformers\Com\Wmi\Win32\Cim
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-storageextent
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-storageextent
  */
 class CimStorageExtent extends CimLogicalDevice
 {

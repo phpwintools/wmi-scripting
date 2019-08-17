@@ -5,9 +5,7 @@ namespace PhpWinTools\WmiScripting\Cim;
 use PhpWinTools\WmiScripting\MappingStrings\SoftwareElementState;
 
 /**
- * Class CimSoftwareElement
- * @package App\Transformers\Com\Wmi\Win32\Cim
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-softwareelement
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-softwareelement
  */
 class CimSoftwareElement extends CimLogicalElement
 {

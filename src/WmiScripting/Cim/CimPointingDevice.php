@@ -3,9 +3,7 @@
 namespace PhpWinTools\WmiScripting\Cim;
 
 /**
- * Class CimPointingDevice
- * @package App\Transformers\Com\Wmi\Win32\Cim
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-pointingdevice
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-pointingdevice
  */
 class CimPointingDevice extends CimUserDevice
 {

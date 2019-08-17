@@ -20,6 +20,6 @@ class CimComponent extends Win32Model
 
     public static function query($connection = null)
     {
-        return new ComponentBuilder($self = new static, $self->getConnection($connection));
+        return new ComponentBuilder($self = new static(), $self->getConnection($connection));
     }
 }

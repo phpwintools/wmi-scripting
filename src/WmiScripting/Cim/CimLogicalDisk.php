@@ -3,9 +3,7 @@
 namespace PhpWinTools\WmiScripting\Cim;
 
 /**
- * Class LogicalDisk
- * @package App\Transformers\Com\Wmi\Win32\Cim
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-logicaldisk
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-logicaldisk
  */
 class CimLogicalDisk extends CimStorageExtent
 {

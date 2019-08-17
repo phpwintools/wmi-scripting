@@ -3,10 +3,7 @@
 namespace PhpWinTools\WmiScripting\Cim;
 
 /**
- * Class LogicalElement
- * @package App\Transformers\Com\Wmi\Win32\Cim
- *
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-logicalelement
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-logicalelement
  */
 class CimLogicalElement extends CimManagedSystemElement
 {

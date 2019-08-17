@@ -3,9 +3,7 @@
 namespace PhpWinTools\WmiScripting\Cim;
 
 /**
- * Class CimUSBController
- * @package App\Transformers\Com\Wmi\Win32\Cim
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-usbcontroller
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-usbcontroller
  */
 class CimUSBController extends CimController
 {

@@ -3,9 +3,7 @@
 namespace PhpWinTools\WmiScripting\Cim;
 
 /**
- * Class CimUserDevice
- * @package App\Transformers\Com\Wmi\Win32\Cim
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-userdevice
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-userdevice
  */
 class CimUserDevice extends CimLogicalDevice
 {
