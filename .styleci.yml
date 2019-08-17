@@ -1,8 +1,7 @@
 preset: recommended
-risky: true
 
-finder:
-  exclude:
-    - vendor
-    - tests
-  name: "*.php"
+enabled:
+  - length_ordered_imports
+
+disabled:
+  - alpha_ordered_imports
