@@ -6,18 +6,15 @@ use Countable;
 use ArrayAccess;
 use PhpWinTools\WmiScripting\Win32Model;
 use PhpWinTools\WmiScripting\Support\VariantWrapper;
+use function PhpWinTools\WmiScripting\Support\resolve;
 use PhpWinTools\WmiScripting\Support\ComVariantWrapper;
 use PhpWinTools\WmiScripting\Collections\ModelCollection;
 use PhpWinTools\WmiScripting\Collections\ObjectSetCollection;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectSet;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectItem;
 
-use function PhpWinTools\WmiScripting\Support\resolve;
-
 /**
- * Class SWbemObjectSet
- * @package App\Transformers\Com\Wmi
- * https://docs.microsoft.com/en-us/windows/win32/wmisdk/swbemobjectset
+ * @link https://docs.microsoft.com/en-us/windows/win32/wmisdk/swbemobjectset
  */
 class SWbemObjectSet extends AbstractWbemObject implements ArrayAccess, Countable, ObjectSet
 {

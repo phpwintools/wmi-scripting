@@ -2,14 +2,11 @@
 
 namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
-use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Support\VariantWrapper;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectPath;
 
 /**
- * Class SWbemObjectPath
- * @package App\Transformers\Com\Wmi
- * https://docs.microsoft.com/en-us/windows/win32/wmisdk/swbemobjectpath
+ * @link https://docs.microsoft.com/en-us/windows/win32/wmisdk/swbemobjectpath
  */
 class SWbemObjectPath extends AbstractWbemObject implements ObjectPath
 {

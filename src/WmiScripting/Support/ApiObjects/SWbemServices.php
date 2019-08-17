@@ -4,18 +4,15 @@ namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
 use PhpWinTools\WmiScripting\Connection;
 use PhpWinTools\WmiScripting\Flags\WbemFlags;
+use function PhpWinTools\WmiScripting\Support\resolve;
 use PhpWinTools\WmiScripting\Support\ComVariantWrapper;
+use function PhpWinTools\WmiScripting\Support\connection;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Services;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectSet;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectItem;
 
-use function PhpWinTools\WmiScripting\Support\resolve;
-use function PhpWinTools\WmiScripting\Support\connection;
-
 /**
- * Class SWbemServices
- * @package App\Transformers\Com\Wmi
- * https://docs.microsoft.com/en-us/windows/win32/wmisdk/swbemservices
+ * @link https://docs.microsoft.com/en-us/windows/win32/wmisdk/swbemservices
  */
 class SWbemServices extends AbstractWbemObject implements Services
 {

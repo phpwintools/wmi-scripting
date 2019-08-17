@@ -6,9 +6,7 @@ use PhpWinTools\WmiScripting\Support\VariantWrapper;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Property;
 
 /**
- * Class SWbemProperty
- * @package App\Transformers\Com\Wmi
- * https://docs.microsoft.com/en-us/windows/win32/wmisdk/swbemproperty
+ * @link https://docs.microsoft.com/en-us/windows/win32/wmisdk/swbemproperty
  */
 class SWbemProperty extends AbstractWbemObject implements Property
 {

@@ -38,5 +38,4 @@ class DiskPartition extends CimDiskPartition
     protected $startingOffset;
 
     protected $type;
-
 }

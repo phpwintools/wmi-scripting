@@ -3,15 +3,12 @@
 namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
 use PhpWinTools\WmiScripting\Support\VariantWrapper;
+use function PhpWinTools\WmiScripting\Support\resolve;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Property;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\PropertySet;
 
-use function PhpWinTools\WmiScripting\Support\resolve;
-
 /**
- * Class SWbemPropertySet
- * @package App\Transformers\Com\Wmi
- * https://docs.microsoft.com/en-us/windows/win32/wmisdk/swbempropertyset
+ * @link https://docs.microsoft.com/en-us/windows/win32/wmisdk/swbempropertyset
  */
 class SWbemPropertySet extends AbstractWbemObject implements PropertySet
 {

@@ -18,5 +18,4 @@ class DesktopMonitor extends CimDesktopMonitor
     protected $pixelsPerXLogicalInch;
 
     protected $pixelsPerYLogicalInch;
-
 }

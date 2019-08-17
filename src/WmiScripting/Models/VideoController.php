@@ -46,5 +46,4 @@ class VideoController extends CimPCVideoController
     protected $systemPaletteEntries;
 
     protected $videoModeDescription;
-
 }

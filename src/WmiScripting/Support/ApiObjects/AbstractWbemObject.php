@@ -8,9 +8,7 @@ use PhpWinTools\WmiScripting\Concerns\ComHasAttributes;
 use PhpWinTools\WmiScripting\Support\ComVariantWrapper;
 
 /**
- * Class AbstractWbemObject
- * @package App\Transformers\Com\Wmi
- * https://docs.microsoft.com/en-us/windows/win32/wmisdk/winmgmt
+ * @link https://docs.microsoft.com/en-us/windows/win32/wmisdk/winmgmt
  */
 class AbstractWbemObject implements Arrayable, Jsonable
 {

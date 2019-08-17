@@ -3,17 +3,14 @@
 namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
 use PhpWinTools\WmiScripting\Connection;
+use function PhpWinTools\WmiScripting\Support\resolve;
 use PhpWinTools\WmiScripting\Support\ComVariantWrapper;
+use function PhpWinTools\WmiScripting\Support\connection;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Locator;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Services;
 
-use function PhpWinTools\WmiScripting\Support\resolve;
-use function PhpWinTools\WmiScripting\Support\connection;
-
 /**
- * Class SWbemLocator
- * @package App\Transformers\Com\Wmi
- * https://docs.microsoft.com/en-us/windows/win32/wmisdk/swbemlocator
+ * @link https://docs.microsoft.com/en-us/windows/win32/wmisdk/swbemlocator
  */
 class SWbemLocator extends AbstractWbemObject implements Locator
 {

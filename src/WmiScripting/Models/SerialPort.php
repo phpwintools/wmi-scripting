@@ -54,6 +54,5 @@ class SerialPort extends CimSerialController
     protected $supportsXOnXOff;
 
     protected $supportsXOnXOffSet;
-
 }
 

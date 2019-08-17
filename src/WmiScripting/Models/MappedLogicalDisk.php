@@ -34,5 +34,4 @@ class MappedLogicalDisk extends CimLogicalDisk
     protected $volumeName;
 
     protected $volumeSerialNumber;
-
 }

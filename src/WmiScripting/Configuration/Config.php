@@ -325,7 +325,7 @@ class Config
      *
      * @return Config
      */
-    public function addConnection(string $name, Connection $connection): Config
+    public function addConnection(string $name, Connection $connection): self
     {
         $this->connections()->set($name, $connection);
 
@@ -351,7 +351,7 @@ class Config
     /**
      * @param string $name
      *
-     * @return  Connection|null
+     * @return Connection|null
      */
     public function getConnection(string $name = null)
     {
