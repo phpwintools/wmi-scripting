@@ -1,0 +1,9 @@
+php:
+  preset: recommended
+  risky: true
+
+  finder:
+    exclude:
+      - vendor
+      - tests
+    name: "*.php"
