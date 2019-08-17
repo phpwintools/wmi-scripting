@@ -106,6 +106,10 @@ class ComVariantWrapper implements IteratorAggregate
         return $items;
     }
 
+    /**
+     * @param $property
+     * @return mixed|AllVariantsInterface|ComWrapper|VariantWrapper
+     */
     public function __get($property)
     {
         $result = $this->comObject->{$property};
@@ -118,7 +122,7 @@ class ComVariantWrapper implements IteratorAggregate
      * @param $method
      * @param $arguments
      *
-     * @return ComWrapper|VariantWrapper|AllVariantsInterface|mixed
+     * @return mixed|AllVariantsInterface|ComWrapper|VariantWrapper
      */
     public function __call($method, $arguments)
     {
@@ -136,7 +140,7 @@ class ComVariantWrapper implements IteratorAggregate
     /**
      * @param $result
      *
-     * @return ComWrapper|VariantWrapper|mixed
+     * @return mixed|AllVariantsInterface|ComWrapper|VariantWrapper
      */
     protected function transformResult($result)
     {
