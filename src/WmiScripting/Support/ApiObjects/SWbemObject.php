@@ -2,9 +2,9 @@
 
 namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
-use PhpWinTools\WmiScripting\Win32\Win32Model;
+use PhpWinTools\WmiScripting\Win32Model;
 use PhpWinTools\WmiScripting\Configuration\Config;
-use PhpWinTools\WmiScripting\Win32\Models\Classes;
+use PhpWinTools\WmiScripting\Models\Classes;
 use PhpWinTools\WmiScripting\Support\VariantWrapper;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectItem;
 

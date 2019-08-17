@@ -2,21 +2,21 @@
 
 namespace PhpWinTools\WmiScripting;
 
-use PhpWinTools\WmiScripting\Win32\Models\Bios;
-use PhpWinTools\WmiScripting\Win32\Models\Group;
-use PhpWinTools\WmiScripting\Win32\Models\Account;
-use PhpWinTools\WmiScripting\Win32\Models\Process;
-use PhpWinTools\WmiScripting\Win32\Models\DiskDrive;
-use PhpWinTools\WmiScripting\Win32\Models\Processor;
-use PhpWinTools\WmiScripting\Win32\Models\SystemBios;
-use PhpWinTools\WmiScripting\Win32\Models\LogicalDisk;
-use PhpWinTools\WmiScripting\Win32\Models\UserAccount;
-use PhpWinTools\WmiScripting\Win32\Models\LoggedOnUser;
-use PhpWinTools\WmiScripting\Win32\Models\SystemDevices;
-use PhpWinTools\WmiScripting\Win32\Models\ComputerSystem;
-use PhpWinTools\WmiScripting\Win32\Models\OperatingSystem;
-use PhpWinTools\WmiScripting\Win32\Models\TemperatureProbe;
-use PhpWinTools\WmiScripting\Win32\Models\ProgramGroupContents;
+use PhpWinTools\WmiScripting\Models\Bios;
+use PhpWinTools\WmiScripting\Models\Group;
+use PhpWinTools\WmiScripting\Models\Account;
+use PhpWinTools\WmiScripting\Models\Process;
+use PhpWinTools\WmiScripting\Models\DiskDrive;
+use PhpWinTools\WmiScripting\Models\Processor;
+use PhpWinTools\WmiScripting\Models\SystemBios;
+use PhpWinTools\WmiScripting\Models\LogicalDisk;
+use PhpWinTools\WmiScripting\Models\UserAccount;
+use PhpWinTools\WmiScripting\Models\LoggedOnUser;
+use PhpWinTools\WmiScripting\Models\SystemDevices;
+use PhpWinTools\WmiScripting\Models\ComputerSystem;
+use PhpWinTools\WmiScripting\Models\OperatingSystem;
+use PhpWinTools\WmiScripting\Models\TemperatureProbe;
+use PhpWinTools\WmiScripting\Models\ProgramGroupContents;
 
 class WmiQueryFactory
 {

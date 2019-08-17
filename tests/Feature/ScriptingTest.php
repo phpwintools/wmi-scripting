@@ -6,7 +6,7 @@ use Tests\TestCase;
 use PhpWinTools\WmiScripting\Scripting;
 use PhpWinTools\WmiScripting\Connection;
 use PhpWinTools\WmiScripting\Configuration\Config;
-use PhpWinTools\WmiScripting\Win32\Models\LogicalDisk;
+use PhpWinTools\WmiScripting\Models\LogicalDisk;
 use PhpWinTools\WmiScripting\Collections\ModelCollection;
 use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
 use PhpWinTools\WmiScripting\Exceptions\InvalidConfigArgumentException;

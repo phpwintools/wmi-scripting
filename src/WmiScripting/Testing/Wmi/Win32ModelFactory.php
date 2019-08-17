@@ -5,7 +5,7 @@ namespace PhpWinTools\WmiScripting\Testing\Wmi;
 use Faker\Factory;
 use Faker\Generator;
 use PhpWinTools\WmiScripting\Connection;
-use PhpWinTools\WmiScripting\Win32\Win32Model;
+use PhpWinTools\WmiScripting\Win32Model;
 use PhpWinTools\WmiScripting\Collections\ArrayCollection;
 use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemServices;
 
