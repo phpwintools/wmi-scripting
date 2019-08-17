@@ -8,6 +8,7 @@ use PhpWinTools\WmiScripting\Support\ComVariantWrapper;
 use function PhpWinTools\WmiScripting\Support\connection;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Locator;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Services;
+use PhpWinTools\WmiScripting\Support\ApiObjects\VariantInterfaces\LocatorVariant;
 
 /**
  * @link https://docs.microsoft.com/en-us/windows/win32/wmisdk/swbemlocator
@@ -15,6 +16,9 @@ use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Services;
 class SWbemLocator extends AbstractWbemObject implements Locator
 {
     const SCRIPTING = 'WbemScripting';
+
+    /** @var ComVariantWrapper|LocatorVariant */
+    protected $object;
 
     public function __construct(ComVariantWrapper $object = null)
     {

@@ -12,6 +12,9 @@ use PhpWinTools\WmiScripting\Collections\ModelCollection;
 use PhpWinTools\WmiScripting\Collections\ObjectSetCollection;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectSet;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectItem;
+use PhpWinTools\WmiScripting\Support\ApiObjects\VariantInterfaces\ObjectVariant;
+use PhpWinTools\WmiScripting\Support\ApiObjects\VariantInterfaces\ObjectExVariant;
+use PhpWinTools\WmiScripting\Support\ApiObjects\VariantInterfaces\ObjectSetVariant;
 
 /**
  * @link https://docs.microsoft.com/en-us/windows/win32/wmisdk/swbemobjectset
@@ -25,11 +28,14 @@ class SWbemObjectSet extends AbstractWbemObject implements ArrayAccess, Countabl
 
     protected $resolve_property_sets = [];
 
+    /** @var VariantWrapper|ObjectSetVariant|ObjectVariant[]|ObjectExVariant[] */
+    protected $object;
+
     public function __construct(VariantWrapper $variant, array $resolve_property_sets = [])
     {
         parent::__construct($variant);
 
-        $this->count = $variant->Count;
+        $this->count = $this->object->Count;
         $this->resolve_property_sets = $resolve_property_sets;
         $this->set = new ObjectSetCollection();
         $this->buildSet();

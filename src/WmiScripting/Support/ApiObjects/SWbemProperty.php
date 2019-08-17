@@ -4,6 +4,7 @@ namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
 use PhpWinTools\WmiScripting\Support\VariantWrapper;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Property;
+use PhpWinTools\WmiScripting\Support\ApiObjects\VariantInterfaces\PropertyVariant;
 
 /**
  * @link https://docs.microsoft.com/en-us/windows/win32/wmisdk/swbemproperty
@@ -15,6 +16,9 @@ class SWbemProperty extends AbstractWbemObject implements Property
     protected $value;
 
     protected $origin;
+
+    /** @var VariantWrapper|PropertyVariant */
+    protected $object;
 
     public function __construct(VariantWrapper $variant)
     {

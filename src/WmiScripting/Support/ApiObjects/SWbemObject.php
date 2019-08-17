@@ -7,6 +7,7 @@ use PhpWinTools\WmiScripting\Models\Classes;
 use PhpWinTools\WmiScripting\Support\VariantWrapper;
 use function PhpWinTools\WmiScripting\Support\resolve;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectItem;
+use PhpWinTools\WmiScripting\Support\ApiObjects\VariantInterfaces\ObjectVariant;
 
 /**
  * @link https://docs.microsoft.com/en-us/windows/win32/wmisdk/swbemobject
@@ -22,6 +23,9 @@ class SWbemObject extends AbstractWbemObject implements ObjectItem
     protected $qualifierSet;
 
     protected $path;
+
+    /** @var VariantWrapper|ObjectVariant */
+    protected $object;
 
     public function __construct(VariantWrapper $variant, array $resolve_property_sets = [])
     {

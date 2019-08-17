@@ -10,6 +10,7 @@ use function PhpWinTools\WmiScripting\Support\connection;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Services;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectSet;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectItem;
+use PhpWinTools\WmiScripting\Support\ApiObjects\VariantInterfaces\ServicesVariant;
 
 /**
  * @link https://docs.microsoft.com/en-us/windows/win32/wmisdk/swbemservices
@@ -19,6 +20,9 @@ class SWbemServices extends AbstractWbemObject implements Services
     const WMI_MONIKER = 'WINMGMTS:';
 
     protected $resolve_property_sets = [];
+
+    /** @var ComVariantWrapper|ServicesVariant */
+    protected $object;
 
     public function __construct(ComVariantWrapper $object = null, Connection $connection = null)
     {
