@@ -46,7 +46,6 @@ namespace PhpWinTools\WmiScripting\Support {
     }
 
     /**
-     * @param   Config|null $config
      * @param   string|null $class
      * @param   mixed       $parameters
      *
