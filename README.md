@@ -1,4 +1,4 @@
-<p align="center"><h1>WMI Scripting</h1></p>
+<h1 align="center">WMI Scripting</h1>
 
 <p align="center">
     <a href="https://travis-ci.org/phpwintools/wmi-scripting"><img src="https://travis-ci.org/phpwintools/wmi-scripting.svg" alt="Build Status"></a>
