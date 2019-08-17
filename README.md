@@ -20,7 +20,7 @@ https://github.com/phpwintools/wmi-scripting/tree/master/src/WmiScripting/Win32/
 This returns a collection of logged on users from the default connection (this is local by configuration).
 The `ModelCollection` extends https://github.com/tightenco/collect / [Laravel Collections](https://laravel.com/docs/5.8/collections).
 
-You can also instantiate Scripting:
+You can also instantiate `Scripting`:
 
     $scripting = new Scripting;
     $scripting->addConnection('remote', Connection::defaultNamespace('server', 'user', 'password'));
