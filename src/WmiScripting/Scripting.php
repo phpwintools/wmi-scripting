@@ -27,7 +27,7 @@ class Scripting
         }
 
         if (is_null($this->config)) {
-            throw new InvalidConfigArgumentException('Cannot instantiate Config with given parameters.');
+            throw new InvalidConfigArgumentException('Cannot instantiate Config with given argument(s).');
         }
     }
 
