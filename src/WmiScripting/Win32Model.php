@@ -102,9 +102,9 @@ class Win32Model implements Arrayable, Jsonable, HasAttributes
     /**
      * @param Connection|string|null $connection
      *
-     * @return Connection
-     *
      * @throws InvalidConnectionException
+     *
+     * @return Connection
      */
     public function getConnection($connection = null)
     {
