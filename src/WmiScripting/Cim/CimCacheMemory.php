@@ -24,5 +24,4 @@ class CimCacheMemory extends CimMemory
     protected $replacementPolicy;
 
     protected $writePolicy;
-
 }

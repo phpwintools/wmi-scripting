@@ -3,7 +3,6 @@
 namespace PhpWinTools\WmiScripting\Cim;
 
 use PhpWinTools\WmiScripting\Win32Model;
-use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Query\DependencyBuilder;
 
 /**
