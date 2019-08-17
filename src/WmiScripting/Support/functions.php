@@ -52,8 +52,8 @@ namespace PhpWinTools\WmiScripting\Support {
      *
      * @return  Resolver|mixed|null
      */
-    function resolve(Config $config = null, string $class = null, ...$parameters)
+    function resolve(string $class = null, ...$parameters)
     {
-        return core($config)($class, $parameters);
+        return core()($class, $parameters);
     }
 }

@@ -41,7 +41,7 @@ class AbstractWbemObject implements Arrayable, Jsonable
 
     public function make(string $class = null, ... $parameters)
     {
-        return resolve($this->config, $class, $parameters);
+        return resolve($class, $parameters);
     }
 
     public function toJson(): string
