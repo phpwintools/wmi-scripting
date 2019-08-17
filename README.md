@@ -1,5 +1,7 @@
-# Wmi-Scripting
 <p align="center">
+
+# Wmi-Scripting
+
 <a href="https://travis-ci.org/phpwintools/wmi-scripting"><img src="https://travis-ci.org/phpwintools/wmi-scripting.svg" alt="Build Status"></a>
 <img src="https://scrutinizer-ci.com/g/phpwintools/wmi-scripting/badges/coverage.png?b=master" alt="Code Coverage">
 <img src="https://scrutinizer-ci.com/g/phpwintools/wmi-scripting/badges/quality-score.png?b=master" alt="Scrutinizer">
