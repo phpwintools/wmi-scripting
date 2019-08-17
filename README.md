@@ -9,7 +9,7 @@
     <a href="https://packagist.org/packages/phpwintools/wmi-scripting"><img src="https://img.shields.io/github/license/phpwintools/wmi-scripting" alt="License"></a>
 </p>
 
-### Current Version: 0.0.1alpha
+### Current Version: 0.0.1-alpha
 
 This is currently under heavy development. Until version 1.0.0 I do not expect to follow SemVer.
 I will try, but understand this library is subject to major changes until 1.0.0 or further adoption/notice.

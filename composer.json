@@ -4,7 +4,7 @@
     "description": "A PHP package for using WMI tools.",
     "keywords": ["not quite ready for public use"],
     "license": "MIT",
-    "version": "0.0.1",
+    "version": "0.0.1-alpha",
     "authors": [
         {
             "name": "Joe Springe",
