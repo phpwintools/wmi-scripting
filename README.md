@@ -17,8 +17,8 @@ https://github.com/phpwintools/wmi-scripting/tree/master/src/WmiScripting/Win32/
 
 `LoggedOnUser::query()-get();`
 
-This returns a collection of logged on users. The `ModelCollection` extends https://github.com/tightenco/collect /
-[Laravel Collections](https://laravel.com/docs/5.8/collections).
+This returns a collection of logged on users from the default connection (this is local by configuration).
+The `ModelCollection` extends https://github.com/tightenco/collect / [Laravel Collections](https://laravel.com/docs/5.8/collections).
 
 You can also instantiate Scripting:
 
