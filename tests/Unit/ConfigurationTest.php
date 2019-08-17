@@ -6,10 +6,10 @@ use Tests\TestCase;
 use PhpWinTools\WmiScripting\Connection;
 use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Configuration\Resolver;
+use PhpWinTools\Support\COM\Testing\ComVariantWrapperFake;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Locator;
 use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
 use PhpWinTools\WmiScripting\Exceptions\UnresolvableClassException;
-use PhpWinTools\WmiScripting\Testing\Support\ComVariantWrapperFake;
 
 class ConfigurationTest extends TestCase
 {

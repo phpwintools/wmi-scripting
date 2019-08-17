@@ -4,7 +4,8 @@ namespace PhpWinTools\WmiScripting\Testing\Support;
 
 use ArrayIterator;
 use IteratorAggregate;
-use PhpWinTools\WmiScripting\Support\VariantWrapper;
+use PhpWinTools\Support\COM\VariantWrapper;
+use PhpWinTools\Support\COM\Testing\COMObjectFake;
 use PhpWinTools\WmiScripting\Testing\CallStacks\ComCallStack;
 use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemObjectSet;
 use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemPropertySet;

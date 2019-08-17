@@ -1,8 +1,8 @@
 <?php
 
-use PhpWinTools\WmiScripting\Support\ComWrapper;
-use PhpWinTools\WmiScripting\Support\VariantWrapper;
-use PhpWinTools\WmiScripting\Support\ComVariantWrapper;
+use PhpWinTools\Support\COM\ComWrapper;
+use PhpWinTools\Support\COM\VariantWrapper;
+use PhpWinTools\Support\COM\ComVariantWrapper;
 
 return [
     'com' => [

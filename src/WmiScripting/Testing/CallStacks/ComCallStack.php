@@ -2,7 +2,7 @@
 
 namespace PhpWinTools\WmiScripting\Testing\CallStacks;
 
-use PhpWinTools\WmiScripting\Support\ComVariantWrapper;
+use PhpWinTools\Support\COM\ComVariantWrapper;
 use PhpWinTools\WmiScripting\Collections\ArrayCollection;
 use PhpWinTools\WmiScripting\Support\ApiObjects\AbstractWbemObject;
 

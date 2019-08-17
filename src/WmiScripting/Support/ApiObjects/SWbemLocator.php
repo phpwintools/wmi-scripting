@@ -3,8 +3,8 @@
 namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
 use PhpWinTools\WmiScripting\Connection;
+use PhpWinTools\Support\COM\ComVariantWrapper;
 use function PhpWinTools\WmiScripting\Support\resolve;
-use PhpWinTools\WmiScripting\Support\ComVariantWrapper;
 use function PhpWinTools\WmiScripting\Support\connection;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Locator;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Services;

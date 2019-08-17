@@ -1,9 +1,9 @@
 <?php
 
-namespace PhpWinTools\WmiScripting\Testing\Support;
+namespace PhpWinTools\Support\COM\Testing;
 
+use PhpWinTools\Support\COM\ComVariantWrapper;
 use PhpWinTools\WmiScripting\Configuration\Config;
-use PhpWinTools\WmiScripting\Support\ComVariantWrapper;
 
 class ComVariantWrapperFake extends ComVariantWrapper
 {

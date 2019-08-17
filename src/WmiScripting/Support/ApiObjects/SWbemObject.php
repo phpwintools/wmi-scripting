@@ -3,8 +3,8 @@
 namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
 use PhpWinTools\WmiScripting\Win32Model;
+use PhpWinTools\Support\COM\VariantWrapper;
 use PhpWinTools\WmiScripting\Models\Classes;
-use PhpWinTools\WmiScripting\Support\VariantWrapper;
 use function PhpWinTools\WmiScripting\Support\resolve;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectItem;
 use PhpWinTools\WmiScripting\Support\ApiObjects\VariantInterfaces\ObjectVariant;

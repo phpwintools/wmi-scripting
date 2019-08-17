@@ -2,7 +2,7 @@
 
 namespace PhpWinTools\WmiScripting\Support\ApiObjects\VariantInterfaces;
 
-use PhpWinTools\WmiScripting\Support\VariantWrapper;
+use PhpWinTools\Support\COM\VariantWrapper;
 
 interface ServicesVariant extends VariantInterface
 {

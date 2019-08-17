@@ -3,9 +3,9 @@
 namespace PhpWinTools\WmiScripting\Testing\Responses;
 
 use ArrayIterator;
+use PhpWinTools\Support\COM\VariantWrapper;
 use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Testing\Wmi\ModelFake;
-use PhpWinTools\WmiScripting\Support\VariantWrapper;
 use PhpWinTools\WmiScripting\Testing\Support\VARIANTFake;
 use PhpWinTools\WmiScripting\Testing\Wmi\ModelFakeCollection;
 use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemObjectSet;
