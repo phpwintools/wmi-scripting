@@ -3,13 +3,11 @@
 namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
 use PhpWinTools\WmiScripting\Support\VariantWrapper;
-use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\QualifierSet;
 use function PhpWinTools\WmiScripting\Support\resolve;
+use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\QualifierSet;
 
 /**
- * Class WbemQualifierSet
- * @package App\Transformers\Com\Wmi
- * https://docs.microsoft.com/en-us/windows/win32/wmisdk/swbemqualifierset
+ * @link https://docs.microsoft.com/en-us/windows/win32/wmisdk/swbemqualifierset
  */
 class SWbemQualifierSet extends AbstractWbemObject implements QualifierSet
 {

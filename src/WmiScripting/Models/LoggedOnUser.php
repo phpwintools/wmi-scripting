@@ -14,11 +14,11 @@ class LoggedOnUser extends CimDependency
 
     protected $attribute_name_replacements = [
         'antecedent' => 'userAccount',
-        'dependent' => 'logonSession',
+        'dependent'  => 'logonSession',
     ];
 
     public static function query($connection = null)
     {
-        return new LoggedOnUserBuilder($self = new static, $self->getConnection($connection));
+        return new LoggedOnUserBuilder($self = new static(), $self->getConnection($connection));
     }
 }

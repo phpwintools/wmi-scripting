@@ -78,5 +78,4 @@ class Printer extends CimPrinter
     protected $untilTime;
 
     protected $workOffline;
-
 }

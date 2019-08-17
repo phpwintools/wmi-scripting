@@ -38,5 +38,4 @@ class SMBIOSMemory extends CimStorageExtent
     protected $startingAddress;
 
     protected $systemLevelAddress;
-
 }

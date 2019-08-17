@@ -20,6 +20,7 @@ use PhpWinTools\WmiScripting\Models\ProgramGroupContents;
 
 class WmiQueryFactory
 {
+    /** @var Connection|string|null */
     protected $connection;
 
     public function __construct($connection = null)

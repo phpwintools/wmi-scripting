@@ -109,7 +109,7 @@ class Builder
 
     protected function compileQuery()
     {
-        $select = implode(", ", $this->selects);
+        $select = implode(', ', $this->selects);
         $query = "select {$select} from {$this->from}";
         $wheres = [];
 

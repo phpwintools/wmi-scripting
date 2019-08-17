@@ -64,5 +64,4 @@ class Process extends CimProcess
     protected $writeOperationCount;
 
     protected $writeTransferCount;
-
 }

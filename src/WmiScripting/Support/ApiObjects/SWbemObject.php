@@ -5,14 +5,11 @@ namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 use PhpWinTools\WmiScripting\Win32Model;
 use PhpWinTools\WmiScripting\Models\Classes;
 use PhpWinTools\WmiScripting\Support\VariantWrapper;
+use function PhpWinTools\WmiScripting\Support\resolve;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectItem;
 
-use function PhpWinTools\WmiScripting\Support\resolve;
-
 /**
- * Class SWbemObject
- * @package App\Transformers\Com\Wmi
- * https://docs.microsoft.com/en-us/windows/win32/wmisdk/swbemobject
+ * @link https://docs.microsoft.com/en-us/windows/win32/wmisdk/swbemobject
  */
 class SWbemObject extends AbstractWbemObject implements ObjectItem
 {

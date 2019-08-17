@@ -32,10 +32,10 @@ class Scripting
     }
 
     /**
-     * @param   TestCase    $testCase
-     * @param   Config|null $config
+     * @param TestCase    $testCase
+     * @param Config|null $config
      *
-     * @return  FakeFactory
+     * @return FakeFactory
      */
     public static function fake(TestCase $testCase, Config $config = null)
     {
@@ -51,9 +51,9 @@ class Scripting
     }
 
     /**
-     * @param   null $connection
+     * @param Connection|string|null $connection
      *
-     * @return  WmiQueryFactory
+     * @return WmiQueryFactory
      */
     public function query($connection = null): WmiQueryFactory
     {
