@@ -3,9 +3,7 @@
 namespace PhpWinTools\WmiScripting\Models;
 
 /**
- * Class LogicalProgramGroup
- * @package App\Transformers\Com\Wmi\Win32\Models
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-logicalprogramgroup
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-logicalprogramgroup
  */
 class LogicalProgramGroup extends ProgramGroupOrItem
 {

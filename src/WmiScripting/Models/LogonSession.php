@@ -3,9 +3,7 @@
 namespace PhpWinTools\WmiScripting\Models;
 
 /**
- * Class LogonSession
- * @package App\Transformers\Com\Wmi\Win32\Providers
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-logonsession
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-logonsession
  */
 class LogonSession extends Session
 {

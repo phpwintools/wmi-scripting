@@ -98,7 +98,7 @@ class Config
      */
     public static function killTestInstance(array $items = [], Resolver $resolver = null)
     {
-        (new static)->endTest();
+        (new static())->endTest();
 
         return static::instance($items, $resolver);
     }
@@ -136,11 +136,11 @@ class Config
         }
 
         if (array_key_exists($class, $this->apiObjects())) {
-            return $this->resolve()->make($this->getApiObject($class), ... $parameters);
+            return $this->resolve()->make($this->getApiObject($class), ...$parameters);
         }
 
         if (array_key_exists($class, $this->com())) {
-            return $this->resolve()->make($this->com()[$class], ... $parameters);
+            return $this->resolve()->make($this->com()[$class], ...$parameters);
         }
 
         throw UnresolvableClassException::default($class);

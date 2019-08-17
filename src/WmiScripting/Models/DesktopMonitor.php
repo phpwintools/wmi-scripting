@@ -5,9 +5,7 @@ namespace PhpWinTools\WmiScripting\Models;
 use PhpWinTools\WmiScripting\Cim\CimDesktopMonitor;
 
 /**
- * Class DesktopMonitor
- * @package App\Transformers\Com\Wmi\Win32\Providers
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-desktopmonitor
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-desktopmonitor
  */
 class DesktopMonitor extends CimDesktopMonitor
 {

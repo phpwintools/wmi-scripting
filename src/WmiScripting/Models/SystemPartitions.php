@@ -3,9 +3,7 @@
 namespace PhpWinTools\WmiScripting\Models;
 
 /**
- * Class SystemPartitions
- * @package App\Transformers\Com\Wmi\Win32\Providers
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-systempartitions
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-systempartitions
  */
 class SystemPartitions extends SystemDevices
 {

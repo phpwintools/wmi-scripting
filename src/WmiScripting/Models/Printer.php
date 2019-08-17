@@ -5,9 +5,7 @@ namespace PhpWinTools\WmiScripting\Models;
 use PhpWinTools\WmiScripting\Cim\CimPrinter;
 
 /**
- * Class Printer
- * @package App\Transformers\Com\Wmi\Win32\Providers
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-printer
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-printer
  */
 class Printer extends CimPrinter
 {

@@ -5,9 +5,7 @@ namespace PhpWinTools\WmiScripting\Models;
 use PhpWinTools\WmiScripting\Cim\CimPCVideoController;
 
 /**
- * Class VideoController
- * @package App\Transformers\Com\Wmi\Win32\Providers
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-videocontroller
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-videocontroller
  */
 class VideoController extends CimPCVideoController
 {

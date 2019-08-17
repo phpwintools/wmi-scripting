@@ -5,9 +5,7 @@ namespace PhpWinTools\WmiScripting\Models;
 use PhpWinTools\WmiScripting\Cim\CimLogicalElement;
 
 /**
- * Class ProgramGroupOrItem
- * @package App\Transformers\Com\Wmi\Win32\Models
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-programgrouporitem
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-programgrouporitem
  */
 class ProgramGroupOrItem extends CimLogicalElement
 {

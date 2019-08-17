@@ -2,14 +2,11 @@
 
 namespace PhpWinTools\WmiScripting\Models;
 
-use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Cim\CimDependency;
 use PhpWinTools\WmiScripting\Query\LoggedOnUserBuilder;
 
 /**
- * Class LoggedOnUser
- * @package App\Transformers\Com\Wmi\Win32\Providers
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-loggedonuser
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-loggedonuser
  */
 class LoggedOnUser extends CimDependency
 {
