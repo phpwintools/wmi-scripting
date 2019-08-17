@@ -6,6 +6,7 @@ use PhpWinTools\WmiScripting\Support\VariantWrapper;
 use function PhpWinTools\WmiScripting\Support\resolve;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Property;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\PropertySet;
+use PhpWinTools\WmiScripting\Support\ApiObjects\VariantInterfaces\PropertySetVariant;
 
 /**
  * @link https://docs.microsoft.com/en-us/windows/win32/wmisdk/swbempropertyset
@@ -16,6 +17,9 @@ class SWbemPropertySet extends AbstractWbemObject implements PropertySet
     protected $properties = [];
 
     protected $resolve_property_sets;
+
+    /** @var VariantWrapper|PropertySetVariant */
+    protected $object;
 
     public function __construct(VariantWrapper $variant, array $resolve_property_sets = [])
     {

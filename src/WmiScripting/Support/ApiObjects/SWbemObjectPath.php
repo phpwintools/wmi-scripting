@@ -4,6 +4,7 @@ namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
 use PhpWinTools\WmiScripting\Support\VariantWrapper;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectPath;
+use PhpWinTools\WmiScripting\Support\ApiObjects\VariantInterfaces\ObjectPathVariant;
 
 /**
  * @link https://docs.microsoft.com/en-us/windows/win32/wmisdk/swbemobjectpath
@@ -31,6 +32,9 @@ class SWbemObjectPath extends AbstractWbemObject implements ObjectPath
     protected $relative_path;
 
     protected $server;
+
+    /** @var VariantWrapper|ObjectPathVariant */
+    protected $object;
 
     public function __construct(VariantWrapper $variant)
     {
