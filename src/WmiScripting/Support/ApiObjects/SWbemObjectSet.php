@@ -65,6 +65,7 @@ class SWbemObjectSet extends AbstractWbemObject implements ArrayAccess, Countabl
 
     /**
      * @param mixed $offset
+     *
      * @return SWbemObject
      */
     public function offsetGet($offset)

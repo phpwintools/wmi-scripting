@@ -33,7 +33,7 @@ class ComVariantWrapper implements IteratorAggregate
         return $com_string;
     }
 
-    public static function getComClassName(ComVariantWrapper $com)
+    public static function getComClassName(self $com)
     {
         if ($com->getComObject() instanceof COMObjectFake) {
             return ComVariantWrapperFake::comToString($com);
@@ -115,6 +115,7 @@ class ComVariantWrapper implements IteratorAggregate
     /**
      * @param $method
      * @param $arguments
+     *
      * @return ComWrapper|VariantWrapper|mixed
      */
     public function __call($method, $arguments)
