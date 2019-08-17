@@ -65,8 +65,8 @@ class Scripting
     }
 
     /**
-     * @param string                 $name
-     * @param Connection|array|null  $connection
+     * @param string                $name
+     * @param Connection|array|null $connection
      *
      * @throws InvalidConnectionException
      *
@@ -98,8 +98,8 @@ class Scripting
     }
 
     /**
-     * @param string                 $name
-     * @param Connection|array|null  $connection
+     * @param string                $name
+     * @param Connection|array|null $connection
      *
      * @throws InvalidConnectionException
      *
