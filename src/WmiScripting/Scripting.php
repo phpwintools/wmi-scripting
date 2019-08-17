@@ -13,6 +13,9 @@ class Scripting
     /** @var Config */
     protected $config;
 
+    /**
+     * @param Config|array|null $config
+     */
     public function __construct($config = null)
     {
         if (is_null($config)) {
@@ -38,7 +41,7 @@ class Scripting
      *
      * @return FakeFactory
      */
-    public static function fake(TestCase $testCase, Config $config = null)
+    public static function fake(TestCase $testCase, Config $config = null): FakeFactory
     {
         return new FakeFactory($testCase, $config ?? Config::testInstance());
     }
@@ -46,7 +49,7 @@ class Scripting
     /**
      * @return Config
      */
-    public function getConfig()
+    public function getConfig(): Config
     {
         return $this->config;
     }
@@ -61,7 +64,15 @@ class Scripting
         return new WmiQueryFactory($connection);
     }
 
-    public function addConnection(string $name, $connection)
+    /**
+     * @param string                 $name
+     * @param Connection|string|null $connection
+     *
+     * @throws InvalidConnectionException
+     *
+     * @return self
+     */
+    public function addConnection(string $name, $connection): self
     {
         if ($connection instanceof Connection) {
             $this->config->addConnection($name, $connection);
@@ -86,7 +97,15 @@ class Scripting
         throw new InvalidConnectionException("Could not create connection '{$name}'.");
     }
 
-    public function setDefaultConnection(string $name, $connection = null)
+    /**
+     * @param string                 $name
+     * @param Connection|string|null $connection
+     *
+     * @throws InvalidConnectionException
+     *
+     * @return self
+     */
+    public function setDefaultConnection(string $name, $connection = null): self
     {
         if ($connection) {
             $this->addConnection($name, $connection);
