@@ -44,7 +44,7 @@ class ModelProperties
                     'origin'    => $this->getPropertyOrigin($property, $reflectionClass)->getName(),
                     'cast'      => $class->getCast($property->name),
                     'doc'       => $property->getDocComment(),
-                    'value'      => $class->getAttribute($property->name),
+                    'value'     => $class->getAttribute($property->name),
                 ]];
             }
         )->diffKeys($class->getHidden())->filter(function ($property) {

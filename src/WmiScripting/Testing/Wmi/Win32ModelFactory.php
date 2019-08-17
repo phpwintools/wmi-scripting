@@ -54,16 +54,16 @@ class Win32ModelFactory
                     'display_name'      => SWbemServices::WMI_MONIKER
                         . '{authenticationLevel=pktPrivacy,impersonationLevel=impersonate}!'
                         . "\\\server\\namespace:{$class_name::newInstance()->getWmiClassNameAttribute()}"
-                        . ".DeviceID=\"something:\"",
+                        . '.DeviceID="something:"',
                     'is_class'          => false,
                     'is_singleton'      => false,
                     'keys'              => [],
                     'namespace'         => Connection::DEFAULT_NAMESPACE,
-                    'parent_namespace'  => "Root",
-                    'path'              => "\\\server\\namespace:"
+                    'parent_namespace'  => 'Root',
+                    'path'              => '\\\server\\namespace:'
                         . "{$class_name::newInstance()->getWmiClassNameAttribute()}.DeviceID=\"something:\"",
-                    'relative_path'     => "some other stuff",
-                    'server' => 'server',
+                    'relative_path'     => 'some other stuff',
+                    'server'            => 'server',
                 ]),
             ]));
 
@@ -95,9 +95,9 @@ class Win32ModelFactory
             }
 
             return [
-                'Name' => $property['name'],
-                'Value' => $value,
-                'Origin' => $property['origin'],
+                'Name'      => $property['name'],
+                'Value'     => $value,
+                'Origin'    => $property['origin'],
             ];
         });
     }

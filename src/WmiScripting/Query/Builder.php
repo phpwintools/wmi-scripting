@@ -100,6 +100,7 @@ class Builder
     {
         if (is_array($relationship)) {
             $this->relationships = array_merge($this->relationships, $relationship);
+
             return $this;
         }
 

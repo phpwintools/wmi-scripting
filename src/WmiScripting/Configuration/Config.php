@@ -178,6 +178,7 @@ class Config
             if (array_key_exists($abstract, $resolvable)) {
                 $result = $resolvable[$abstract];
                 unset($this->resolve_stack[$key]);
+
                 return $result;
             }
         }
@@ -238,7 +239,6 @@ class Config
 
         return $this;
     }
-
 
     /**
      * @param string $class
