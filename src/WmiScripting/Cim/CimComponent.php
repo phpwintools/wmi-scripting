@@ -6,7 +6,7 @@ use PhpWinTools\WmiScripting\Win32Model;
 use PhpWinTools\WmiScripting\Query\ComponentBuilder;
 
 /**
- * https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-component
+ * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-component
  */
 class CimComponent extends Win32Model
 {
