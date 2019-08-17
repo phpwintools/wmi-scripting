@@ -1,11 +1,14 @@
 language: php
 
+os: windows
+
 php:
   - '7.1'
   - '7.2'
   - '7.3'
 
 before_script:
+  - pecl install com_dotnet
   - travis_retry composer self-update
   - travis_retry composer install --prefer-source --no-interaction
 
