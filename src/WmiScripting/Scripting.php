@@ -10,6 +10,7 @@ use PhpWinTools\WmiScripting\Exceptions\InvalidConfigArgumentException;
 
 class Scripting
 {
+    /** @var Config */
     protected $config;
 
     public function __construct($config = null)
