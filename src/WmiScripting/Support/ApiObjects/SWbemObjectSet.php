@@ -35,7 +35,7 @@ class SWbemObjectSet extends AbstractWbemObject implements ArrayAccess, Countabl
     {
         parent::__construct($variant);
 
-        $this->count = $this->object->Count;
+        $this->count = (int) $this->object->Count;
         $this->resolve_property_sets = $resolve_property_sets;
         $this->set = new ObjectSetCollection();
         $this->buildSet();
