@@ -28,4 +28,9 @@ You can also instantiate Scripting:
 
 `$scripting->query('remote')->loggedOnUser()->get();`
 
+##### Testing
+
+You can call `Scripting:fack($testCase)->win32Model($class_name);` to create a fake for testing without
+actually connection to a WMI service.
+
 #### @Todo: Finish Docs
