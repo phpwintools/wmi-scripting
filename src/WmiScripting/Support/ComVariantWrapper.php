@@ -5,6 +5,7 @@ namespace PhpWinTools\WmiScripting\Support;
 use ArrayIterator;
 use COM as ComExt;
 use IteratorAggregate;
+use PhpWinTools\WmiScripting\Support\ApiObjects\VariantInterfaces\AllVariantsInterface;
 use VARIANT as VariantExt;
 use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Testing\Support\COMObjectFake;
@@ -117,7 +118,7 @@ class ComVariantWrapper implements IteratorAggregate
      * @param $method
      * @param $arguments
      *
-     * @return ComWrapper|VariantWrapper|mixed
+     * @return ComWrapper|VariantWrapper|AllVariantsInterface|mixed
      */
     public function __call($method, $arguments)
     {
