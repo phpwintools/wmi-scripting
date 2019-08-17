@@ -32,7 +32,7 @@ to guide me on how this query builder should look please contact me.
 
 #### Testing
 
-You can call `Scripting:fake($testCase)->win32Model($class_name);` to create a fake for testing without
+You can call `Scripting::fake($testCase)->win32Model($class_name);` to create a fake for testing without
 actually creating a real connection to a WMI service.
 
 #### @Todo: Finish Docs
