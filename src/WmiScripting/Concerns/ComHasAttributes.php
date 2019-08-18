@@ -3,6 +3,7 @@
 namespace PhpWinTools\WmiScripting\Concerns;
 
 use Exception;
+use PhpWinTools\Support\StringModule;
 use ReflectionClass;
 use PhpWinTools\WmiScripting\Contracts\Arrayable;
 use Illuminate\Contracts\Support\Arrayable as IlluminateArrayable;
@@ -34,7 +35,7 @@ trait ComHasAttributes
     public function getAttribute($attribute, $default = null)
     {
         if ($this->hasAttributeMethod($attribute)) {
-            $method = 'get' . ucfirst($this->snackCaseToCamel($attribute)) . 'Attribute';
+            $method = 'get' . StringModule::studly($attribute) . 'Attribute';
             if ($this->hasProperty($attribute)) {
                 return $this->{$method}($this->{$attribute});
             } elseif ($this->hasUnmappedAttribute($attribute)) {
@@ -57,20 +58,6 @@ trait ComHasAttributes
         }
 
         return $default;
-    }
-
-    public function snackCaseToCamel(string $string)
-    {
-        $string = ucwords(str_replace(['-', '_'], ' ', $string));
-
-        return lcfirst(str_replace(' ', '', $string));
-    }
-
-    public function camelCaseToSnack(string $string)
-    {
-        $string = preg_replace('/\s+/u', '', ucwords($string));
-
-        return strtolower(preg_replace('/(.)(?=[A-Z])/u', '$1_', $string));
     }
 
     public function toArray(): array
@@ -140,7 +127,7 @@ trait ComHasAttributes
                 return true;
             }
 
-            $method_name = $this->camelCaseToSnack($method_name);
+            $method_name = StringModule::snake($method_name);
 
             if ($method_name === $attribute) {
                 return true;
