@@ -50,7 +50,6 @@ class Win32Model implements Arrayable, Jsonable, HasAttributes
     /* TODO: Remove ObjectPath dependency. Should be passed into attributes */
     public function __construct(array $attributes = [], ObjectPath $objectPath = null)
     {
-        $this->setCasts($this->attribute_casting, $this->merge_parent_casting);
         $this->mergeHiddenAttributes($this->hidden_attributes, $this->merge_parent_hidden_attributes);
         $this->fill($attributes);
 
