@@ -3,6 +3,7 @@
 namespace PhpWinTools\WmiScripting\Concerns;
 
 use Exception;
+use PhpWinTools\Support\BooleanModule;
 use ReflectionClass;
 use PhpWinTools\Support\StringModule;
 use PhpWinTools\WmiScripting\Contracts\Arrayable;
@@ -12,6 +13,8 @@ use Illuminate\Contracts\Support\Arrayable as IlluminateArrayable;
 trait ComHasAttributes
 {
     protected $hidden_booted = false;
+
+    protected $casts_booted = false;
 
     protected $unmapped_attributes = [];
 
@@ -34,29 +37,28 @@ trait ComHasAttributes
     public function getAttribute($attribute, $default = null)
     {
         if ($this->hasAttributeMethod($attribute)) {
-            $method = 'get' . StringModule::studly($attribute) . 'Attribute';
-            if ($this->hasProperty($attribute)) {
-                return $this->{$method}($this->{$attribute});
-            } elseif ($this->hasUnmappedAttribute($attribute)) {
-                return  $this->{$method}($this->unmapped_attributes[$attribute]);
-            }
-
-            return $this->{$method}();
+            return $this->getAttributeMethodValue('get' . StringModule::studly($attribute) . 'Attribute', $attribute);
         }
 
+        $value = $default;
+
         if ($this->hasProperty($attribute)) {
-            return $this->{$attribute};
+            $value = $this->{$attribute};
         }
 
         if ($key = array_search($attribute, $this->attribute_name_replacements)) {
-            return $this->{$key};
+            $value = $this->{$key};
         }
 
         if (array_key_exists($attribute, $this->unmapped_attributes)) {
-            return $this->unmapped_attributes[$attribute];
+            $value = $this->unmapped_attributes[$attribute];
         }
 
-        return $default;
+        if ($this->hasCast($attribute)) {
+            $value = $this->cast($attribute, $value);
+        }
+
+        return $value;
     }
 
     public function toArray(): array
@@ -109,6 +111,10 @@ trait ComHasAttributes
 
     public function getCasts(): array
     {
+        if (!$this->casts_booted) {
+            $this->bootCasts();
+        }
+
         return $this->attribute_casting;
     }
 
@@ -121,14 +127,27 @@ trait ComHasAttributes
 
     public function hasCast($attribute): bool
     {
-        return array_key_exists($attribute, $this->attribute_casting);
+        return array_key_exists($attribute, $this->getCasts());
     }
 
-    public function setCasts(array $attribute_casting, bool $merge_casting = true)
+    protected function bootCasts()
     {
+        $merge_casting = true;
+        $attribute_casting = [];
+
+        if ($this->hasProperty('merge_parent_casting')) {
+            $merge_casting = $this->merge_parent_casting;
+        }
+
+        if ($this->hasProperty('attribute_casting')) {
+            $attribute_casting = $this->attribute_casting;
+        }
+
         $this->attribute_casting = $merge_casting
             ? array_merge($this->getAncestorProperty('attribute_casting'), $attribute_casting)
             : $attribute_casting;
+
+        $this->casts_booted = true;
     }
 
     protected function bootHiddenAttributes()
@@ -136,6 +155,20 @@ trait ComHasAttributes
         $this->trait_hidden_attributes = array_combine($this->trait_hidden_attributes, $this->trait_hidden_attributes);
 
         $this->hidden_booted = true;
+    }
+
+
+    protected function getAttributeMethodValue($method, $attribute)
+    {
+        if ($this->hasProperty($attribute)) {
+            return $this->{$method}($this->{$attribute});
+        }
+
+        if ($this->hasUnmappedAttribute($attribute)) {
+            return  $this->{$method}($this->unmapped_attributes[$attribute]);
+        }
+
+        return $this->{$method}($attribute);
     }
 
     protected function getCalculatedAttributes()
@@ -220,7 +253,7 @@ trait ComHasAttributes
                 return is_array($value) ? $value : [$value];
             case 'bool':
             case 'boolean':
-                return (bool) $value;
+                return BooleanModule::makeBoolean($value);
             case 'float':
                 return (float) $value;
             case 'int':

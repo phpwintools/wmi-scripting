@@ -15,6 +15,4 @@ interface HasAttributes extends Arrayable
     public function getCasts(): array;
 
     public function getCast($attribute);
-
-    public function setCasts(array $attribute_casting, bool $merge_casting = true);
 }
