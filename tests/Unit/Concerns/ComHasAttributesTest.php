@@ -15,6 +15,7 @@ class ComHasAttributesTest extends TestCase
         parent::setUp();
 
         $this->class = new ClassHasAttributes();
+        $this->class->setUnmappedAttribute('unmappedAttributeModified', 'i should be uppercase');
     }
 
     /** @test */
@@ -62,12 +63,47 @@ class ComHasAttributesTest extends TestCase
     }
 
     /** @test */
-    public function it_an_modify_a_hidden_attribute_with_an_attribute_method()
+    public function it_can_modify_an_unmapped_attribute_with_an_attribute_method()
     {
         $this->class->setUnmappedAttribute('unmapped_attribute_modified', 'i should be uppercase');
         $this->assertSame($this->class->getAttribute('unmapped_attribute_modified'), 'I AM UPPERCASE');
 
         $this->class->setUnmappedAttribute('unmappedAttributeModified', 'i should be uppercase');
         $this->assertSame($this->class->getAttribute('unmappedAttributeModified'), 'I AM UPPERCASE');
+    }
+
+    /** @test */
+    public function it_can_get_an_attribute_by_its_replaced_name()
+    {
+        $this->class->replacedNameProperty = 'test value';
+
+        $this->assertSame('test value', $this->class->getAttribute('new_name_property'));
+    }
+
+    /** @test */
+    public function it_transforms_names_when_transforming_to_an_array()
+    {
+        $this->class->replacedNameProperty = 'test';
+
+        $this->assertArrayNotHasKey('replacedNameProperty', $this->class->toArray());
+        $this->assertArrayHasKey('new_name_property', $this->class->toArray());
+        $this->assertSame('test', $this->class->toArray()['new_name_property']);
+    }
+
+    /** @test */
+    public function it_can_return_an_array()
+    {
+        $this->assertIsArray($this->class->toArray());
+    }
+
+    /** @test */
+    public function it_can_hide_values_from_array_transform()
+    {
+        $this->class->hiddenProperty = 'test';
+
+        $this->assertArrayHasKey('hiddenProperty', $this->class->toArray());
+
+        $this->class->mergeHiddenAttributes(['hiddenProperty']);
+        $this->assertArrayNotHasKey('hiddenProperty', $this->class->toArray());
     }
 }

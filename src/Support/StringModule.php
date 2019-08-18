@@ -2,6 +2,9 @@
 
 namespace PhpWinTools\Support;
 
+/**
+ * Clone of Str in Laravel.
+ */
 class StringModule
 {
     public static function camel(string $string)

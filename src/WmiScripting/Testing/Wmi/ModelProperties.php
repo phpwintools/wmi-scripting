@@ -47,7 +47,7 @@ class ModelProperties
                     'value'     => $class->getAttribute($property->name),
                 ]];
             }
-        )->diffKeys($class->getHidden())->filter(function ($property) {
+        )->diffKeys($class->getHiddenAttributes())->filter(function ($property) {
             return $property['origin'] !== Win32Model::class;
         });
     }

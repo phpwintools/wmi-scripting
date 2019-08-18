@@ -6,17 +6,16 @@ use Exception;
 use ReflectionClass;
 use PhpWinTools\Support\StringModule;
 use PhpWinTools\WmiScripting\Contracts\Arrayable;
+use PhpWinTools\WmiScripting\Collections\ArrayCollection;
 use Illuminate\Contracts\Support\Arrayable as IlluminateArrayable;
 
 trait ComHasAttributes
 {
-    use CanCollect;
+    protected $hidden_booted = false;
 
     protected $unmapped_attributes = [];
 
     protected $attribute_name_replacements = [];
-
-    protected $trait_name_replacements = [];
 
     protected $trait_hidden_attributes = [
         'trait_hidden_attributes',
@@ -69,7 +68,12 @@ trait ComHasAttributes
         );
     }
 
-    public function setHidden(array $hidden_attributes, bool $merge_hidden = true)
+    public function collect(array $array)
+    {
+        return new ArrayCollection($array);
+    }
+
+    public function mergeHiddenAttributes(array $hidden_attributes, bool $merge_hidden = true)
     {
         $hidden_attributes = $merge_hidden
             ? array_merge($this->getAncestorProperty('hidden_attributes'), $hidden_attributes)
@@ -77,19 +81,23 @@ trait ComHasAttributes
 
         $this->trait_hidden_attributes = array_merge($this->trait_hidden_attributes, $hidden_attributes);
 
+        $this->bootHiddenAttributes();
+
         return $this;
+    }
+
+    public function getHiddenAttributes()
+    {
+        if (!$this->hidden_booted) {
+            $this->bootHiddenAttributes();
+        }
+
+        return $this->trait_hidden_attributes;
     }
 
     public function isHidden($key): bool
     {
-        $this->trait_hidden_attributes = array_combine($this->trait_hidden_attributes, $this->trait_hidden_attributes);
-
-        return array_key_exists($key, $this->trait_hidden_attributes);
-    }
-
-    public function getHidden()
-    {
-        return array_combine($this->trait_hidden_attributes, $this->trait_hidden_attributes);
+        return array_key_exists($key, $this->getHiddenAttributes());
     }
 
     public function setUnmappedAttribute($key, $value)
@@ -97,6 +105,13 @@ trait ComHasAttributes
         $this->unmapped_attributes[$key] = $value;
 
         return $this;
+    }
+
+    protected function bootHiddenAttributes()
+    {
+        $this->trait_hidden_attributes = array_combine($this->trait_hidden_attributes, $this->trait_hidden_attributes);
+
+        $this->hidden_booted = true;
     }
 
     protected function getCalculatedAttributes()
@@ -149,13 +164,6 @@ trait ComHasAttributes
         })->values()->toArray();
     }
 
-    protected function setAttributeNameReplacements(array $name_replacements)
-    {
-        $this->trait_name_replacements = $name_replacements;
-
-        return $this;
-    }
-
     protected function hasProperty($property_name)
     {
         return array_key_exists($property_name, get_class_vars(get_called_class()));
@@ -163,8 +171,8 @@ trait ComHasAttributes
 
     protected function replaceAttributeName($key)
     {
-        if (array_key_exists($key, $this->trait_name_replacements)) {
-            return $this->trait_name_replacements[$key];
+        if (array_key_exists($key, $this->attribute_name_replacements)) {
+            return $this->attribute_name_replacements[$key];
         }
 
         return $key;

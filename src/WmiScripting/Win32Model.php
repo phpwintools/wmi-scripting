@@ -43,9 +43,6 @@ class Win32Model implements Arrayable, Jsonable, HasAttributes
     /** @var array */
     protected $attribute_casting = [];
 
-    /** @var array */
-    protected $attribute_name_replacements = [];
-
     protected $connection = 'default';
 
     protected $wmi_class_name;
@@ -53,8 +50,7 @@ class Win32Model implements Arrayable, Jsonable, HasAttributes
     public function __construct(array $attributes = [], ObjectPath $objectPath = null)
     {
         $this->setCasts($this->attribute_casting, $this->merge_parent_casting);
-        $this->setHidden($this->hidden_attributes, $this->merge_parent_hidden_attributes);
-        $this->setAttributeNameReplacements($this->attribute_name_replacements);
+        $this->mergeHiddenAttributes($this->hidden_attributes, $this->merge_parent_hidden_attributes);
         $this->fill($attributes);
 
         $this->objectPath = $objectPath;
