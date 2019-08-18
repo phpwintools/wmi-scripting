@@ -157,7 +157,6 @@ trait ComHasAttributes
         $this->hidden_booted = true;
     }
 
-
     protected function getAttributeMethodValue($method, $attribute)
     {
         if ($this->hasProperty($attribute)) {
