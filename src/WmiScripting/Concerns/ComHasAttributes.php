@@ -3,6 +3,7 @@
 namespace PhpWinTools\WmiScripting\Concerns;
 
 use Exception;
+use Illuminate\Support\Str;
 use ReflectionClass;
 use PhpWinTools\WmiScripting\Contracts\Arrayable;
 use Illuminate\Contracts\Support\Arrayable as IlluminateArrayable;
@@ -12,6 +13,8 @@ trait ComHasAttributes
     use CanCollect;
 
     protected $unmapped_attributes = [];
+
+    protected $attribute_name_replacements = [];
 
     protected $trait_name_replacements = [];
 
@@ -32,7 +35,7 @@ trait ComHasAttributes
     public function getAttribute($attribute, $default = null)
     {
         if ($this->hasAttributeMethod($attribute)) {
-            $method = 'get' . ucfirst($attribute) . 'Attribute';
+            $method = 'get' . ucfirst($this->snackCaseToCamel($attribute)) . 'Attribute';
             if ($this->hasProperty($attribute)) {
                 return $this->{$method}($this->{$attribute});
             } elseif ($this->hasUnmappedAttribute($attribute)) {
@@ -55,6 +58,20 @@ trait ComHasAttributes
         }
 
         return $default;
+    }
+
+    public function snackCaseToCamel(string $string)
+    {
+        $string = ucwords(str_replace(['-', '_'], ' ', $string));
+
+        return lcfirst(str_replace(' ', '', $string));
+    }
+
+    public function camelCaseToSnack(string $string)
+    {
+        $string = preg_replace('/\s+/u', '', ucwords($string));
+
+        return strtolower(preg_replace('/(.)(?=[A-Z])/u', '$1_', $string));
     }
 
     public function toArray(): array
@@ -89,6 +106,13 @@ trait ComHasAttributes
         return array_combine($this->trait_hidden_attributes, $this->trait_hidden_attributes);
     }
 
+    public function setUnmappedAttribute($key, $value)
+    {
+        $this->unmapped_attributes[$key] = $value;
+
+        return $this;
+    }
+
     protected function getCalculatedAttributes()
     {
         return $this->collect($this->calculatedAttributes())->mapWithKeys(function ($attribute) {
@@ -113,7 +137,17 @@ trait ComHasAttributes
     protected function hasAttributeMethod($attribute)
     {
         return $this->collect($this->getAttributeMethods())->filter(function ($method) use ($attribute) {
-            return $this->getAttributeNameFromMethod($method) === $attribute;
+            if (($method_name = $this->getAttributeNameFromMethod($method)) === $attribute) {
+                return true;
+            }
+
+            $method_name = $this->camelCaseToSnack($method_name);
+
+            if ($method_name  === $attribute) {
+                return true;
+            }
+
+              return false;
         })->isNotEmpty();
     }
 
