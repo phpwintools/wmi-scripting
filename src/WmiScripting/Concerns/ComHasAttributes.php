@@ -142,7 +142,7 @@ trait ComHasAttributes
 
             $method_name = $this->camelCaseToSnack($method_name);
 
-            if ($method_name  === $attribute) {
+            if ($method_name === $attribute) {
                 return true;
             }
 
