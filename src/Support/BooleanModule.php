@@ -6,18 +6,12 @@ class BooleanModule
 {
     public static function makeBoolean($value): bool
     {
-        $value = strtolower($value);
-
         if ($value === true || $value === false) {
             return $value;
         }
 
-        if ($value === 'true') {
-            return true;
-        }
-
-        if ($value === 'false') {
-            return false;
+        if (is_array($value)) {
+            return !empty($value);
         }
 
         if ($value === 1 || $value === '1') {
@@ -28,8 +22,14 @@ class BooleanModule
             return false;
         }
 
-        if (is_array($value)) {
-            return !empty($value);
+        $value = strtolower($value);
+
+        if ($value === 'true') {
+            return true;
+        }
+
+        if ($value === 'false') {
+            return false;
         }
 
         if (trim($value) !== '') {
