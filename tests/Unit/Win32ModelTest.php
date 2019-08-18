@@ -182,8 +182,8 @@ class Win32ModelTest extends TestCase
             public $stringIntFalse = '0';
             public $intTrue = 1;
             public $intFalse = 0;
-            public $true = true;
-            public $false = false;
+            public $trueBool = true;
+            public $falseBool = false;
 
             protected $attribute_casting = [
                 'stringTrue'        => 'bool',
@@ -192,6 +192,8 @@ class Win32ModelTest extends TestCase
                 'stringIntFalse'    => 'bool',
                 'intTrue'           => 'bool',
                 'intFalse'          => 'bool',
+                'trueBool'          => 'boolean',
+                'falseBool'         => 'boolean',
             ];
         };
 
@@ -208,8 +210,8 @@ class Win32ModelTest extends TestCase
         $this->assertFalse($class->getAttribute('stringIntFalse'));
         $this->assertTrue($class->getAttribute('intTrue'));
         $this->assertFalse($class->getAttribute('intFalse'));
-        $this->assertTrue($class->getAttribute('true'));
-        $this->assertFalse($class->getAttribute('false'));
+        $this->assertTrue($class->getAttribute('trueBool'));
+        $this->assertFalse($class->getAttribute('falseBool'));
     }
 
     /** @test */
