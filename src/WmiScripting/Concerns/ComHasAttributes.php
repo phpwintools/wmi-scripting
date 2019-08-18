@@ -3,9 +3,9 @@
 namespace PhpWinTools\WmiScripting\Concerns;
 
 use Exception;
-use PhpWinTools\Support\BooleanModule;
 use ReflectionClass;
 use PhpWinTools\Support\StringModule;
+use PhpWinTools\Support\BooleanModule;
 use PhpWinTools\WmiScripting\Contracts\Arrayable;
 use PhpWinTools\WmiScripting\Collections\ArrayCollection;
 use Illuminate\Contracts\Support\Arrayable as IlluminateArrayable;
