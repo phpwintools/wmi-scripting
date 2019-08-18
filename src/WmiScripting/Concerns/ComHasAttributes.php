@@ -107,6 +107,30 @@ trait ComHasAttributes
         return $this;
     }
 
+    public function getCasts(): array
+    {
+        return $this->attribute_casting;
+    }
+
+    public function getCast($attribute)
+    {
+        $casts = $this->getCasts();
+
+        return $casts[$attribute] ?? null;
+    }
+
+    public function hasCast($attribute): bool
+    {
+        return array_key_exists($attribute, $this->attribute_casting);
+    }
+
+    public function setCasts(array $attribute_casting, bool $merge_casting = true)
+    {
+        $this->attribute_casting = $merge_casting
+            ? array_merge($this->getAncestorProperty('attribute_casting'), $attribute_casting)
+            : $attribute_casting;
+    }
+
     protected function bootHiddenAttributes()
     {
         $this->trait_hidden_attributes = array_combine($this->trait_hidden_attributes, $this->trait_hidden_attributes);
@@ -164,7 +188,7 @@ trait ComHasAttributes
         })->values()->toArray();
     }
 
-    protected function hasProperty($property_name)
+    public function hasProperty($property_name)
     {
         return array_key_exists($property_name, get_class_vars(get_called_class()));
     }
@@ -176,6 +200,38 @@ trait ComHasAttributes
         }
 
         return $key;
+    }
+
+    protected function cast($key, $value)
+    {
+        $casts = $this->getCasts();
+
+        if (!$this->hasCast($key)) {
+            return $value;
+        }
+
+        /* @TODO: This isn't needed. Need to write tests around it so I can remove it. */
+        if (is_callable($casts[$key])) {
+            return $casts[$key]($value, $key);
+        }
+
+        switch ($casts[$key]) {
+            case 'array':
+                return is_array($value) ? $value : [$value];
+            case 'bool':
+            case 'boolean':
+                return (bool) $value;
+            case 'float':
+                return (float) $value;
+            case 'int':
+            case 'integer':
+                // Prevent integer overflow
+                return $value >= PHP_INT_MAX || $value <= PHP_INT_MIN ? (string) $value : (int) $value;
+            case 'string':
+                return (string) $value;
+            default:
+                return $value;
+        }
     }
 
     protected function objectToArray($value)
@@ -263,61 +319,6 @@ trait ComHasAttributes
         }
 
         return $results;
-    }
-
-    public function getCasts(): array
-    {
-        return $this->attribute_casting;
-    }
-
-    public function getCast($attribute)
-    {
-        $casts = $this->getCasts();
-
-        return $casts[$attribute] ?? null;
-    }
-
-    public function hasCast($attribute): bool
-    {
-        return array_key_exists($attribute, $this->attribute_casting);
-    }
-
-    public function setCasts(array $attribute_casting, bool $merge_casting = true)
-    {
-        $this->attribute_casting = $merge_casting
-            ? array_merge($this->getAncestorProperty('attribute_casting'), $attribute_casting)
-            : $attribute_casting;
-    }
-
-    protected function cast($key, $value)
-    {
-        $casts = $this->getCasts();
-
-        if (!$this->hasCast($key)) {
-            return $value;
-        }
-
-        if (is_callable($casts[$key])) {
-            return $casts[$key]($value, $key);
-        }
-
-        switch ($casts[$key]) {
-            case 'array':
-                return is_array($value) ? $value : [$value];
-            case 'bool':
-            case 'boolean':
-                return (bool) $value;
-            case 'float':
-                return (float) $value;
-            case 'int':
-            case 'integer':
-                // Prevent integer overflow
-                return $value >= PHP_INT_MAX || $value <= PHP_INT_MIN ? (string) $value : (int) $value;
-            case 'string':
-                return (string) $value;
-            default:
-                return $value;
-        }
     }
 
     protected function getAncestorProperty($property_name)
