@@ -47,6 +47,7 @@ class Win32Model implements Arrayable, Jsonable, HasAttributes
 
     protected $wmi_class_name;
 
+    /* TODO: Remove ObjectPath dependency. Should be passed into attributes */
     public function __construct(array $attributes = [], ObjectPath $objectPath = null)
     {
         $this->setCasts($this->attribute_casting, $this->merge_parent_casting);
@@ -225,6 +226,8 @@ class Win32Model implements Arrayable, Jsonable, HasAttributes
     }
 
     /**
+     * @TODO: This should just be a helper method instead of returning a callback.
+     *
      * @param $constant_class
      *
      * @return Closure
