@@ -3,8 +3,8 @@
 namespace PhpWinTools\WmiScripting\Concerns;
 
 use Exception;
-use PhpWinTools\Support\StringModule;
 use ReflectionClass;
+use PhpWinTools\Support\StringModule;
 use PhpWinTools\WmiScripting\Contracts\Arrayable;
 use Illuminate\Contracts\Support\Arrayable as IlluminateArrayable;
 
