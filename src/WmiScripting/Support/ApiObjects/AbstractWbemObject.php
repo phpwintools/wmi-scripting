@@ -22,13 +22,10 @@ class AbstractWbemObject implements Arrayable, Jsonable
 
     protected $hidden_attributes = ['object', 'services', 'resolve_property_sets', 'config'];
 
-    protected $attribute_name_replacements = [];
-
     public function __construct(ComVariantWrapper $object)
     {
         $this->object = $object;
-        $this->setHidden($this->hidden_attributes, $this->merge_parent_hidden_attributes);
-        $this->setAttributeNameReplacements($this->attribute_name_replacements);
+        $this->mergeHiddenAttributes($this->hidden_attributes, $this->merge_parent_hidden_attributes);
     }
 
     public function toJson(): string
