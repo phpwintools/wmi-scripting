@@ -146,7 +146,7 @@ trait ComHasAttributes
                 return true;
             }
 
-              return false;
+            return false;
         })->isNotEmpty();
     }
 
