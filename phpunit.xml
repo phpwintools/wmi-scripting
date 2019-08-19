@@ -17,11 +17,6 @@
             <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>
     </testsuites>
-    <groups>
-        <exclude>
-            <group>uses_real_com</group>
-        </exclude>
-    </groups>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./src</directory>
