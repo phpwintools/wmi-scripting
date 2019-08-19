@@ -35,9 +35,6 @@
         "mockery/mockery": "^1.0",
         "phpunit/phpunit": "^7.5"
     },
-    "suggest": {
-        "ext-com_dotnet": "Required for the library to work, but cannot be required due to TravisCI :("
-    },
     "autoload": {
         "psr-4": {
             "PhpWinTools\\": "src/"

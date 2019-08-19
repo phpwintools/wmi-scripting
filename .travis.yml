@@ -48,12 +48,14 @@ before_install:
   - export PATH=/c/ProgramData/ComposerSetup/bin:$PATH;
   # Make sure composer is up-to-date
   - travis_retry composer self-update
-  # Download appropriate XDebug and modify configuration
-  - travis_retry wget $XDEBUG -O /c/tools/$PHP_DIR/ext/xdebug.dll -q;
-  - echo "zend_extension=xdebug.dll" >> /c/tools/$PHP_DIR/php.ini;
 
 install:
   - travis_retry composer update --no-interaction --prefer-dist --no-suggest
+
+before_script:
+  # Download appropriate XDebug and modify configuration
+  - travis_retry wget $XDEBUG -O /c/tools/$PHP_DIR/ext/xdebug.dll -q;
+  - echo "zend_extension=xdebug.dll" >> /c/tools/$PHP_DIR/php.ini;
 
 script: ./vendor/bin/phpunit --coverage-clover=/c/tools/$PHP_DIR/coverage.clover
 
