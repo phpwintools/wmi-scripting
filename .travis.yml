@@ -40,26 +40,23 @@ before_install:
   - echo "extension=php_ftp.dll" >> /c/tools/$PHP_DIR/php.ini;
   - echo "extension=php_com_dotnet.dll" >> /c/tools/$PHP_DIR/php.ini;
   - echo "memory_limit=256M" >> /c/tools/$PHP_DIR/php.ini;
+  # Download CA Bundle and update configuration
+  - travis_retry wget https://curl.haxx.se/ca/cacert.pem -O /c/tools/cacert.pem -q;
+  - echo "curl.cainfo=C:\tools\cacert.pem" >> /c/tools/$PHP_DIR/php.ini;
   # Install Composer and modify PATH
   - choco install composer -i;
   - export PATH=/c/ProgramData/ComposerSetup/bin:$PATH;
-  # Download CA Bundle and update configuration
-  - travis_retry wget https://curl.haxx.se/ca/cacert.pem -O /c/tools/cacert.pem -q
-  - echo "curl.cainfo=C:\tools\cacert.pem" >> /c/tools/$PHP_DIR/php.ini
-#  - travis_retry wget https://raw.githubusercontent.com/composer/getcomposer.org/d3e09029468023aa4e9dcd165e9b6f43df0a9999/web/installer -O - -q | php --
   # Make sure composer is up-to-date
   - travis_retry composer self-update
-#  - travis_retry php composer.phar self-update
   # Download appropriate XDebug and modify configuration
-  - travis_retry wget $XDEBUG -O /c/tools/$PHP_DIR/ext/xdebug.dll -q
-  - echo "zend_extension=xdebug.dll" >> /c/tools/$PHP_DIR/php.ini
+  - travis_retry wget $XDEBUG -O /c/tools/$PHP_DIR/ext/xdebug.dll -q;
+  - echo "zend_extension=xdebug.dll" >> /c/tools/$PHP_DIR/php.ini;
 
 install:
-#  - travis_retry php composer.phar update --no-interaction --prefer-dist --no-suggest
   - travis_retry composer update --no-interaction --prefer-dist --no-suggest
 
 script: ./vendor/bin/phpunit --coverage-clover=/c/tools/$PHP_DIR/coverage.clover
 
 after_script:
-  - travis_retry wget https://github.com/scrutinizer-ci/ocular/releases/download/1.5.2/ocular.phar
+  - travis_retry wget https://github.com/scrutinizer-ci/ocular/releases/download/1.5.2/ocular.phar -q;
   - php ocular.phar code-coverage:upload --format=php-clover /c/tools/$PHP_DIR/coverage.clover 2>&1
