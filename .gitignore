@@ -2,3 +2,4 @@
 /vendor
 .phpunit.result.cache
 composer.lock
+.notes-for-lib.txt
