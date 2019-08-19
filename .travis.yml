@@ -11,7 +11,7 @@ cache:
   directories:
     - $HOME/.composer/cache
 
-before_script:
+before_install:
   - choco install php --version $PHP_VERSION -y;
   - export PATH=/c/tools/$PHP_DIR:$PATH;
   - echo 'extension_dir="ext"' >> /c/tools/$PHP_DIR/php.ini
