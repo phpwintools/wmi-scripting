@@ -24,12 +24,12 @@ before_install:
   - echo "extension=php_ftp.dll" >> /c/tools/$PHP_DIR/php.ini
   - echo "extension=php_com_dotnet.dll" >> /c/tools/$PHP_DIR/php.ini
   - echo "memory_limit=256M" >> /c/tools/$PHP_DIR/php.ini
-  - wget https://xdebug.org/files/php_xdebug-2.8.0beta1-7.2-vc15-nts-x86_64.dll -O /c/tools/$PHP_DIR/ext/xdebug.dll -q
-#  - echo "zend_extension=xdebug.dll" >> /c/tools/$PHP_DIR/php.ini
 #  - choco install composer
 #  - phpenv config-rm xdebug.ini || true
   - wget https://raw.githubusercontent.com/composer/getcomposer.org/d3e09029468023aa4e9dcd165e9b6f43df0a9999/web/installer -O - -q | php --
   - travis_retry php composer.phar self-update
+  - wget https://xdebug.org/files/php_xdebug-2.8.0beta1-7.2-vc15-nts-x86_64.dll -O /c/tools/$PHP_DIR/ext/xdebug.dll -q
+  - echo "zend_extension=xdebug.dll" >> /c/tools/$PHP_DIR/php.ini
 #  - travis_retry composer self-update
 
 install:
