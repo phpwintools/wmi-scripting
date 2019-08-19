@@ -3,8 +3,12 @@ filter:
     - tests/*
 
 build:
+  dependencies:
+    override:
+      - yes | pecl install com_dotnet
   nodes:
     analysis:
       tests:
         override:
+          - php ./vendor/bin/phpunit --configuration phpunit.xml --exlude-group uses_real_com
           - php-scrutinizer-run
