@@ -29,10 +29,11 @@ before_install:
   - choco install composer
   #- phpenv config-rm xdebug.ini || true
   #- wget https://raw.githubusercontent.com/composer/getcomposer.org/d3e09029468023aa4e9dcd165e9b6f43df0a9999/web/installer -O - -q | php --
-  - travis_retry php composer.phar self-update
+  #- travis_retry php composer.phar self-update
+  - travis_retry composer self-update
 
 install:
-  - travis_retry php composer.phar update --no-interaction --prefer-stable --prefer-dist --no-suggest
+  - travis_retry composer update --no-interaction --prefer-stable --prefer-dist --no-suggest
 
 script: ./vendor/bin/phpunit --coverage-clover=coverage.clover
 
