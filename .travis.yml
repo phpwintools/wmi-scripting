@@ -10,7 +10,7 @@ matrix:
     - os: windows
       language: sh
       env:
-        - PHP_VERSION=7.2.21
+        - PHP_VERSION=7.2.20
         - PHP_DIR=php72
         - XDEBUG=https://xdebug.org/files/php_xdebug-2.8.0beta1-7.2-vc15-nts-x86_64.dll
     - os: windows
