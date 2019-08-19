@@ -12,5 +12,5 @@ build:
     analysis:
       tests:
         override:
-          - php ./vendor/bin/phpunit --configuration phpunit.xml --exlude-group uses_real_com
+          - php ./vendor/bin/phpunit --configuration phpunit.xml --exclude-group uses_real_com
           - php-scrutinizer-run
