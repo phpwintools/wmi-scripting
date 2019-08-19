@@ -7,6 +7,10 @@ build:
     override:
       -
         command: composer install --ignore-platform-reqs --no-interaction --prefer-dist --no-suggest
+  tests:
+    override:
+      - command: vendor/bin/phpunit --configuration phpunit.xml --exclude-group uses_real_com
+      - php-scrutinizer-run
   nodes:
     analysis:
       tests:
