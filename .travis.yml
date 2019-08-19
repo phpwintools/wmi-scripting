@@ -38,7 +38,7 @@ before_install:
   - echo "extension=php_ftp.dll" >> /c/tools/$PHP_DIR/php.ini
   - echo "extension=php_com_dotnet.dll" >> /c/tools/$PHP_DIR/php.ini
   - echo "memory_limit=256M" >> /c/tools/$PHP_DIR/php.ini
-  - choco install composer --ia '"/DEV=c:\tools /PHP=c:\tools\"':$PHP_DIR
+  - choco install composer /DEV=/c/tools /PHP=/c/tools/$PHP_DIR
   - composer || true
   - travis_retry wget https://curl.haxx.se/ca/cacert.pem -O /c/tools/cacert.pem -q
   - echo "curl.cainfo=C:\tools\cacert.pem" >> /c/tools/$PHP_DIR/php.ini
