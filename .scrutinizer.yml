@@ -5,10 +5,12 @@ filter:
 build:
   dependencies:
     override:
-      - true
+      -
+        command: composer install --ignore-platform-reqs --no-interaction --prefer-stable --prefer-dist --no-suggest
   nodes:
     analysis:
       tests:
         override:
-          - phpunit --configuration phpunit.xml --exclude-group uses_real_com
+          -
+            command: vendor/bin/phpunit --configuration phpunit.xml --exclude-group uses_real_com
           - php-scrutinizer-run
