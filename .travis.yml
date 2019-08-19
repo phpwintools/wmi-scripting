@@ -39,7 +39,7 @@ before_install:
   - echo "extension=php_com_dotnet.dll" >> /c/tools/$PHP_DIR/php.ini;
   - echo "memory_limit=256M" >> /c/tools/$PHP_DIR/php.ini;
   - choco install composer -i;
-  - dir /c/tools || true;
+  - export PATH=/c/ProgramData/ComposerSetup/bin:$PATH;
   - composer || true;
   - travis_retry wget https://curl.haxx.se/ca/cacert.pem -O /c/tools/cacert.pem -q
   - echo "curl.cainfo=C:\tools\cacert.pem" >> /c/tools/$PHP_DIR/php.ini
