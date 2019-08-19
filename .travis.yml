@@ -45,7 +45,7 @@ before_install:
   - echo "zend_extension=xdebug.dll" >> /c/tools/$PHP_DIR/php.ini
 
 install:
-  - travis_retry php composer.phar update --no-interaction --prefer-stable --prefer-dist --no-suggest
+  - travis_retry php composer.phar update --no-interaction --prefer-dist --no-suggest
 
 script: ./vendor/bin/phpunit --coverage-clover=/c/tools/$PHP_DIR/coverage.clover
 
