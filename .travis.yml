@@ -29,6 +29,7 @@ before_install:
   - export PATH=/c/tools/$PHP_DIR:$PATH;
   - echo 'extension_dir="ext"' >> /c/tools/$PHP_DIR/php.ini
   - echo "extension=php_openssl.dll" >> /c/tools/$PHP_DIR/php.ini;
+  - echo "extension=php_curl.dll" >> /c/tools/$PHP_DIR/php.ini;
   - echo "extension=php_mbstring.dll" >> /c/tools/$PHP_DIR/php.ini
   - echo "extension=php_pdo_mysql.dll" >> /c/tools/$PHP_DIR/php.ini
   - echo "extension=php_pdo_sqlite.dll" >> /c/tools/$PHP_DIR/php.ini
@@ -50,4 +51,4 @@ script: ./vendor/bin/phpunit --coverage-clover=coverage.clover
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover --repository=phpwintools/wmi-scripting  2>&1
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover --repository="phpwintools/wmi-scripting"  2>&1
