@@ -6,7 +6,7 @@ build:
   dependencies:
     override:
       -
-        command: composer install --ignore-platform-reqs --no-interaction --prefer-stable --prefer-dist --no-suggest
+        command: composer install --ignore-platform-reqs --no-interaction --prefer-dist --no-suggest
   nodes:
     analysis:
       tests:
