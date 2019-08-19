@@ -24,6 +24,7 @@ before_install:
   - echo "extension=php_ftp.dll" >> /c/tools/$PHP_DIR/php.ini
   - echo "extension=php_com_dotnet.dll" >> /c/tools/$PHP_DIR/php.ini
   - echo "memory_limit=256M" >> /c/tools/$PHP_DIR/php.ini
+  - get https://raw.githubusercontent.com/composer/getcomposer.org/d3e09029468023aa4e9dcd165e9b6f43df0a9999/web/installer -O - -q | php --
   - travis_retry php composer.phar self-update
 
 install:
