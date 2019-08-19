@@ -1,19 +1,62 @@
-sudo: required
-dist: xenial
-language: php
-dotnet: 2.2
+matrix:
+  fast_finish: true
+  include:
+    - os: windows
+      language: sh
+      env:
+        - PHP_VERSION=7.1.25
+        - PHP_DIR=php71
+        - XDEBUG=https://xdebug.org/files/php_xdebug-2.8.0beta1-7.1-vc14-nts-x86_64.dll
+    - os: windows
+      language: sh
+      env:
+        - PHP_VERSION=7.2.20
+        - PHP_DIR=php72
+        - XDEBUG=https://xdebug.org/files/php_xdebug-2.8.0beta1-7.2-vc15-nts-x86_64.dll
+    - os: windows
+      language: sh
+      env:
+        - PHP_VERSION=7.3.8
+        - PHP_DIR=php73
+        - XDEBUG=https://xdebug.org/files/php_xdebug-2.8.0beta1-7.3-vc15-nts-x86_64.dll
 
-php:
-  - '7.1'
-  - '7.2'
-  - '7.3'
+cache:
+  directories:
+    - $HOME/.composer/cache
 
-before_script:
+before_install:
+  # Install PHP and setup PATH
+  - choco install php --version $PHP_VERSION -y;
+  - export PATH=/c/tools/$PHP_DIR:$PATH;
+  # Modify configuration
+  - echo 'extension_dir="ext"' >> /c/tools/$PHP_DIR/php.ini;
+  - echo "extension=php_openssl.dll" >> /c/tools/$PHP_DIR/php.ini;
+  - echo "extension=php_curl.dll" >> /c/tools/$PHP_DIR/php.ini;
+  - echo "extension=php_mbstring.dll" >> /c/tools/$PHP_DIR/php.ini;
+  - echo "extension=php_pdo_mysql.dll" >> /c/tools/$PHP_DIR/php.ini;
+  - echo "extension=php_pdo_sqlite.dll" >> /c/tools/$PHP_DIR/php.ini;
+  - echo "extension=php_fileinfo.dll" >> /c/tools/$PHP_DIR/php.ini;
+  - echo "extension=php_gd2.dll" >> /c/tools/$PHP_DIR/php.ini;
+  - echo "extension=php_ftp.dll" >> /c/tools/$PHP_DIR/php.ini;
+  - echo "extension=php_com_dotnet.dll" >> /c/tools/$PHP_DIR/php.ini;
+  - echo "memory_limit=256M" >> /c/tools/$PHP_DIR/php.ini;
+  # Download CA Bundle and update configuration
+  - travis_retry wget https://curl.haxx.se/ca/cacert.pem -O /c/tools/cacert.pem -q;
+  - echo "curl.cainfo=C:\tools\cacert.pem" >> /c/tools/$PHP_DIR/php.ini;
+  # Install Composer and modify PATH
+  - choco install composer -i;
+  - export PATH=/c/ProgramData/ComposerSetup/bin:$PATH;
+  # Make sure composer is up-to-date
   - travis_retry composer self-update
-  - travis_retry composer install --no-interaction
+  # Download appropriate XDebug and modify configuration
+  - travis_retry wget $XDEBUG -O /c/tools/$PHP_DIR/ext/xdebug.dll -q;
+  - echo "zend_extension=xdebug.dll" >> /c/tools/$PHP_DIR/php.ini;
 
-script: ./vendor/bin/phpunit --coverage-clover=coverage.clover
+install:
+  - travis_retry composer update --no-interaction --prefer-dist --no-suggest
+
+script: ./vendor/bin/phpunit --coverage-clover=/c/tools/$PHP_DIR/coverage.clover
 
 after_script:
-  - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover 2>&1
+  - travis_retry wget https://github.com/scrutinizer-ci/ocular/releases/download/1.5.2/ocular.phar -q;
+  - php ocular.phar code-coverage:upload --format=php-clover /c/tools/$PHP_DIR/coverage.clover 2>&1
