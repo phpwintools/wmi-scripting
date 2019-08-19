@@ -6,6 +6,7 @@ checks:
   php:
     excluded_dependencies:
       - ext-com_dotnet
+      - com_dotnet
 
 build:
   nodes:
