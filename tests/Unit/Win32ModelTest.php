@@ -173,7 +173,7 @@ class Win32ModelTest extends TestCase
     }
 
     /** @test */
-    public function it_can_a_value_to_boolean()
+    public function it_can_cast_a_value_to_boolean()
     {
         $class = new class extends Win32Model {
             public $stringTrue = 'true';
