@@ -22,32 +22,29 @@ matrix:
 
 cache:
   directories:
-    - $HOME/.composer/cache
+    # Cache common cache directories
+    - $HOME/AppData/Local/Temp/chocolatey
+    - vendor
+#    - $HOME/AppData/Local/Composer
+    # Cache PHP and Composer install
+    - /c/tools/$PHP_DIR
+    - /c/ProgramData/ComposerSetup/bin
 
 before_install:
-  # Install PHP and setup PATH
-  - choco install php --version $PHP_VERSION -y;
+  # Install PHP, Configure INI, and setup PATH
+  - if [ ! -f "/c/tools/$PHP_DIR/php.ini" ]; then choco install php --version $PHP_VERSION -y; ./bin/ci/setup_php.sh;  fi
   - export PATH=/c/tools/$PHP_DIR:$PATH;
-  # Modify configuration
-  - echo 'extension_dir="ext"' >> /c/tools/$PHP_DIR/php.ini;
-  - echo "extension=php_openssl.dll" >> /c/tools/$PHP_DIR/php.ini;
-  - echo "extension=php_curl.dll" >> /c/tools/$PHP_DIR/php.ini;
-  - echo "extension=php_mbstring.dll" >> /c/tools/$PHP_DIR/php.ini;
-  - echo "extension=php_pdo_mysql.dll" >> /c/tools/$PHP_DIR/php.ini;
-  - echo "extension=php_pdo_sqlite.dll" >> /c/tools/$PHP_DIR/php.ini;
-  - echo "extension=php_fileinfo.dll" >> /c/tools/$PHP_DIR/php.ini;
-  - echo "extension=php_gd2.dll" >> /c/tools/$PHP_DIR/php.ini;
-  - echo "extension=php_ftp.dll" >> /c/tools/$PHP_DIR/php.ini;
-  - echo "extension=php_com_dotnet.dll" >> /c/tools/$PHP_DIR/php.ini;
-  - echo "memory_limit=256M" >> /c/tools/$PHP_DIR/php.ini;
-  # Download CA Bundle and update configuration
+
+  # Download CA Bundle
   - travis_retry wget https://curl.haxx.se/ca/cacert.pem -O /c/tools/cacert.pem -q;
-  - echo "curl.cainfo=C:\tools\cacert.pem" >> /c/tools/$PHP_DIR/php.ini;
+
   # Install Composer and modify PATH
-  - choco install composer -i;
+  - if [ ! -f "/c/ProgramData/ComposerSetup/bin/composer.bat" ]; then choco install composer -i;  fi
   - export PATH=/c/ProgramData/ComposerSetup/bin:$PATH;
+
   # Make sure composer is up-to-date
   - travis_retry composer self-update
+  - travis_retry composer global require hirak/prestissimo
 
 install:
   - travis_retry composer update --no-interaction --prefer-dist --no-suggest
@@ -55,9 +52,12 @@ install:
 before_script:
   # Download appropriate XDebug and modify configuration
   - travis_retry wget $XDEBUG -O /c/tools/$PHP_DIR/ext/xdebug.dll -q;
-  - echo "zend_extension=xdebug.dll" >> /c/tools/$PHP_DIR/php.ini;
+  - ./bin/ci/start_xdebug.sh;
 
 script: ./vendor/bin/phpunit --coverage-clover=/c/tools/$PHP_DIR/coverage.clover
+
+# Remove XDebug from INI before cache
+before_cache: ./bin/ci/stop_xdebug.sh;
 
 after_script:
   - travis_retry wget https://github.com/scrutinizer-ci/ocular/releases/download/1.5.2/ocular.phar -q;
