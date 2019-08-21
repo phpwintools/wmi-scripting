@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\WmiScripting;
 
 use Tests\TestCase;
 use PhpWinTools\WmiScripting\Scripting;

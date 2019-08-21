@@ -2,7 +2,7 @@
 
 namespace PhpWinTools\WmiScripting\Cim;
 
-use PhpWinTools\WmiScripting\Win32Model;
+use PhpWinTools\WmiScripting\Models\Win32Model;
 
 /**
  * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cim-managedsystemelement

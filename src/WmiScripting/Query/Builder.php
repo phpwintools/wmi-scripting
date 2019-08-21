@@ -3,7 +3,7 @@
 namespace PhpWinTools\WmiScripting\Query;
 
 use PhpWinTools\WmiScripting\Connection;
-use PhpWinTools\WmiScripting\Win32Model;
+use PhpWinTools\WmiScripting\Models\Win32Model;
 use PhpWinTools\WmiScripting\Collections\ModelCollection;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectSet;
 

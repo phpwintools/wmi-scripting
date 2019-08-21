@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\WmiScripting\Support\Configuration;
 
 use Tests\TestCase;
 use PhpWinTools\WmiScripting\Connection;

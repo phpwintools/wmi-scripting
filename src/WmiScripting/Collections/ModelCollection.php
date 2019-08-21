@@ -3,7 +3,7 @@
 namespace PhpWinTools\WmiScripting\Collections;
 
 use Illuminate\Support\Collection;
-use PhpWinTools\WmiScripting\Win32Model;
+use PhpWinTools\WmiScripting\Models\Win32Model;
 use PhpWinTools\WmiScripting\Contracts\Arrayable;
 use Illuminate\Support\HigherOrderCollectionProxy;
 use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemObject;

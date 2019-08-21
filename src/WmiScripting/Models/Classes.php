@@ -2,8 +2,6 @@
 
 namespace PhpWinTools\WmiScripting\Models;
 
-use PhpWinTools\WmiScripting\Win32Model;
-
 abstract class Classes
 {
     /**

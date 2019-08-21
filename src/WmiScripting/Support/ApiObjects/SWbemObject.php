@@ -2,7 +2,7 @@
 
 namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
-use PhpWinTools\WmiScripting\Win32Model;
+use PhpWinTools\WmiScripting\Models\Win32Model;
 use PhpWinTools\Support\COM\VariantWrapper;
 use PhpWinTools\WmiScripting\Models\Classes;
 use function PhpWinTools\WmiScripting\Support\resolve;

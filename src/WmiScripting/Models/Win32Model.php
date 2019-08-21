@@ -1,10 +1,10 @@
 <?php
 
-namespace PhpWinTools\WmiScripting;
+namespace PhpWinTools\WmiScripting\Models;
 
 use Closure;
+use PhpWinTools\WmiScripting\Connection;
 use PhpWinTools\WmiScripting\Query\Builder;
-use PhpWinTools\WmiScripting\Models\Classes;
 use PhpWinTools\WmiScripting\Contracts\Jsonable;
 use PhpWinTools\WmiScripting\Contracts\Arrayable;
 use PhpWinTools\WmiScripting\Contracts\HasAttributes;

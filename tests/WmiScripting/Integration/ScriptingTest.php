@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\RealCom;
+namespace Tests\WmiScripting\Integration;
 
 use PhpWinTools\WmiScripting\Collections\ModelCollection;
 use PhpWinTools\WmiScripting\Models\LogicalDisk;

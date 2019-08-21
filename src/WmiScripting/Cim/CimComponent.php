@@ -2,7 +2,7 @@
 
 namespace PhpWinTools\WmiScripting\Cim;
 
-use PhpWinTools\WmiScripting\Win32Model;
+use PhpWinTools\WmiScripting\Models\Win32Model;
 use PhpWinTools\WmiScripting\Query\ComponentBuilder;
 
 /**

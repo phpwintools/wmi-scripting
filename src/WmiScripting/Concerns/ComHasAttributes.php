@@ -253,13 +253,23 @@ trait ComHasAttributes
             case 'bool':
             case 'boolean':
                 return BooleanModule::makeBoolean($value);
-            case 'float':
-                return (float) $value;
             case 'int':
             case 'integer':
                 // Prevent integer overflow
                 return $value >= PHP_INT_MAX || $value <= PHP_INT_MIN ? (string) $value : (int) $value;
             case 'string':
+                if ($value === true) {
+                    return 'true';
+                }
+
+                if ($value === false) {
+                    return 'false';
+                }
+
+                if (is_array($value)) {
+                    return json_encode($value);
+                }
+
                 return (string) $value;
             default:
                 return $value;
