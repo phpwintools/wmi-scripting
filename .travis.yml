@@ -22,29 +22,28 @@ matrix:
 
 cache:
   directories:
-    # Cache common cache directories
-    - $HOME/AppData/Local/Temp/chocolatey
+    # Common cache directories
     - vendor
-#    - $HOME/AppData/Local/Composer
+    - $HOME/AppData/Local/Temp/chocolatey
+
     # Cache PHP and Composer install
     - /c/tools/$PHP_DIR
     - /c/ProgramData/ComposerSetup/bin
 
 before_install:
   # Install PHP, Configure INI, and setup PATH
-  - if [ ! -f "/c/tools/$PHP_DIR/php.ini" ]; then choco install php --version $PHP_VERSION -y; ./bin/ci/setup_php.sh;  fi
+  - if [[ ! -f "/c/tools/$PHP_DIR/php.ini" ]]; then choco install php --version $PHP_VERSION -y; ./bin/ci/setup_php.sh;  fi
   - export PATH=/c/tools/$PHP_DIR:$PATH;
 
   # Download CA Bundle
   - travis_retry wget https://curl.haxx.se/ca/cacert.pem -O /c/tools/cacert.pem -q;
 
   # Install Composer and modify PATH
-  - if [ ! -f "/c/ProgramData/ComposerSetup/bin/composer.bat" ]; then choco install composer -i;  fi
+  - if [[ ! -f "/c/ProgramData/ComposerSetup/bin/composer.bat" ]]; then choco install composer -i;  fi
   - export PATH=/c/ProgramData/ComposerSetup/bin:$PATH;
 
   # Make sure composer is up-to-date
   - travis_retry composer self-update
-  - travis_retry composer global require hirak/prestissimo
 
 install:
   - travis_retry composer update --no-interaction --prefer-dist --no-suggest
