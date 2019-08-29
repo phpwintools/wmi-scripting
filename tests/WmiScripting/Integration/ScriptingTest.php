@@ -2,10 +2,10 @@
 
 namespace Tests\WmiScripting\Integration;
 
-use PhpWinTools\WmiScripting\Collections\ModelCollection;
-use PhpWinTools\WmiScripting\Models\LogicalDisk;
-use PhpWinTools\WmiScripting\Scripting;
 use Tests\TestCase;
+use PhpWinTools\WmiScripting\Scripting;
+use PhpWinTools\WmiScripting\Models\LogicalDisk;
+use PhpWinTools\WmiScripting\Collections\ModelCollection;
 
 class ScriptingTest extends TestCase
 {
