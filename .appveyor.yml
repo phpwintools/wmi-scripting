@@ -1,0 +1,54 @@
+build: false
+clone_folder: c:\projects\wmi-scripting
+
+init:
+  - SET COMPOSER_NO_INTERACTION=1
+  - SET ANSICON=121x90 (121x90)
+  - REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Command Processor" /v DelayedExpansion /t REG_DWORD /d 1 /f
+
+environment:
+  matrix:
+    - PHP_VERSION: "7.2.20"
+      PHP_DIR: "php72"
+
+    - PHP_VERSION: "7.3.8"
+      PHP_DIR: "php73"
+
+matrix:
+  fast_finish: true
+
+cache:
+  - composer.phar
+  - c:\projects\wmi-scripting\vendor
+  - c:\tools\%PHP_DIR%
+
+install:
+  - SET PATH=c:\tools\%PHP_DIR%;%PATH%
+  - IF NOT EXIST c:\tools\%PHP_DIR%\php.exe (
+          cinst -y php -i --version %PHP_VERSION% &&
+          cd c:\tools\%PHP_DIR% &&
+          echo extension_dir=ext >> c:\tools\%PHP_DIR%\php.ini &&
+          echo extension=php_openssl.dll >> c:\tools\%PHP_DIR%\php.ini &&
+          echo extension=php_curl.dll >> c:\tools\%PHP_DIR%\php.ini &&
+          echo extension=php_mbstring.dll >> c:\tools\%PHP_DIR%\php.ini &&
+          echo extension=php_pdo_mysql.dll >> c:\tools\%PHP_DIR%\php.ini &&
+          echo extension=php_pdo_sqlite.dll >> c:\tools\%PHP_DIR%\php.ini &&
+          echo extension=php_fileinfo.dll >> c:\tools\%PHP_DIR%\php.ini &&
+          echo extension=php_gd2.dll >> c:\tools\%PHP_DIR%\php.ini &&
+          echo extension=php_ftp.dll >> c:\tools\%PHP_DIR%\php.ini &&
+          echo extension=php_com_dotnet.dll >> c:\tools\%PHP_DIR%\php.ini &&
+          echo memory_limit=256M >> c:\tools\%PHP_DIR%\php.ini &&
+          echo curl.cainfo=C:\tools\cacert.pem >> c:\tools\%PHP_DIR%\php.ini
+      )
+  - cd c:\tools
+  - appveyor DownloadFile https://curl.haxx.se/ca/cacert.pem
+
+  - cd c:\projects\wmi-scripting
+  - IF NOT EXIST composer.phar (appveyor DownloadFile https://github.com/composer/composer/releases/download/1.9.0/composer.phar)
+  - php composer.phar self-update
+  - php composer.phar update --no-interaction --prefer-dist --no-suggest --ansi --no-progress
+
+test_script:
+  - SET X=0
+  - vendor\bin\phpunit || SET X=!errorlevel!
+  - exit %X%

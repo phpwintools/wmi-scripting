@@ -1,6 +1,7 @@
 <h1 align="center">WMI Scripting</h1>
 
 <p align="center">
+    <a href="https://ci.appveyor.com/project/jspringe/wmi-scripting"><img src="https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva/branch/master?svg=true" alt="AppVeyor Build Status"></a>
     <a href="https://travis-ci.org/phpwintools/wmi-scripting"><img src="https://travis-ci.org/phpwintools/wmi-scripting.svg" alt="Build Status"></a>
     <a href="https://scrutinizer-ci.com/g/phpwintools/wmi-scripting/?branch=master"><img src="https://scrutinizer-ci.com/g/phpwintools/wmi-scripting/badges/quality-score.png?b=master" alt="Scrutinizer"></a>
     <img src="https://scrutinizer-ci.com/g/phpwintools/wmi-scripting/badges/coverage.png?b=master" alt="Code Coverage">
