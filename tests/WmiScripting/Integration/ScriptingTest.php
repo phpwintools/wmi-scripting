@@ -31,10 +31,4 @@ class ScriptingTest extends TestCase
             return $disk->getAttribute('deviceID') === 'C:';
         }));
     }
-
-    /** @test */
-    public function purposeful_failure()
-    {
-        $this->assertTrue(false);
-    }
 }
