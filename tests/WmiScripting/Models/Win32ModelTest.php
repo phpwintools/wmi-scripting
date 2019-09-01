@@ -246,4 +246,15 @@ class Win32ModelTest extends TestCase
         $this->assertJson($class->toString());
         $this->assertJson((string) $class);
     }
+
+    /** @test */
+    public function it_reduces_value_arrays_to_just_its_value()
+    {
+        $test_array['valueArray'] = ['value' => 'test value'];
+        $class = new class($test_array) extends Win32Model {
+            protected $wmi_class_name = 'test';
+        };
+
+        $this->assertSame($test_array['valueArray']['value'], $class->toArray()['valueArray']);
+    }
 }
