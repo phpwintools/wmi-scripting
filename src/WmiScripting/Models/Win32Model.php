@@ -205,8 +205,7 @@ class Win32Model implements Arrayable, Jsonable, HasAttributes
                 continue;
             }
 
-            $this->unmapped_attributes[$key] =
-                $this->cast($key, $value);
+            $this->unmapped_attributes[$key] = $this->cast($key, $value);
         }
     }
 
