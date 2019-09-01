@@ -3,6 +3,8 @@
 namespace Tests\WmiScripting\Models;
 
 use Tests\TestCase;
+use PhpWinTools\WmiScripting\Connection;
+use PhpWinTools\WmiScripting\Query\Builder;
 use PhpWinTools\WmiScripting\Models\Win32Model;
 use PhpWinTools\WmiScripting\Models\LogicalDisk;
 
@@ -13,6 +15,23 @@ class Win32ModelTest extends TestCase
     {
         $this->assertInstanceOf(Win32Model::class, new Win32Model());
         $this->assertInstanceOf(Win32Model::class, Win32Model::newInstance());
+    }
+
+    /** @test */
+    public function it_returns_an_instance_of_builder()
+    {
+        $testModel = new class extends Win32Model {
+            protected $wmi_class_name = 'test';
+        };
+
+        $this->assertInstanceOf(Builder::class, $testModel::query());
+    }
+
+    /** @test */
+    public function it_has_a_default_connection_of_default()
+    {
+        $this->assertSame('default', LogicalDisk::newInstance()->getConnectionName());
+        $this->assertInstanceOf(Connection::class, LogicalDisk::newInstance()->getConnection());
     }
 
     /** @test */
