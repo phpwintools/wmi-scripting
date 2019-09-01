@@ -24,7 +24,6 @@ cache:
   directories:
     # Common cache directories
     - vendor
-    - $HOME/AppData/Local/Temp/chocolatey
 
     # Cache PHP and Composer install
     - /c/tools/$PHP_DIR
