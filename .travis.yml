@@ -53,11 +53,11 @@ before_script:
   - travis_retry wget $XDEBUG -O /c/tools/$PHP_DIR/ext/xdebug.dll -q;
   - ./bin/ci/start_xdebug.sh;
 
-script: ./vendor/bin/phpunit --coverage-clover=/c/tools/$PHP_DIR/coverage.clover
+script: ./vendor/bin/phpunit --coverage-clover=/c/tools/coverage.clover
 
 # Remove XDebug from INI before cache
 before_cache: ./bin/ci/stop_xdebug.sh;
 
 after_script:
   - travis_retry wget https://github.com/scrutinizer-ci/ocular/releases/download/1.5.2/ocular.phar -q;
-  - php ocular.phar code-coverage:upload --format=php-clover /c/tools/$PHP_DIR/coverage.clover 2>&1
+  - php ocular.phar code-coverage:upload --format=php-clover /c/tools/coverage.clover
