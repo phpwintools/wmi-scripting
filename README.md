@@ -1,8 +1,6 @@
 <h1 align="center">WMI Scripting</h1>
 
 <p align="center">
-    <a href="https://ci.appveyor.com/project/jspringe/wmi-scripting/branch/master"><img src="https://ci.appveyor.com/api/projects/status/github/phpwintools/wmi-scripting?svg=true&branch=master&passingText=master%20-%20Passing&failingText=master%20-%20Failing&pendingText=master%20-%20Testing" alt="AppVeyor Build Status"></a>
-    <a href="https://travis-ci.org/phpwintools/wmi-scripting"><img src="https://travis-ci.org/phpwintools/wmi-scripting.svg" alt="Build Status"></a>
     <a href="https://scrutinizer-ci.com/g/phpwintools/wmi-scripting/?branch=master"><img src="https://scrutinizer-ci.com/g/phpwintools/wmi-scripting/badges/quality-score.png?b=master" alt="Scrutinizer"></a>
     <img src="https://scrutinizer-ci.com/g/phpwintools/wmi-scripting/badges/coverage.png?b=master" alt="Code Coverage">
     <a href="https://packagist.org/packages/phpwintools/wmi-scripting"><img src="https://poser.pugx.org/phpwintools/wmi-scripting/v/stable.svg" alt="Latest Stable Version"></a>
@@ -10,6 +8,11 @@
     <a href="https://packagist.org/packages/phpwintools/wmi-scripting"><img src="https://img.shields.io/github/license/phpwintools/wmi-scripting" alt="License"></a>
 </p>
 
+| Status | Details
+|--------|---------
+| <a href="https://ci.appveyor.com/project/jspringe/wmi-scripting/branch/master"><img src="https://ci.appveyor.com/api/projects/status/github/phpwintools/wmi-scripting?svg=true&branch=master&passingText=Master%20-%20Passing&failingText=Master%20-%20Failing&pendingText=Master%20-%20Testing" alt="AppVeyor Build Status"></a> | Master (AppVeyor)
+| <a href="https://ci.appveyor.com/project/jspringe/wmi-scripting/branch/win32modeltests"><img src="https://ci.appveyor.com/api/projects/status/github/phpwintools/wmi-scripting?svg=true&branch=win32modeltests&passingText=Feature%20-%20Passing&failingText=Feature%20-%20Failing&pendingText=Feature%20-%20Testing" alt="AppVeyor Build Status"></a> | Win32ModelTesting (AppVeyor)
+| <a href="https://travis-ci.org/phpwintools/wmi-scripting"><img src="https://travis-ci.org/phpwintools/wmi-scripting.svg" alt="Build Status"></a> | Master (Travis)
 ### Current Version: 0.0.1-alpha
 
 This is currently under heavy development. Until version 1.0.0 I do not expect to follow SemVer.
