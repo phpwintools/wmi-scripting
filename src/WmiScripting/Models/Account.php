@@ -20,10 +20,8 @@ class Account extends CimLogicalElement
 
     protected $sIDType;
 
-    public function __construct(array $attributes = [])
+    public function getSIDTypeAttribute($value)
     {
-        $this->attribute_casting['sIDType'] = $this->constantToStringCallback(SidType::class);
-
-        parent::__construct($attributes);
+        return $this->mapConstant(SidType::class, $value);
     }
 }

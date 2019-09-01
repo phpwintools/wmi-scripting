@@ -8,6 +8,9 @@ init:
 
 environment:
   matrix:
+    - PHP_VERSION: "7.1.25"
+      PHP_DIR: "php71"
+
     - PHP_VERSION: "7.2.20"
       PHP_DIR: "php72"
 

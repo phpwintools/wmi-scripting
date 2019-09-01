@@ -10,7 +10,7 @@ use PhpWinTools\WmiScripting\Contracts\Arrayable;
 use PhpWinTools\WmiScripting\Collections\ArrayCollection;
 use Illuminate\Contracts\Support\Arrayable as IlluminateArrayable;
 
-trait ComHasAttributes
+trait HasArrayableAttributes
 {
     protected $hidden_booted = false;
 

@@ -55,11 +55,9 @@ class CimOperatingSystem extends CimLogicalElement
 
     protected $version;
 
-    public function __construct(array $attributes = [])
+    public function getOSTypeAttribute($value)
     {
-        $this->attribute_casting['oSType'] = $this->constantToStringCallback(OSType::class);
-
-        parent::__construct($attributes);
+        return $this->mapConstant(OSType::class, $value);
     }
 
     public function reboot()

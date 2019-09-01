@@ -13,6 +13,11 @@ class ApiObjectCallStack
         static::$instance = $this;
     }
 
+    public static function newInstance()
+    {
+        return static::$instance = new static();
+    }
+
     public static function instance()
     {
         return static::$instance ?? new static();
