@@ -2,13 +2,13 @@
 
 namespace Tests\WmiScripting\Models;
 
-use PhpWinTools\WmiScripting\Collections\ModelCollection;
 use Tests\TestCase;
 use PhpWinTools\WmiScripting\Scripting;
 use PhpWinTools\WmiScripting\Connection;
 use PhpWinTools\WmiScripting\Query\Builder;
 use PhpWinTools\WmiScripting\Models\Win32Model;
 use PhpWinTools\WmiScripting\Models\LogicalDisk;
+use PhpWinTools\WmiScripting\Collections\ModelCollection;
 use PhpWinTools\WmiScripting\Exceptions\WmiClassNotFoundException;
 
 class Win32ModelTest extends TestCase
@@ -59,6 +59,7 @@ class Win32ModelTest extends TestCase
     {
          $wmiClass = new class extends Win32Model {
             public static $builder;
+
             protected $wmi_class_name = 'test';
 
             public static function query($connection = null)
@@ -67,16 +68,20 @@ class Win32ModelTest extends TestCase
             }
         };
 
-        $mockConnection = $this->getMockBuilder(Connection::class)->getMock();
-        $mockConnection->expects($this->once())->method('connect');
+        $connection = $this->getMockBuilder(Connection::class)->getMock();
+        $connection->expects($this->once())->method('connect');
 
-        $mockBuilder = $this->getMockBuilder(Builder::class)
-            ->setConstructorArgs([$wmiClass, $mockConnection])
-            ->getMock();
-        $mockBuilder->expects($this->once())->method('all')->willReturn(new ModelCollection());
+        $builder = $this->getMockBuilder(Builder::class)->setConstructorArgs([$wmiClass, $connection])->getMock();
+        $builder->expects($this->once())->method('all')->willReturn(new ModelCollection());
 
-        $wmiClass::$builder = $mockBuilder;
-        $wmiClass::all($mockConnection);
+        $wmiClass::$builder = $builder;
+        $wmiClass::all($connection);
+    }
+
+    /** @test */
+    public function it_returns_the_class_name_without_the_namespace()
+    {
+        $this->assertSame('LogicalDisk', LogicalDisk::newInstance()->getClassName());
     }
 
     /** @test */
@@ -219,5 +224,26 @@ class Win32ModelTest extends TestCase
         };
 
         $this->assertArrayNotHasKey('iAmHidden', $class->toArray());
+    }
+
+    /** @test */
+    public function it_can_return_to_a_json_string()
+    {
+        $class = new class extends Win32Model {
+            protected $wmi_class_name = 'test';
+        };
+
+        $this->assertJson($class->toJson());
+    }
+
+    /** @test */
+    public function it_returns_a_json_string_when_cast_to_string()
+    {
+        $class = new class extends Win32Model {
+            protected $wmi_class_name = 'test';
+        };
+
+        $this->assertJson($class->toString());
+        $this->assertJson((string) $class);
     }
 }
