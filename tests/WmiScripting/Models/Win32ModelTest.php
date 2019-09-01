@@ -2,6 +2,7 @@
 
 namespace Tests\WmiScripting\Models;
 
+use PhpWinTools\WmiScripting\Collections\ModelCollection;
 use Tests\TestCase;
 use PhpWinTools\WmiScripting\Scripting;
 use PhpWinTools\WmiScripting\Connection;
@@ -51,6 +52,31 @@ class Win32ModelTest extends TestCase
         $this->expectException(WmiClassNotFoundException::class);
 
         (new class extends Win32Model {})->getAttribute('wmi_class_name');
+    }
+
+    /** @test */
+    public function it_calls_all_on_an_instance_of_builder_with_the_given_connection()
+    {
+         $wmiClass = new class extends Win32Model {
+            public static $builder;
+            protected $wmi_class_name = 'test';
+
+            public static function query($connection = null)
+            {
+                return static::$builder;
+            }
+        };
+
+        $mockConnection = $this->getMockBuilder(Connection::class)->getMock();
+        $mockConnection->expects($this->once())->method('connect');
+
+        $mockBuilder = $this->getMockBuilder(Builder::class)
+            ->setConstructorArgs([$wmiClass, $mockConnection])
+            ->getMock();
+        $mockBuilder->expects($this->once())->method('all')->willReturn(new ModelCollection());
+
+        $wmiClass::$builder = $mockBuilder;
+        $wmiClass::all($mockConnection);
     }
 
     /** @test */

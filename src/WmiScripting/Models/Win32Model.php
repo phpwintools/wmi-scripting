@@ -57,16 +57,6 @@ class Win32Model implements Arrayable, Jsonable, HasAttributes
     }
 
     /**
-     * @param Connection|string|null $connection
-     *
-     * @return ModelCollection|Win32Model[]
-     */
-    public static function all($connection = null)
-    {
-        return static::query(static::newInstance()->getConnection($connection))->all();
-    }
-
-    /**
      * @param array           $attributes
      * @param ObjectPath|null $objectPath
      *
@@ -75,6 +65,16 @@ class Win32Model implements Arrayable, Jsonable, HasAttributes
     public static function newInstance(array $attributes = [], ObjectPath $objectPath = null)
     {
         return new static($attributes, $objectPath);
+    }
+
+    /**
+     * @param Connection|string|null $connection
+     *
+     * @return ModelCollection|Win32Model[]
+     */
+    public static function all($connection = null)
+    {
+        return static::query(static::newInstance()->getConnection($connection))->all();
     }
 
     /**
