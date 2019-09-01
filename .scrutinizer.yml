@@ -6,8 +6,7 @@ tools:
 build:
   dependencies:
     override:
-      -
-        command: composer install --ignore-platform-reqs --no-interaction --prefer-dist --no-suggest
+      - command: composer install --ignore-platform-reqs --no-interaction --prefer-dist --no-suggest
   nodes:
     analysis:
       project_setup:
@@ -17,9 +16,7 @@ build:
         override:
           - command: vendor/bin/phpunit --configuration phpunit.xml --exclude-group uses_real_com
           - php-scrutinizer-run
-          -
-            command: phpcs-run
-            use_website_config: true
+          - command: phpcs-run
     tests: true
 filter:
   excluded_paths:
