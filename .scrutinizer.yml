@@ -14,10 +14,9 @@ build:
           - 'true'
       tests:
         override:
-          - command: vendor/bin/phpunit --configuration phpunit.xml --exclude-group uses_real_com
+          - vendor/bin/phpunit --configuration phpunit.xml --exclude-group uses_real_com
           - php-scrutinizer-run
-          - command: phpcs-run ./src
-    tests: true
+
 filter:
   excluded_paths:
     - 'tests/*'
