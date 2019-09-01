@@ -10,9 +10,9 @@
 
 | Status | Details
 |--------|---------
+| <a href="https://travis-ci.org/phpwintools/wmi-scripting"><img src="https://travis-ci.org/phpwintools/wmi-scripting.svg" alt="Build Status"></a> | Master (Travis)
 | <a href="https://ci.appveyor.com/project/jspringe/wmi-scripting/branch/master"><img src="https://ci.appveyor.com/api/projects/status/github/phpwintools/wmi-scripting?svg=true&branch=master&passingText=Master%20-%20Passing&failingText=Master%20-%20Failing&pendingText=Master%20-%20Testing" alt="AppVeyor Build Status"></a> | Master (AppVeyor)
 | <a href="https://ci.appveyor.com/project/jspringe/wmi-scripting/branch/win32modeltests"><img src="https://ci.appveyor.com/api/projects/status/github/phpwintools/wmi-scripting?svg=true&branch=win32modeltests&passingText=Feature%20-%20Passing&failingText=Feature%20-%20Failing&pendingText=Feature%20-%20Testing" alt="AppVeyor Build Status"></a> | Win32ModelTesting (AppVeyor)
-| <a href="https://travis-ci.org/phpwintools/wmi-scripting"><img src="https://travis-ci.org/phpwintools/wmi-scripting.svg" alt="Build Status"></a> | Master (Travis)
 ### Current Version: 0.0.1-alpha
 
 This is currently under heavy development. Until version 1.0.0 I do not expect to follow SemVer.
