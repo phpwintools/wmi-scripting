@@ -28,6 +28,20 @@ class Win32ModelTest extends TestCase
     }
 
     /** @test */
+    public function it_can_detect_the_wmi_class_if_not_provided()
+    {
+        $this->assertSame('Win32_LogicalDisk', LogicalDisk::newInstance()->getAttribute('wmi_class_name'));
+    }
+
+    /** @test */
+    public function it_can_detect_the_wmi_class_from_its_parent()
+    {
+        $wmiClass = new class extends LogicalDisk {};
+
+        $this->assertSame('Win32_LogicalDisk', $wmiClass->getAttribute('wmi_class_name'));
+    }
+
+    /** @test */
     public function it_has_a_default_connection_of_default()
     {
         $this->assertSame('default', LogicalDisk::newInstance()->getConnectionName());
