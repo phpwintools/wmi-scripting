@@ -5,8 +5,8 @@ namespace Tests\WmiScripting;
 use Tests\TestCase;
 use PhpWinTools\WmiScripting\Scripting;
 use PhpWinTools\WmiScripting\Connection;
-use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Models\LogicalDisk;
+use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Collections\ModelCollection;
 use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
 use PhpWinTools\WmiScripting\Exceptions\InvalidConfigArgumentException;
@@ -15,13 +15,13 @@ class ScriptingTest extends TestCase
 {
     /** @var Config */
     protected $config;
-//
-//    protected function tearDown(): void
-//    {
-//        parent::tearDown();
-//
-//        $this->config = Config::killTestInstance();
-//    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->config = Config::killTestInstance();
+    }
 
     /** @test */
     public function it_can_instantiate_with_no_parameters()
