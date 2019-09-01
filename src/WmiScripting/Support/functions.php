@@ -31,7 +31,7 @@ namespace PhpWinTools\WmiScripting\Support {
         }
 
         if (is_string($connection) && trim($connection) !== '') {
-            $connection = core($config)->getConnection($connection) ?? $connection;
+            $connection = core($config)->getConnection($connection);
         }
 
         if (!$connection instanceof Connection && $default) {

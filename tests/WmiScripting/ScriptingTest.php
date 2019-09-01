@@ -15,13 +15,13 @@ class ScriptingTest extends TestCase
 {
     /** @var Config */
     protected $config;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->config = Config::killTestInstance();
-    }
+//
+//    protected function tearDown(): void
+//    {
+//        parent::tearDown();
+//
+//        $this->config = Config::killTestInstance();
+//    }
 
     /** @test */
     public function it_can_instantiate_with_no_parameters()

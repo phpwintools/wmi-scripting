@@ -20,6 +20,11 @@ class ComCallStack
         static::$instance = $this;
     }
 
+    public static function newInstance()
+    {
+        return static::$instance = new static();
+    }
+
     /**
      * @return ComCallStack
      */

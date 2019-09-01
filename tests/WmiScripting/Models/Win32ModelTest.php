@@ -2,6 +2,8 @@
 
 namespace Tests\WmiScripting\Models;
 
+use PhpWinTools\WmiScripting\Configuration\Config;
+use PhpWinTools\WmiScripting\Scripting;
 use Tests\TestCase;
 use PhpWinTools\WmiScripting\Connection;
 use PhpWinTools\WmiScripting\Query\Builder;
@@ -10,6 +12,13 @@ use PhpWinTools\WmiScripting\Models\LogicalDisk;
 
 class Win32ModelTest extends TestCase
 {
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        Config::killTestInstance();
+    }
+
     /** @test */
     public function it_can_be_instantiated()
     {
@@ -20,6 +29,8 @@ class Win32ModelTest extends TestCase
     /** @test */
     public function it_returns_an_instance_of_builder()
     {
+        Scripting::fake($this)->win32Model(LogicalDisk::class);
+
         $testModel = new class extends Win32Model {
             protected $wmi_class_name = 'test';
         };

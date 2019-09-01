@@ -3,6 +3,8 @@
 namespace PhpWinTools\WmiScripting;
 
 use PHPUnit\Framework\TestCase;
+use PhpWinTools\WmiScripting\Testing\CallStacks\ApiObjectCallStack;
+use PhpWinTools\WmiScripting\Testing\CallStacks\ComCallStack;
 use PhpWinTools\WmiScripting\Testing\FakeFactory;
 use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
@@ -43,6 +45,9 @@ class Scripting
      */
     public static function fake(TestCase $testCase, Config $config = null): FakeFactory
     {
+        ComCallStack::newInstance();
+        ApiObjectCallStack::newInstance();
+
         return new FakeFactory($testCase, $config ?? Config::testInstance());
     }
 
