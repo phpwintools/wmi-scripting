@@ -8,6 +8,8 @@
     <a href="https://packagist.org/packages/phpwintools/wmi-scripting"><img src="https://img.shields.io/github/license/phpwintools/wmi-scripting" alt="License"></a>
 </p>
 
+### Build Status
+
 | Status | Details | Service
 |--------|---------|---------
 | <a href="https://travis-ci.org/phpwintools/wmi-scripting"><img src="https://travis-ci.org/phpwintools/wmi-scripting.svg" alt="Build Status"></a> | Master | Travis
