@@ -20,10 +20,8 @@ class UserAccount extends Account
 
     protected $passwordRequired;
 
-    public function __construct(array $attributes = [])
+    public function getAccountTypeAttribute($value)
     {
-        $this->attribute_casting['accountType'] = $this->constantToStringCallback(AccountType::class);
-
-        parent::__construct($attributes);
+        return $this->mapConstant(AccountType::class, $value);
     }
 }

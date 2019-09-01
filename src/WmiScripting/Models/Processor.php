@@ -66,10 +66,8 @@ class Processor extends CimProcessor
 
     protected $voltageCaps;
 
-    public function __construct(array $attributes = [])
+    public function getArchitectureAttribute($value)
     {
-        $this->attribute_casting['architecture'] = $this->constantToStringCallback(ProcessorArchitecture::class);
-
-        parent::__construct($attributes);
+        return $this->mapConstant(ProcessorArchitecture::class, $value);
     }
 }

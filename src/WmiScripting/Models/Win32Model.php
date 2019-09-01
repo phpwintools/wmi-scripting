@@ -2,15 +2,16 @@
 
 namespace PhpWinTools\WmiScripting\Models;
 
-use Closure;
 use PhpWinTools\WmiScripting\Connection;
 use PhpWinTools\WmiScripting\Query\Builder;
 use PhpWinTools\WmiScripting\Contracts\Jsonable;
 use PhpWinTools\WmiScripting\Contracts\Arrayable;
 use PhpWinTools\WmiScripting\Contracts\HasAttributes;
+use PhpWinTools\WmiScripting\MappingStrings\Mappings;
 use function PhpWinTools\WmiScripting\Support\connection;
 use PhpWinTools\WmiScripting\Collections\ModelCollection;
 use PhpWinTools\WmiScripting\Concerns\HasArrayableAttributes;
+use PhpWinTools\WmiScripting\Exceptions\InvalidArgumentException;
 use PhpWinTools\WmiScripting\Exceptions\WmiClassNotFoundException;
 use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectPath;
@@ -224,20 +225,23 @@ class Win32Model implements Arrayable, Jsonable, HasAttributes
     }
 
     /**
-     * @TODO: This should just be a helper method instead of returning a callback.
+     * @param Mappings|string $mapping_string_class
+     * @param mixed           $constant
      *
-     * @param $constant_class
+     * @throws InvalidArgumentException
      *
-     * @return Closure
+     * @return mixed
      */
-    protected function constantToStringCallback($constant_class)
+    protected function mapConstant(string $mapping_string_class, $constant)
     {
-        return function ($constant) use ($constant_class) {
-            if (trim($type = call_user_func_array($constant_class . '::string', [$constant])) === '') {
-                return "[{$constant}] - UNKNOWN";
-            }
+        if (!array_key_exists(Mappings::class, class_parents($mapping_string_class))) {
+            throw new InvalidArgumentException("{$mapping_string_class} must extend " . Mappings::class);
+        }
 
-            return "[{$constant}] - {$type}";
-        };
+        if (trim($type = call_user_func_array($mapping_string_class . '::string', [$constant])) === '') {
+            return "[{$constant}] - UNKNOWN";
+        }
+
+        return $type;
     }
 }
