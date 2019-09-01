@@ -46,7 +46,7 @@ before_install:
   - travis_retry composer self-update
 
 install:
-  - travis_retry composer update --no-interaction --prefer-dist --no-suggest
+  - travis_retry composer update --no-interaction --prefer-dist --no-suggest --ansi --no-progress
 
 before_script:
   # Download appropriate XDebug and modify configuration
