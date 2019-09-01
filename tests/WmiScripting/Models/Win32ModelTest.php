@@ -2,6 +2,8 @@
 
 namespace Tests\WmiScripting\Models;
 
+use PhpWinTools\WmiScripting\Exceptions\InvalidArgumentException;
+use PhpWinTools\WmiScripting\MappingStrings\Mappings;
 use Tests\TestCase;
 use PhpWinTools\WmiScripting\Scripting;
 use PhpWinTools\WmiScripting\Connection;
@@ -256,5 +258,88 @@ class Win32ModelTest extends TestCase
         };
 
         $this->assertSame($test_array['valueArray']['value'], $class->toArray()['valueArray']);
+    }
+
+    /** @test */
+    public function it_can_map_a_constant_to_a_string()
+    {
+        $constants = new class extends Mappings {
+            const TEST = 1;
+
+            const STRING_ARRAY = [
+                self::TEST => 'test string',
+            ];
+        };
+
+        $wmiClass = new class extends Win32Model {
+            protected $wmi_class_name = 'test';
+
+            public $constant_class;
+
+            protected $testConstant = 1;
+
+            public function getTestConstantAttribute($value)
+            {
+                return $this->mapConstant($this->constant_class, $value);
+            }
+        };
+
+        $wmiClass->constant_class = get_class($constants);
+
+        $this->assertSame($constants::string(1), $wmiClass->getAttribute('testConstant'));
+    }
+
+    /** @test */
+    public function it_can_returns_the_constant_in_brackets_with_unknown_if_it_cant_be_mapped()
+    {
+        $constants = new class extends Mappings {
+            const TEST = 1;
+
+            const STRING_ARRAY = [
+                self::TEST => 'test string',
+            ];
+        };
+
+        $wmiClass = new class extends Win32Model {
+            protected $wmi_class_name = 'test';
+
+            public $constant_class;
+
+            protected $testConstant = 2;
+
+            public function getTestConstantAttribute($value)
+            {
+                return $this->mapConstant($this->constant_class, $value);
+            }
+        };
+
+        $wmiClass->constant_class = get_class($constants);
+
+        $this->assertSame('[2] - UNKNOWN', $wmiClass->getAttribute('testConstant'));
+    }
+
+    /** @test */
+    public function it_throws_exception_if_constant_class_doesnt_extend_mappings()
+    {
+        $class = new class {};
+
+        $wmiClass = new class extends Win32Model {
+            protected $wmi_class_name = 'test';
+
+            public $constant_class;
+
+            protected $testConstant = 1234;
+
+            public function getTestConstantAttribute($value)
+            {
+                return $this->mapConstant($this->constant_class, $value);
+            }
+        };
+
+        $wmiClass->constant_class = get_class($class);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $wmiClass->getAttribute('testConstant');
     }
 }
