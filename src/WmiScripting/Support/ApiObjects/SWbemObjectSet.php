@@ -4,9 +4,9 @@ namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
 use Countable;
 use ArrayAccess;
-use PhpWinTools\WmiScripting\Models\Win32Model;
 use PhpWinTools\Support\COM\VariantWrapper;
 use PhpWinTools\Support\COM\ComVariantWrapper;
+use PhpWinTools\WmiScripting\Models\Win32Model;
 use function PhpWinTools\WmiScripting\Support\resolve;
 use PhpWinTools\WmiScripting\Collections\ModelCollection;
 use PhpWinTools\WmiScripting\Collections\ObjectSetCollection;
