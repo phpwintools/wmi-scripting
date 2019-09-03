@@ -10,20 +10,25 @@ environment:
   matrix:
     - PHP_VERSION: "7.1.25"
       PHP_DIR: "php71"
+      XDEBUG: "https://xdebug.org/files/php_xdebug-2.8.0beta1-7.1-vc14-nts-x86_64.dll"
 
     - PHP_VERSION: "7.2.20"
       PHP_DIR: "php72"
+      XDEBUG: "https://xdebug.org/files/php_xdebug-2.8.0beta1-7.2-vc15-nts-x86_64.dll"
 
     - PHP_VERSION: "7.3.8"
       PHP_DIR: "php73"
+      XDEBUG: "https://xdebug.org/files/php_xdebug-2.8.0beta1-7.3-vc15-nts-x86_64.dll"
 
 matrix:
   fast_finish: true
 
 cache:
-  - composer.phar
-  - c:\projects\wmi-scripting\vendor
-  - c:\tools\%PHP_DIR%
+  - composer.phar -> appveyor.xml
+  - ocular.phar -> appveyor.xml
+  - xdebug.dll -> appveyor.xml
+  - c:\projects\wmi-scripting\vendor -> appveyor.xml
+  - c:\tools\%PHP_DIR% -> appveyor.xml
 
 install:
   - SET PATH=c:\tools\%PHP_DIR%;%PATH%
@@ -51,7 +56,17 @@ install:
   - php composer.phar self-update
   - php composer.phar update --no-interaction --prefer-dist --no-suggest --ansi --no-progress
 
+before_test:
+  - IF NOT EXIST xdebug.dll (appveyor DownloadFile %XDEBUG% xdebug.dll)
+  - copy /Y c:\tools\%PHP_DIR%\php.ini c:\tools\%PHP_DIR%\php.ini.base
+  - echo zend_extension=xdebug.dll >> c:\tools\%PHP_DIR%\php.ini
+
 test_script:
   - SET X=0
-  - vendor\bin\phpunit || SET X=!errorlevel!
+  - vendor\bin\phpunit --coverage-clover coverage.clover --configuration phpunit.xml || SET X=!errorlevel!
   - exit %X%
+
+after_test:
+  - copy /Y c:\tools\%PHP_DIR%\php.ini.base c:\tools\%PHP_DIR%\php.ini
+  - IF NOT EXIST ocular.phar (appveyor DownloadFile https://github.com/scrutinizer-ci/ocular/releases/download/1.6.0/ocular.phar)
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
