@@ -4,13 +4,11 @@ namespace PhpWinTools\WmiScripting\Concerns;
 
 use Exception;
 use PhpWinTools\Support\StringModule;
-use PhpWinTools\Support\BooleanModule;
 use PhpWinTools\WmiScripting\Contracts\Arrayable;
 use PhpWinTools\WmiScripting\Collections\ArrayCollection;
 use function PhpWinTools\WmiScripting\Support\class_has_property;
 use function PhpWinTools\WmiScripting\Support\class_has_trait;
 use Illuminate\Contracts\Support\Arrayable as IlluminateArrayable;
-use function PhpWinTools\WmiScripting\Support\get_ancestor_property;
 
 trait HasArrayableAttributes
 {
