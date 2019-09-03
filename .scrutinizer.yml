@@ -1,7 +1,7 @@
 tools:
   external_code_coverage:
-    timeout: 720
-    runs: 3
+    timeout: 300
+    runs: 1
 
 build:
   dependencies:
