@@ -56,6 +56,25 @@ namespace PhpWinTools\WmiScripting\Support {
         return core()($class, $parameters);
     }
 
+    /**
+     * Expects either a class name or instance and will return if the given trait exists on the class.
+     *
+     * @param $class
+     * @param $trait
+     *
+     * @return bool
+     */
+    function class_has_trait($class, $trait): bool
+    {
+        return array_key_exists($trait, class_traits(is_object($class) ? get_class($class) : $class));
+    }
+
+    /**
+     * Returns all traits of the given class or instance. It also checks the traits for any used traits.
+     *
+     * @param $class
+     * @return array
+     */
     function class_traits($class)
     {
         $class = is_object($class) ? get_class($class) : $class;
@@ -75,6 +94,12 @@ namespace PhpWinTools\WmiScripting\Support {
         return array_merge($trait_traits, $traits);
     }
 
+    /**
+     * Returns all of the traits that a trait uses including it's ancestors.
+     *
+     * @param $trait
+     * @return array
+     */
     function trait_traits($trait)
     {
         $traits = class_uses($trait);

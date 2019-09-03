@@ -9,6 +9,7 @@ use PhpWinTools\Support\BooleanModule;
 use PhpWinTools\WmiScripting\Contracts\Arrayable;
 use PhpWinTools\WmiScripting\Collections\ArrayCollection;
 use Illuminate\Contracts\Support\Arrayable as IlluminateArrayable;
+use function PhpWinTools\WmiScripting\Support\class_has_trait;
 
 trait HasArrayableAttributes
 {
@@ -303,7 +304,7 @@ trait HasArrayableAttributes
         $results = [];
 
         foreach ($attributes as $key => $value) {
-            if ($this->isHidden($key)) {
+            if (class_has_trait(get_called_class(), HasHiddenAttributes::class) && $this->isHidden($key)) {
                 continue;
             }
 
