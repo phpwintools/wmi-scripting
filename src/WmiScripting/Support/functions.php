@@ -2,12 +2,12 @@
 
 namespace PhpWinTools\WmiScripting\Support {
 
-    use PhpWinTools\WmiScripting\Collections\ArrayCollection;
+    use ReflectionClass;
     use PhpWinTools\WmiScripting\Connection;
     use PhpWinTools\WmiScripting\Configuration\Config;
     use PhpWinTools\WmiScripting\Configuration\Resolver;
+    use PhpWinTools\WmiScripting\Collections\ArrayCollection;
     use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
-    use ReflectionClass;
 
     /**
      * @param Config|null $config

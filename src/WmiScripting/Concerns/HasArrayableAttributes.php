@@ -3,7 +3,6 @@
 namespace PhpWinTools\WmiScripting\Concerns;
 
 use Exception;
-use ReflectionClass;
 use PhpWinTools\Support\StringModule;
 use PhpWinTools\Support\BooleanModule;
 use PhpWinTools\WmiScripting\Contracts\Arrayable;
