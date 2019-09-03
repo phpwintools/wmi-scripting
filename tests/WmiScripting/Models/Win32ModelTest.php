@@ -12,6 +12,7 @@ use PhpWinTools\WmiScripting\MappingStrings\Mappings;
 use PhpWinTools\WmiScripting\Collections\ModelCollection;
 use PhpWinTools\WmiScripting\Exceptions\InvalidArgumentException;
 use PhpWinTools\WmiScripting\Exceptions\WmiClassNotFoundException;
+use function PhpWinTools\WmiScripting\Support\class_has_property;
 
 class Win32ModelTest extends TestCase
 {
@@ -98,7 +99,7 @@ class Win32ModelTest extends TestCase
     {
         $model = new LogicalDisk(['driveType' => 1234]);
 
-        $this->assertTrue($model->hasProperty('driveType'));
+        $this->assertTrue(class_has_property($model, 'driveType'));
         $this->assertSame($model->getAttribute('driveType'), 1234);
     }
 

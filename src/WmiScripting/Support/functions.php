@@ -7,6 +7,7 @@ namespace PhpWinTools\WmiScripting\Support {
     use PhpWinTools\WmiScripting\Configuration\Config;
     use PhpWinTools\WmiScripting\Configuration\Resolver;
     use PhpWinTools\WmiScripting\Collections\ArrayCollection;
+    use PhpWinTools\WmiScripting\Exceptions\InvalidArgumentException;
     use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
 
     /**
@@ -58,6 +59,35 @@ namespace PhpWinTools\WmiScripting\Support {
         return core()($class, $parameters);
     }
 
+    /**
+     * Checks for the existence of a property.
+     *
+     * @param $class
+     * @param $property_name
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return bool
+     */
+    function class_has_property($class, $property_name): bool
+    {
+        $class = is_object($class) ? get_class($class) : $class;
+
+        try {
+            return (new ReflectionClass($class))->hasProperty($property_name);
+        } catch (\Exception $exception) {
+            throw new InvalidConnectionException("Unable to reflect on {$class}.", null, $exception);
+        }
+    }
+
+    /**
+     * Gets the default value of the given property through the parent.
+     *
+     * @param $class
+     * @param $property_name
+     *
+     * @return array
+     */
     function get_ancestor_property($class, $property_name)
     {
         $class = is_object($class) ? get_class($class) : $class;

@@ -11,8 +11,10 @@ use PhpWinTools\WmiScripting\MappingStrings\Mappings;
 use function PhpWinTools\WmiScripting\Support\connection;
 use PhpWinTools\WmiScripting\Collections\ModelCollection;
 use PhpWinTools\WmiScripting\Concerns\HasHiddenAttributes;
+use PhpWinTools\WmiScripting\Concerns\HasCastableAttributes;
 use PhpWinTools\WmiScripting\Concerns\HasArrayableAttributes;
 use PhpWinTools\WmiScripting\Exceptions\InvalidArgumentException;
+use function PhpWinTools\WmiScripting\Support\class_has_property;
 use PhpWinTools\WmiScripting\Exceptions\WmiClassNotFoundException;
 use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectPath;
@@ -23,7 +25,8 @@ use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectPath;
 class Win32Model implements Arrayable, Jsonable, HasAttributes
 {
     use HasArrayableAttributes,
-        HasHiddenAttributes;
+        HasHiddenAttributes,
+        HasCastableAttributes;
 
     /** @var string */
     protected $uuid;
@@ -203,7 +206,7 @@ class Win32Model implements Arrayable, Jsonable, HasAttributes
         foreach ($attributes as $key => $value) {
             $key = lcfirst($key);
             $value = $this->reduceValueArray($value);
-            if ($this->hasProperty($key)) {
+            if (class_has_property(get_called_class(), $key)) {
                 $this->{$key} = $this->cast($key, $value);
                 continue;
             }

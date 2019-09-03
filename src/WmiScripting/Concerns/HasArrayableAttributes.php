@@ -7,14 +7,13 @@ use PhpWinTools\Support\StringModule;
 use PhpWinTools\Support\BooleanModule;
 use PhpWinTools\WmiScripting\Contracts\Arrayable;
 use PhpWinTools\WmiScripting\Collections\ArrayCollection;
+use function PhpWinTools\WmiScripting\Support\class_has_property;
 use function PhpWinTools\WmiScripting\Support\class_has_trait;
 use Illuminate\Contracts\Support\Arrayable as IlluminateArrayable;
 use function PhpWinTools\WmiScripting\Support\get_ancestor_property;
 
 trait HasArrayableAttributes
 {
-    protected $casts_booted = false;
-
     protected $unmapped_attributes = [];
 
     protected $attribute_name_replacements = [];
@@ -27,7 +26,7 @@ trait HasArrayableAttributes
 
         $value = $default;
 
-        if ($this->hasProperty($attribute)) {
+        if (class_has_property(get_called_class(), $attribute)) {
             $value = $this->{$attribute};
         }
 
@@ -39,7 +38,7 @@ trait HasArrayableAttributes
             $value = $this->unmapped_attributes[$attribute];
         }
 
-        if ($this->hasCast($attribute)) {
+        if (class_has_trait(get_called_class(), HasCastableAttributes::class) && $this->hasCast($attribute)) {
             $value = $this->cast($attribute, $value);
         }
 
@@ -67,50 +66,9 @@ trait HasArrayableAttributes
         return $this;
     }
 
-    public function getCasts(): array
-    {
-        if (!$this->casts_booted) {
-            $this->bootCasts();
-        }
-
-        return $this->attribute_casting;
-    }
-
-    public function getCast($attribute)
-    {
-        $casts = $this->getCasts();
-
-        return $casts[$attribute] ?? null;
-    }
-
-    public function hasCast($attribute): bool
-    {
-        return array_key_exists($attribute, $this->getCasts());
-    }
-
-    protected function bootCasts()
-    {
-        $merge_casting = true;
-        $attribute_casting = [];
-
-        if ($this->hasProperty('merge_parent_casting')) {
-            $merge_casting = $this->merge_parent_casting;
-        }
-
-        if ($this->hasProperty('attribute_casting')) {
-            $attribute_casting = $this->attribute_casting;
-        }
-
-        $this->attribute_casting = $merge_casting
-            ? array_merge(get_ancestor_property(get_called_class(), 'attribute_casting'), $attribute_casting)
-            : $attribute_casting;
-
-        $this->casts_booted = true;
-    }
-
     protected function getAttributeMethodValue($method, $attribute)
     {
-        if ($this->hasProperty($attribute)) {
+        if (class_has_property(get_called_class(), $attribute)) {
             return $this->{$method}($this->{$attribute});
         }
 
@@ -133,7 +91,7 @@ trait HasArrayableAttributes
         return $this->collect($this->getAttributeMethods())->map(function ($method) {
             return $this->getAttributeNameFromMethod($method);
         })->filter(function ($attribute) {
-            return !$this->hasProperty($attribute) && !$this->hasUnmappedAttribute($attribute);
+            return !class_has_property(get_called_class(), $attribute) && !$this->hasUnmappedAttribute($attribute);
         })->values()->toArray();
     }
 
@@ -171,11 +129,6 @@ trait HasArrayableAttributes
         })->values()->toArray();
     }
 
-    public function hasProperty($property_name)
-    {
-        return array_key_exists($property_name, get_class_vars(get_called_class()));
-    }
-
     protected function replaceAttributeName($key)
     {
         if (array_key_exists($key, $this->attribute_name_replacements)) {
@@ -183,43 +136,6 @@ trait HasArrayableAttributes
         }
 
         return $key;
-    }
-
-    protected function cast($key, $value)
-    {
-        $casts = $this->getCasts();
-
-        if (!$this->hasCast($key)) {
-            return $value;
-        }
-
-        switch ($casts[$key]) {
-            case 'array':
-                return is_array($value) ? $value : [$value];
-            case 'bool':
-            case 'boolean':
-                return BooleanModule::makeBoolean($value);
-            case 'int':
-            case 'integer':
-                // Prevent integer overflow
-                return $value >= PHP_INT_MAX || $value <= PHP_INT_MIN ? (string) $value : (int) $value;
-            case 'string':
-                if ($value === true) {
-                    return 'true';
-                }
-
-                if ($value === false) {
-                    return 'false';
-                }
-
-                if (is_array($value)) {
-                    return json_encode($value);
-                }
-
-                return (string) $value;
-            default:
-                return $value;
-        }
     }
 
     protected function objectToArray($value)

@@ -6,6 +6,7 @@ use PhpWinTools\Support\COM\ComVariantWrapper;
 use PhpWinTools\WmiScripting\Contracts\Jsonable;
 use PhpWinTools\WmiScripting\Contracts\Arrayable;
 use PhpWinTools\WmiScripting\Concerns\HasHiddenAttributes;
+use PhpWinTools\WmiScripting\Concerns\HasCastableAttributes;
 use PhpWinTools\WmiScripting\Concerns\HasArrayableAttributes;
 
 /**
@@ -14,7 +15,8 @@ use PhpWinTools\WmiScripting\Concerns\HasArrayableAttributes;
 class AbstractWbemObject implements Arrayable, Jsonable
 {
     use HasArrayableAttributes,
-        HasHiddenAttributes;
+        HasHiddenAttributes,
+        HasCastableAttributes;
 
     protected $object;
 
