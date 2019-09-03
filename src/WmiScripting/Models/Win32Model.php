@@ -2,6 +2,7 @@
 
 namespace PhpWinTools\WmiScripting\Models;
 
+use PhpWinTools\WmiScripting\Concerns\HasHiddenAttributes;
 use PhpWinTools\WmiScripting\Connection;
 use PhpWinTools\WmiScripting\Query\Builder;
 use PhpWinTools\WmiScripting\Contracts\Jsonable;
@@ -21,7 +22,8 @@ use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectPath;
  */
 class Win32Model implements Arrayable, Jsonable, HasAttributes
 {
-    use HasArrayableAttributes;
+    use HasArrayableAttributes,
+        HasHiddenAttributes;
 
     /** @var string */
     protected $uuid;
