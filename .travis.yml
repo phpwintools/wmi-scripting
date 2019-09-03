@@ -52,7 +52,7 @@ before_script:
   - travis_retry wget $XDEBUG -O /c/tools/$PHP_DIR/ext/xdebug.dll -q;
   - ./bin/ci/start_xdebug.sh;
 
-script: ./vendor/bin/phpunit --coverage-clover=/c/tools/coverage.clover
+script: ./vendor/bin/phpunit --coverage-clover /c/tools/coverage.clover --configuration phpunit.xml
 
 # Remove XDebug from INI before cache
 before_cache: ./bin/ci/stop_xdebug.sh;
