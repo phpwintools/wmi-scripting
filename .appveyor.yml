@@ -62,10 +62,13 @@ before_test:
 
 test_script:
   - SET X=0
-  - vendor\bin\phpunit --coverage-clover coverage.clover --configuration phpunit.xml || SET X=!errorlevel!
+  - vendor\bin\phpunit --coverage-clover coverage.clover --configuration phpunit.xml --log-junit junit-results.xml || SET X=!errorlevel!
   - exit %X%
 
 after_test:
+  - ps: |
+      $wc = New-Object 'System.Net.WebClient'
+      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\junit-results.xml))
   - copy /Y c:\tools\%PHP_DIR%\php.ini.base c:\tools\%PHP_DIR%\php.ini
   - IF NOT EXIST ocular.phar (appveyor DownloadFile https://github.com/scrutinizer-ci/ocular/releases/download/1.6.0/ocular.phar)
   - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
