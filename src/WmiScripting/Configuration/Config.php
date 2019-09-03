@@ -10,6 +10,7 @@ use PhpWinTools\Support\COM\ComVariantWrapper;
 use PhpWinTools\WmiScripting\Containers\Connections;
 use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
 use PhpWinTools\WmiScripting\Exceptions\UnresolvableClassException;
+use PhpWinTools\WmiScripting\Support\Events\Bus;
 
 class Config
 {
@@ -22,11 +23,14 @@ class Config
 
     protected $resolver;
 
+    protected $bus;
+
     protected $resolve_stack = [];
 
-    public function __construct(array $config = [], Resolver $resolver = null)
+    public function __construct(array $config = [], Resolver $resolver = null, Bus $bus = null)
     {
         $this->resolver = $resolver ?? new Resolver($this);
+        $this->bus = $bus;
         $this->boot($config);
 
         static::$instance = $this;
@@ -250,6 +254,16 @@ class Config
         return $this->get("wmi.api_objects.{$class}");
     }
 
+    public function bus()
+    {
+        return $this->bootBus();
+    }
+
+    public function getBusClass()
+    {
+        return $this->get('bus.class');
+    }
+
     /**
      * @return array
      */
@@ -388,6 +402,7 @@ class Config
 
         $this->merge(include(__DIR__ . '/../config/bootstrap.php'));
 
+        $this->bootBus();
         $this->bootConnections();
     }
 
@@ -396,6 +411,11 @@ class Config
         foreach (Arr::dot($config) as $key => $value) {
             $this->config = Arr::add($this->config, $key, $value);
         }
+    }
+
+    protected function bootBus()
+    {
+        return $this->bus = $this->bus ?? $this->resolve()->make($this->getBusClass(), $this);
     }
 
     protected function bootConnections()
