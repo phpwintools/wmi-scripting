@@ -110,6 +110,7 @@ namespace PhpWinTools\WmiScripting\Support {
      * Returns all of the traits that a trait uses including it's ancestors.
      *
      * @param $trait_name
+     *
      * @return array
      */
     function trait_traits($trait_name)
