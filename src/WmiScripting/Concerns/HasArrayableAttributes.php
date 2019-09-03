@@ -12,27 +12,11 @@ use Illuminate\Contracts\Support\Arrayable as IlluminateArrayable;
 
 trait HasArrayableAttributes
 {
-    protected $hidden_booted = false;
-
     protected $casts_booted = false;
 
     protected $unmapped_attributes = [];
 
     protected $attribute_name_replacements = [];
-
-    protected $trait_hidden_attributes = [
-        'trait_hidden_attributes',
-        'trait_name_replacements',
-
-        'attribute_name_replacements',
-        'unmapped_attributes',
-
-        'hidden_attributes',
-        'merge_parent_hidden_attributes',
-
-        'attribute_casting',
-        'merge_parent_casting',
-    ];
 
     public function getAttribute($attribute, $default = null)
     {
@@ -73,33 +57,6 @@ trait HasArrayableAttributes
     public function collect(array $array)
     {
         return new ArrayCollection($array);
-    }
-
-    public function mergeHiddenAttributes(array $hidden_attributes, bool $merge_hidden = true)
-    {
-        $hidden_attributes = $merge_hidden
-            ? array_merge($this->getAncestorProperty('hidden_attributes'), $hidden_attributes)
-            : $hidden_attributes;
-
-        $this->trait_hidden_attributes = array_merge($this->trait_hidden_attributes, $hidden_attributes);
-
-        $this->bootHiddenAttributes();
-
-        return $this;
-    }
-
-    public function getHiddenAttributes()
-    {
-        if (!$this->hidden_booted) {
-            $this->bootHiddenAttributes();
-        }
-
-        return $this->trait_hidden_attributes;
-    }
-
-    public function isHidden($key): bool
-    {
-        return array_key_exists($key, $this->getHiddenAttributes());
     }
 
     public function setUnmappedAttribute($key, $value)
@@ -148,13 +105,6 @@ trait HasArrayableAttributes
             : $attribute_casting;
 
         $this->casts_booted = true;
-    }
-
-    protected function bootHiddenAttributes()
-    {
-        $this->trait_hidden_attributes = array_combine($this->trait_hidden_attributes, $this->trait_hidden_attributes);
-
-        $this->hidden_booted = true;
     }
 
     protected function getAttributeMethodValue($method, $attribute)

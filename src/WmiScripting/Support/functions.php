@@ -55,4 +55,34 @@ namespace PhpWinTools\WmiScripting\Support {
     {
         return core()($class, $parameters);
     }
+
+    function class_traits($class)
+    {
+        $class = is_object($class) ? get_class($class) : $class;
+
+        $traits = class_uses($class);
+
+        while ($class = get_parent_class($class)) {
+            $traits += class_uses($class);
+        }
+
+        $trait_traits = [];
+
+        foreach ($traits as $trait) {
+            $trait_traits += trait_traits($trait);
+        }
+
+        return array_merge($trait_traits, $traits);
+    }
+
+    function trait_traits($trait)
+    {
+        $traits = class_uses($trait);
+
+        foreach ($traits as $trait) {
+            $traits += trait_traits($trait);
+        }
+
+        return $traits;
+    }
 }

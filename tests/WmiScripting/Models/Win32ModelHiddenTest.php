@@ -2,8 +2,10 @@
 
 namespace Tests\WmiScripting\Models;
 
+use PhpWinTools\WmiScripting\Models\Account;
 use Tests\TestCase;
 use PhpWinTools\WmiScripting\Models\Win32Model;
+use function PhpWinTools\WmiScripting\Support\class_traits;
 
 class Win32ModelHiddenTest extends TestCase
 {
