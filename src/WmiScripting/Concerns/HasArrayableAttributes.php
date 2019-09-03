@@ -6,8 +6,8 @@ use Exception;
 use PhpWinTools\Support\StringModule;
 use PhpWinTools\WmiScripting\Contracts\Arrayable;
 use PhpWinTools\WmiScripting\Collections\ArrayCollection;
-use function PhpWinTools\WmiScripting\Support\class_has_property;
 use function PhpWinTools\WmiScripting\Support\class_has_trait;
+use function PhpWinTools\WmiScripting\Support\class_has_property;
 use Illuminate\Contracts\Support\Arrayable as IlluminateArrayable;
 
 trait HasArrayableAttributes
