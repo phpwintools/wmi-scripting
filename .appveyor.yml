@@ -27,8 +27,8 @@ cache:
   - composer.phar -> appveyor.xml
   - ocular.phar -> appveyor.xml
   - xdebug.dll -> appveyor.xml
-  - c:\projects\wmi-scripting\vendor -> appveyor.xml
-  - c:\tools\%PHP_DIR% -> appveyor.xml
+  - c:\projects\wmi-scripting\vendor
+  - c:\tools\%PHP_DIR%
 
 install:
   - SET PATH=c:\tools\%PHP_DIR%;%PATH%
@@ -57,7 +57,7 @@ install:
   - php composer.phar update --no-interaction --prefer-dist --no-suggest --ansi --no-progress
 
 before_test:
-  - IF NOT EXIST xdebug.dll (appveyor DownloadFile %XDEBUG% xdebug.dll)
+  - IF NOT EXIST xdebug.dll (appveyor DownloadFile %XDEBUG% -Filename xdebug.dll)
   - copy /Y c:\tools\%PHP_DIR%\php.ini c:\tools\%PHP_DIR%\php.ini.base
   - echo zend_extension=xdebug.dll >> c:\tools\%PHP_DIR%\php.ini
 
