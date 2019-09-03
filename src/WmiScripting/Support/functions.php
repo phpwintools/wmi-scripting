@@ -2,10 +2,12 @@
 
 namespace PhpWinTools\WmiScripting\Support {
 
+    use PhpWinTools\WmiScripting\Collections\ArrayCollection;
     use PhpWinTools\WmiScripting\Connection;
     use PhpWinTools\WmiScripting\Configuration\Config;
     use PhpWinTools\WmiScripting\Configuration\Resolver;
     use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
+    use ReflectionClass;
 
     /**
      * @param Config|null $config
@@ -56,6 +58,15 @@ namespace PhpWinTools\WmiScripting\Support {
         return core()($class, $parameters);
     }
 
+    function get_ancestor_property($class, $property_name)
+    {
+        $class = is_object($class) ? get_class($class) : $class;
+
+        return ArrayCollection::collect(class_parents($class))->map(function ($class) use ($property_name) {
+            return (new ReflectionClass($class))->getDefaultProperties()[$property_name] ?? [];
+        })->values()->collapse()->toArray();
+    }
+
     /**
      * Expects either a class name or instance and will return if the given trait exists on the class.
      *
@@ -98,12 +109,12 @@ namespace PhpWinTools\WmiScripting\Support {
     /**
      * Returns all of the traits that a trait uses including it's ancestors.
      *
-     * @param $trait
+     * @param $trait_name
      * @return array
      */
-    function trait_traits($trait)
+    function trait_traits($trait_name)
     {
-        $traits = class_uses($trait);
+        $traits = class_uses($trait_name);
 
         foreach ($traits as $trait) {
             $traits += trait_traits($trait);

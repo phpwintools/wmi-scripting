@@ -10,6 +10,7 @@ use PhpWinTools\WmiScripting\Contracts\Arrayable;
 use PhpWinTools\WmiScripting\Collections\ArrayCollection;
 use function PhpWinTools\WmiScripting\Support\class_has_trait;
 use Illuminate\Contracts\Support\Arrayable as IlluminateArrayable;
+use function PhpWinTools\WmiScripting\Support\get_ancestor_property;
 
 trait HasArrayableAttributes
 {
@@ -57,7 +58,7 @@ trait HasArrayableAttributes
 
     public function collect(array $array)
     {
-        return new ArrayCollection($array);
+        return ArrayCollection::collect($array);
     }
 
     public function setUnmappedAttribute($key, $value)
@@ -102,7 +103,7 @@ trait HasArrayableAttributes
         }
 
         $this->attribute_casting = $merge_casting
-            ? array_merge($this->getAncestorProperty('attribute_casting'), $attribute_casting)
+            ? array_merge(get_ancestor_property(get_called_class(), 'attribute_casting'), $attribute_casting)
             : $attribute_casting;
 
         $this->casts_booted = true;
@@ -191,11 +192,6 @@ trait HasArrayableAttributes
 
         if (!$this->hasCast($key)) {
             return $value;
-        }
-
-        /* @TODO: This isn't needed. Need to write tests around it so I can remove it. */
-        if (is_callable($casts[$key])) {
-            return $casts[$key]($value, $key);
         }
 
         switch ($casts[$key]) {
@@ -312,12 +308,5 @@ trait HasArrayableAttributes
         }
 
         return $results;
-    }
-
-    protected function getAncestorProperty($property_name)
-    {
-        return $this->collect(class_parents($this))->map(function ($class) use ($property_name) {
-            return (new ReflectionClass($class))->getDefaultProperties()[$property_name] ?? [];
-        })->values()->collapse()->toArray();
     }
 }

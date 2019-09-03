@@ -2,6 +2,8 @@
 
 namespace PhpWinTools\WmiScripting\Concerns;
 
+use function PhpWinTools\WmiScripting\Support\get_ancestor_property;
+
 trait HasHiddenAttributes
 {
     protected $hidden_booted = false;
@@ -23,7 +25,7 @@ trait HasHiddenAttributes
     public function mergeHiddenAttributes(array $hidden_attributes, bool $merge_hidden = true)
     {
         $hidden_attributes = $merge_hidden
-            ? array_merge($this->getAncestorProperty('hidden_attributes'), $hidden_attributes)
+            ? array_merge(get_ancestor_property(get_called_class(), 'hidden_attributes'), $hidden_attributes)
             : $hidden_attributes;
 
         $this->trait_hidden_attributes = array_merge($this->trait_hidden_attributes, $hidden_attributes);
