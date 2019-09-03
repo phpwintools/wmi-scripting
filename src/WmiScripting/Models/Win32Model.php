@@ -2,7 +2,6 @@
 
 namespace PhpWinTools\WmiScripting\Models;
 
-use PhpWinTools\WmiScripting\Concerns\HasHiddenAttributes;
 use PhpWinTools\WmiScripting\Connection;
 use PhpWinTools\WmiScripting\Query\Builder;
 use PhpWinTools\WmiScripting\Contracts\Jsonable;
@@ -11,6 +10,7 @@ use PhpWinTools\WmiScripting\Contracts\HasAttributes;
 use PhpWinTools\WmiScripting\MappingStrings\Mappings;
 use function PhpWinTools\WmiScripting\Support\connection;
 use PhpWinTools\WmiScripting\Collections\ModelCollection;
+use PhpWinTools\WmiScripting\Concerns\HasHiddenAttributes;
 use PhpWinTools\WmiScripting\Concerns\HasArrayableAttributes;
 use PhpWinTools\WmiScripting\Exceptions\InvalidArgumentException;
 use PhpWinTools\WmiScripting\Exceptions\WmiClassNotFoundException;

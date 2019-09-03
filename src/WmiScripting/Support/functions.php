@@ -73,6 +73,7 @@ namespace PhpWinTools\WmiScripting\Support {
      * Returns all traits of the given class or instance. It also checks the traits for any used traits.
      *
      * @param $class
+     *
      * @return array
      */
     function class_traits($class)

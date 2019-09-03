@@ -3,9 +3,9 @@
 namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
 use PhpWinTools\Support\COM\ComVariantWrapper;
-use PhpWinTools\WmiScripting\Concerns\HasHiddenAttributes;
 use PhpWinTools\WmiScripting\Contracts\Jsonable;
 use PhpWinTools\WmiScripting\Contracts\Arrayable;
+use PhpWinTools\WmiScripting\Concerns\HasHiddenAttributes;
 use PhpWinTools\WmiScripting\Concerns\HasArrayableAttributes;
 
 /**
