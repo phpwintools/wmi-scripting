@@ -2,16 +2,17 @@
 
 namespace Tests\WmiScripting\Models;
 
-use PhpWinTools\WmiScripting\Exceptions\InvalidArgumentException;
-use PhpWinTools\WmiScripting\MappingStrings\Mappings;
 use Tests\TestCase;
 use PhpWinTools\WmiScripting\Scripting;
 use PhpWinTools\WmiScripting\Connection;
 use PhpWinTools\WmiScripting\Query\Builder;
 use PhpWinTools\WmiScripting\Models\Win32Model;
 use PhpWinTools\WmiScripting\Models\LogicalDisk;
+use PhpWinTools\WmiScripting\MappingStrings\Mappings;
 use PhpWinTools\WmiScripting\Collections\ModelCollection;
+use PhpWinTools\WmiScripting\Exceptions\InvalidArgumentException;
 use PhpWinTools\WmiScripting\Exceptions\WmiClassNotFoundException;
+use function PhpWinTools\WmiScripting\Support\class_has_property;
 
 class Win32ModelTest extends TestCase
 {
@@ -98,7 +99,7 @@ class Win32ModelTest extends TestCase
     {
         $model = new LogicalDisk(['driveType' => 1234]);
 
-        $this->assertTrue($model->hasProperty('driveType'));
+        $this->assertTrue(class_has_property($model, 'driveType'));
         $this->assertSame($model->getAttribute('driveType'), 1234);
     }
 
@@ -212,20 +213,6 @@ class Win32ModelTest extends TestCase
         $this->assertArrayNotHasKey('oldName', $class->toArray());
         $this->assertArrayHasKey('newName', $class->toArray());
         $this->assertSame($class->oldName, $class->toArray()['newName']);
-    }
-
-    /** @test */
-    public function it_can_hide_values_from_array_transform()
-    {
-        $class = new class extends Win32Model {
-            public $iAmHidden = 'i am some text';
-
-            protected $wmi_class_name = 'test';
-
-            protected $hidden_attributes = ['iAmHidden'];
-        };
-
-        $this->assertArrayNotHasKey('iAmHidden', $class->toArray());
     }
 
     /** @test */

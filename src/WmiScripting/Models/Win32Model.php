@@ -8,9 +8,14 @@ use PhpWinTools\WmiScripting\Contracts\Jsonable;
 use PhpWinTools\WmiScripting\Contracts\Arrayable;
 use PhpWinTools\WmiScripting\Contracts\HasAttributes;
 use PhpWinTools\WmiScripting\MappingStrings\Mappings;
+use PhpWinTools\WmiScripting\Contracts\CastsAttributes;
+use PhpWinTools\WmiScripting\Contracts\HidesAttributes;
 use function PhpWinTools\WmiScripting\Support\connection;
 use PhpWinTools\WmiScripting\Collections\ModelCollection;
+use PhpWinTools\WmiScripting\Concerns\HasHiddenAttributes;
+use PhpWinTools\WmiScripting\Concerns\HasCastableAttributes;
 use PhpWinTools\WmiScripting\Concerns\HasArrayableAttributes;
+use function PhpWinTools\WmiScripting\Support\class_has_property;
 use PhpWinTools\WmiScripting\Exceptions\InvalidArgumentException;
 use PhpWinTools\WmiScripting\Exceptions\WmiClassNotFoundException;
 use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
@@ -19,9 +24,11 @@ use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectPath;
 /**
  * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-provider
  */
-class Win32Model implements Arrayable, Jsonable, HasAttributes
+class Win32Model implements Arrayable, Jsonable, HasAttributes, HidesAttributes, CastsAttributes
 {
-    use HasArrayableAttributes;
+    use HasArrayableAttributes,
+        HasHiddenAttributes,
+        HasCastableAttributes;
 
     /** @var string */
     protected $uuid;
@@ -201,7 +208,7 @@ class Win32Model implements Arrayable, Jsonable, HasAttributes
         foreach ($attributes as $key => $value) {
             $key = lcfirst($key);
             $value = $this->reduceValueArray($value);
-            if ($this->hasProperty($key)) {
+            if (class_has_property(get_called_class(), $key)) {
                 $this->{$key} = $this->cast($key, $value);
                 continue;
             }

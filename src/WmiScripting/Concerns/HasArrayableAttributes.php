@@ -3,36 +3,18 @@
 namespace PhpWinTools\WmiScripting\Concerns;
 
 use Exception;
-use ReflectionClass;
 use PhpWinTools\Support\StringModule;
-use PhpWinTools\Support\BooleanModule;
 use PhpWinTools\WmiScripting\Contracts\Arrayable;
 use PhpWinTools\WmiScripting\Collections\ArrayCollection;
+use function PhpWinTools\WmiScripting\Support\class_has_trait;
+use function PhpWinTools\WmiScripting\Support\class_has_property;
 use Illuminate\Contracts\Support\Arrayable as IlluminateArrayable;
 
 trait HasArrayableAttributes
 {
-    protected $hidden_booted = false;
-
-    protected $casts_booted = false;
-
     protected $unmapped_attributes = [];
 
     protected $attribute_name_replacements = [];
-
-    protected $trait_hidden_attributes = [
-        'trait_hidden_attributes',
-        'trait_name_replacements',
-
-        'attribute_name_replacements',
-        'unmapped_attributes',
-
-        'hidden_attributes',
-        'merge_parent_hidden_attributes',
-
-        'attribute_casting',
-        'merge_parent_casting',
-    ];
 
     public function getAttribute($attribute, $default = null)
     {
@@ -42,7 +24,7 @@ trait HasArrayableAttributes
 
         $value = $default;
 
-        if ($this->hasProperty($attribute)) {
+        if (class_has_property(get_called_class(), $attribute)) {
             $value = $this->{$attribute};
         }
 
@@ -54,7 +36,7 @@ trait HasArrayableAttributes
             $value = $this->unmapped_attributes[$attribute];
         }
 
-        if ($this->hasCast($attribute)) {
+        if (class_has_trait(get_called_class(), HasCastableAttributes::class) && $this->hasCast($attribute)) {
             $value = $this->cast($attribute, $value);
         }
 
@@ -72,34 +54,7 @@ trait HasArrayableAttributes
 
     public function collect(array $array)
     {
-        return new ArrayCollection($array);
-    }
-
-    public function mergeHiddenAttributes(array $hidden_attributes, bool $merge_hidden = true)
-    {
-        $hidden_attributes = $merge_hidden
-            ? array_merge($this->getAncestorProperty('hidden_attributes'), $hidden_attributes)
-            : $hidden_attributes;
-
-        $this->trait_hidden_attributes = array_merge($this->trait_hidden_attributes, $hidden_attributes);
-
-        $this->bootHiddenAttributes();
-
-        return $this;
-    }
-
-    public function getHiddenAttributes()
-    {
-        if (!$this->hidden_booted) {
-            $this->bootHiddenAttributes();
-        }
-
-        return $this->trait_hidden_attributes;
-    }
-
-    public function isHidden($key): bool
-    {
-        return array_key_exists($key, $this->getHiddenAttributes());
+        return ArrayCollection::collect($array);
     }
 
     public function setUnmappedAttribute($key, $value)
@@ -109,57 +64,9 @@ trait HasArrayableAttributes
         return $this;
     }
 
-    public function getCasts(): array
-    {
-        if (!$this->casts_booted) {
-            $this->bootCasts();
-        }
-
-        return $this->attribute_casting;
-    }
-
-    public function getCast($attribute)
-    {
-        $casts = $this->getCasts();
-
-        return $casts[$attribute] ?? null;
-    }
-
-    public function hasCast($attribute): bool
-    {
-        return array_key_exists($attribute, $this->getCasts());
-    }
-
-    protected function bootCasts()
-    {
-        $merge_casting = true;
-        $attribute_casting = [];
-
-        if ($this->hasProperty('merge_parent_casting')) {
-            $merge_casting = $this->merge_parent_casting;
-        }
-
-        if ($this->hasProperty('attribute_casting')) {
-            $attribute_casting = $this->attribute_casting;
-        }
-
-        $this->attribute_casting = $merge_casting
-            ? array_merge($this->getAncestorProperty('attribute_casting'), $attribute_casting)
-            : $attribute_casting;
-
-        $this->casts_booted = true;
-    }
-
-    protected function bootHiddenAttributes()
-    {
-        $this->trait_hidden_attributes = array_combine($this->trait_hidden_attributes, $this->trait_hidden_attributes);
-
-        $this->hidden_booted = true;
-    }
-
     protected function getAttributeMethodValue($method, $attribute)
     {
-        if ($this->hasProperty($attribute)) {
+        if (class_has_property(get_called_class(), $attribute)) {
             return $this->{$method}($this->{$attribute});
         }
 
@@ -182,7 +89,7 @@ trait HasArrayableAttributes
         return $this->collect($this->getAttributeMethods())->map(function ($method) {
             return $this->getAttributeNameFromMethod($method);
         })->filter(function ($attribute) {
-            return !$this->hasProperty($attribute) && !$this->hasUnmappedAttribute($attribute);
+            return !class_has_property(get_called_class(), $attribute) && !$this->hasUnmappedAttribute($attribute);
         })->values()->toArray();
     }
 
@@ -220,11 +127,6 @@ trait HasArrayableAttributes
         })->values()->toArray();
     }
 
-    public function hasProperty($property_name)
-    {
-        return array_key_exists($property_name, get_class_vars(get_called_class()));
-    }
-
     protected function replaceAttributeName($key)
     {
         if (array_key_exists($key, $this->attribute_name_replacements)) {
@@ -232,48 +134,6 @@ trait HasArrayableAttributes
         }
 
         return $key;
-    }
-
-    protected function cast($key, $value)
-    {
-        $casts = $this->getCasts();
-
-        if (!$this->hasCast($key)) {
-            return $value;
-        }
-
-        /* @TODO: This isn't needed. Need to write tests around it so I can remove it. */
-        if (is_callable($casts[$key])) {
-            return $casts[$key]($value, $key);
-        }
-
-        switch ($casts[$key]) {
-            case 'array':
-                return is_array($value) ? $value : [$value];
-            case 'bool':
-            case 'boolean':
-                return BooleanModule::makeBoolean($value);
-            case 'int':
-            case 'integer':
-                // Prevent integer overflow
-                return $value >= PHP_INT_MAX || $value <= PHP_INT_MIN ? (string) $value : (int) $value;
-            case 'string':
-                if ($value === true) {
-                    return 'true';
-                }
-
-                if ($value === false) {
-                    return 'false';
-                }
-
-                if (is_array($value)) {
-                    return json_encode($value);
-                }
-
-                return (string) $value;
-            default:
-                return $value;
-        }
     }
 
     protected function objectToArray($value)
@@ -353,7 +213,7 @@ trait HasArrayableAttributes
         $results = [];
 
         foreach ($attributes as $key => $value) {
-            if ($this->isHidden($key)) {
+            if (class_has_trait(get_called_class(), HasHiddenAttributes::class) && $this->isHidden($key)) {
                 continue;
             }
 
@@ -361,12 +221,5 @@ trait HasArrayableAttributes
         }
 
         return $results;
-    }
-
-    protected function getAncestorProperty($property_name)
-    {
-        return $this->collect(class_parents($this))->map(function ($class) use ($property_name) {
-            return (new ReflectionClass($class))->getDefaultProperties()[$property_name] ?? [];
-        })->values()->collapse()->toArray();
     }
 }

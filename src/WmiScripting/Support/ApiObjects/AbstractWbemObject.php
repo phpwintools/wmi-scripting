@@ -5,14 +5,21 @@ namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 use PhpWinTools\Support\COM\ComVariantWrapper;
 use PhpWinTools\WmiScripting\Contracts\Jsonable;
 use PhpWinTools\WmiScripting\Contracts\Arrayable;
+use PhpWinTools\WmiScripting\Contracts\HasAttributes;
+use PhpWinTools\WmiScripting\Contracts\CastsAttributes;
+use PhpWinTools\WmiScripting\Contracts\HidesAttributes;
+use PhpWinTools\WmiScripting\Concerns\HasHiddenAttributes;
+use PhpWinTools\WmiScripting\Concerns\HasCastableAttributes;
 use PhpWinTools\WmiScripting\Concerns\HasArrayableAttributes;
 
 /**
  * @link https://docs.microsoft.com/en-us/windows/win32/wmisdk/winmgmt
  */
-class AbstractWbemObject implements Arrayable, Jsonable
+class AbstractWbemObject implements Arrayable, Jsonable, HasAttributes, CastsAttributes, HidesAttributes
 {
-    use HasArrayableAttributes;
+    use HasArrayableAttributes,
+        HasHiddenAttributes,
+        HasCastableAttributes;
 
     protected $object;
 
