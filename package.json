@@ -1,7 +1,9 @@
 {
   "scripts": {
     "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "docs:build": "vuepress build docs",
+    "docs:deploy:windows": "yarn docs:build && cd docs\\.vuepress\\dist && git init && git add -A &&  git commit -m \"deploy\" && git push -f https://github.com/phpwintools/wmi-scripting.git master:gh-pages",
+    "docs:deploy:linux": "yarn docs:build && cd docs/.vuepress/dist && git init &&  git add -A && git commit -m \"deploy\" && git push -f https://github.com/phpwintools/wmi-scripting.git master:gh-pages"
   },
 
   "devDependencies": {

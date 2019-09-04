@@ -1,3 +1,3 @@
 ### WMI Scripting
 
-First commit for documentation.
+Testing deploy command
