@@ -30,8 +30,6 @@ cache:
   - c:\tools\%PHP_DIR%
 
 install:
-  - yarn install
-  - yarn docs:deploy:windows
   - SET PATH=c:\tools\%PHP_DIR%;%PATH%
   - IF NOT EXIST c:\tools\%PHP_DIR%\php.exe (
           cinst -y php -i --version %PHP_VERSION% &&
@@ -53,6 +51,8 @@ install:
   - appveyor DownloadFile https://curl.haxx.se/ca/cacert.pem
 
   - cd c:\projects\wmi-scripting
+  - yarn install
+  - yarn docs:deploy:windows
   - IF NOT EXIST composer.phar (appveyor DownloadFile https://github.com/composer/composer/releases/download/1.9.0/composer.phar)
   - php composer.phar self-update
   - php composer.phar update --no-interaction --prefer-dist --no-suggest --ansi --no-progress
