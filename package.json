@@ -2,8 +2,8 @@
   "scripts": {
     "docs:dev": "vuepress dev docs --host localhost --port 8080 --temp docs/.vuepress/.temp",
     "docs:build": "vuepress build docs",
-    "docs:deploy:windows": "yarn docs:build && cd docs\\.vuepress\\dist && git init && git add -A &&  git commit -m \"deploy\" && git push -f https://github.com/phpwintools/wmi-scripting.git master:gh-pages",
-    "docs:deploy:windows:ci": "yarn docs:build && cd docs\\.vuepress\\dist && git init && git add -A &&  git commit -m \"deploy\" && git push -f git@github.com:phpwintools/wmi-scripting.git master:gh-pages",
+    "docs:deploy:windows": "yarn docs:build && cd docs\\.vuepress\\dist && git init && git add -A && git commit -m \"deploy\" && git push -f https://github.com/phpwintools/wmi-scripting.git master:gh-pages",
+    "docs:deploy:windows:ci": "yarn docs:build && cd docs\\.vuepress\\dist && git init && git add -A && git commit -m \"deploy\" && git push -f git@github.com:phpwintools/wmi-scripting.git master:gh-pages",
     "docs:deploy:linux": "yarn docs:build && cd docs/.vuepress/dist && git init &&  git add -A && git commit -m \"deploy\" && git push -f https://github.com/phpwintools/wmi-scripting.git master:gh-pages"
   },
 
