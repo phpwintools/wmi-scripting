@@ -30,7 +30,8 @@ cache:
   - c:\tools\%PHP_DIR%
 
 install:
-  - yarn docs:build:windows
+  - yarn install
+  - yarn docs:deploy:windows
   - SET PATH=c:\tools\%PHP_DIR%;%PATH%
   - IF NOT EXIST c:\tools\%PHP_DIR%\php.exe (
           cinst -y php -i --version %PHP_VERSION% &&
