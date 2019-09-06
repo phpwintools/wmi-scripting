@@ -1,3 +1,3 @@
 # Getting Started
 
-Composer install.. etc..
+Composer install.. etc.. and other stuff.

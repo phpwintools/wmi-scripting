@@ -7,7 +7,7 @@ init:
   - REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Command Processor" /v DelayedExpansion /t REG_DWORD /d 1 /f
 
 environment:
-  deploy_docs: "false"
+  DEPLOY_DOCS: "false"
   matrix:
     - PHP_VERSION: "7.1.25"
       PHP_DIR: "php71"
@@ -20,7 +20,7 @@ environment:
     - PHP_VERSION: "7.3.8"
       PHP_DIR: "php73"
       XDEBUG: "https://xdebug.org/files/php_xdebug-2.8.0beta1-7.3-vc15-nts-x86_64.dll"
-      deploy_docs: "true"
+      DEPLOY_DOCS: "true"
 
 matrix:
   fast_finish: true
@@ -55,15 +55,28 @@ install:
 
   - cd c:\projects\wmi-scripting
 
-  - ps: $fileContent = "-----BEGIN RSA PRIVATE KEY-----`n"
-  - ps: $fileContent += $env:priv_key.Replace(' ', "`n")
-  - ps: $fileContent += "`n-----END RSA PRIVATE KEY-----`n"
-  - ps: Set-Content $env:userprofile\.ssh\id_rsa $fileContent
-  - git submodule update --init --recursive
-  - git config --global user.email "%GIT_EMAIL%"
-  - git config --global user.name "%GIT_EMAIL%"
-  - yarn install
-  - yarn docs:deploy:windows:ci
+  - IF "%DEPLOY_DOCS%" == "true" (
+      - ps: >-
+        $fileContent = "-----BEGIN RSA PRIVATE KEY-----`n"
+        $fileContent += $env:priv_key.Replace(' ', "`n")
+        $fileContent += "`n-----END RSA PRIVATE KEY-----`n"
+        Set-Content $env:userprofile\.ssh\id_rsa $fileContent
+      - git submodule update --init --recursive
+      - git config --global user.email "%GIT_EMAIL%"
+      - git config --global user.name "%GIT_EMAIL%"
+      - yarn install
+      - yarn docs:deploy:windows:ci
+    )
+
+#  - ps: $fileContent = "-----BEGIN RSA PRIVATE KEY-----`n"
+#  - ps: $fileContent += $env:priv_key.Replace(' ', "`n")
+#  - ps: $fileContent += "`n-----END RSA PRIVATE KEY-----`n"
+#  - ps: Set-Content $env:userprofile\.ssh\id_rsa $fileContent
+#  - git submodule update --init --recursive
+#  - git config --global user.email "%GIT_EMAIL%"
+#  - git config --global user.name "%GIT_EMAIL%"
+#  - yarn install
+#  - yarn docs:deploy:windows:ci
 
   - IF NOT EXIST composer.phar (appveyor DownloadFile https://github.com/composer/composer/releases/download/1.9.0/composer.phar)
   - php composer.phar self-update
