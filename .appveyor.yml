@@ -35,37 +35,37 @@ cache:
 install:
   - SET PATH=c:\tools\%PHP_DIR%;%PATH%
   - IF NOT EXIST c:\tools\%PHP_DIR%\php.exe (
-          cinst -y php -i --version %PHP_VERSION% &&
-          cd c:\tools\%PHP_DIR% &&
-          echo extension_dir=ext >> c:\tools\%PHP_DIR%\php.ini &&
-          echo extension=php_openssl.dll >> c:\tools\%PHP_DIR%\php.ini &&
-          echo extension=php_curl.dll >> c:\tools\%PHP_DIR%\php.ini &&
-          echo extension=php_mbstring.dll >> c:\tools\%PHP_DIR%\php.ini &&
-          echo extension=php_pdo_mysql.dll >> c:\tools\%PHP_DIR%\php.ini &&
-          echo extension=php_pdo_sqlite.dll >> c:\tools\%PHP_DIR%\php.ini &&
-          echo extension=php_fileinfo.dll >> c:\tools\%PHP_DIR%\php.ini &&
-          echo extension=php_gd2.dll >> c:\tools\%PHP_DIR%\php.ini &&
-          echo extension=php_ftp.dll >> c:\tools\%PHP_DIR%\php.ini &&
-          echo extension=php_com_dotnet.dll >> c:\tools\%PHP_DIR%\php.ini &&
-          echo memory_limit=256M >> c:\tools\%PHP_DIR%\php.ini &&
-          echo curl.cainfo=C:\tools\cacert.pem >> c:\tools\%PHP_DIR%\php.ini
-      )
+        cinst -y php -i --version %PHP_VERSION% &&
+        cd c:\tools\%PHP_DIR% &&
+        echo extension_dir=ext >> c:\tools\%PHP_DIR%\php.ini &&
+        echo extension=php_openssl.dll >> c:\tools\%PHP_DIR%\php.ini &&
+        echo extension=php_curl.dll >> c:\tools\%PHP_DIR%\php.ini &&
+        echo extension=php_mbstring.dll >> c:\tools\%PHP_DIR%\php.ini &&
+        echo extension=php_pdo_mysql.dll >> c:\tools\%PHP_DIR%\php.ini &&
+        echo extension=php_pdo_sqlite.dll >> c:\tools\%PHP_DIR%\php.ini &&
+        echo extension=php_fileinfo.dll >> c:\tools\%PHP_DIR%\php.ini &&
+        echo extension=php_gd2.dll >> c:\tools\%PHP_DIR%\php.ini &&
+        echo extension=php_ftp.dll >> c:\tools\%PHP_DIR%\php.ini &&
+        echo extension=php_com_dotnet.dll >> c:\tools\%PHP_DIR%\php.ini &&
+        echo memory_limit=256M >> c:\tools\%PHP_DIR%\php.ini &&
+        echo curl.cainfo=C:\tools\cacert.pem >> c:\tools\%PHP_DIR%\php.ini
+    )
   - cd c:\tools
   - appveyor DownloadFile https://curl.haxx.se/ca/cacert.pem
 
   - cd c:\projects\wmi-scripting
 
   - IF "%DEPLOY_DOCS%" == "true" (
-      - ps: >-
-        $fileContent = "-----BEGIN RSA PRIVATE KEY-----`n"
-        $fileContent += $env:priv_key.Replace(' ', "`n")
-        $fileContent += "`n-----END RSA PRIVATE KEY-----`n"
-        Set-Content $env:userprofile\.ssh\id_rsa $fileContent
-      - git submodule update --init --recursive
-      - git config --global user.email "%GIT_EMAIL%"
-      - git config --global user.name "%GIT_EMAIL%"
-      - yarn install
-      - yarn docs:deploy:windows:ci
+      powershell -command "
+        $fileContent = `"-----BEGIN RSA PRIVATE KEY-----`n`"
+        $fileContent += $env:priv_key.Replace(' ', `"`n`")
+        $fileContent += `"`n-----END RSA PRIVATE KEY-----`n`"
+        Set-Content $env:userprofile\.ssh\id_rsa $fileContent" &&
+      git submodule update --init --recursive &&
+      git config --global user.email "%GIT_EMAIL%" &&
+      git config --global user.name "%GIT_EMAIL%" &&
+      yarn install &&
+      yarn docs:deploy:windows:ci
     )
 
 #  - ps: $fileContent = "-----BEGIN RSA PRIVATE KEY-----`n"
