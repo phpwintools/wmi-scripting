@@ -16,4 +16,4 @@ The current wish list consists of at least the following:
 
 * Near 100% test coverage
 * Expand testing system
-* Event System
+* Event system

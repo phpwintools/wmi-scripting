@@ -47,9 +47,6 @@ composer require phpwintools/wmi-scripting
 ### Connections with instantiation
 
 ```php
-use PhpWinTools\WmiScripting\Scripting;
-use PhpWinTools\WmiScripting\Connection;
-
 $scripting = new Scripting;
 
 // These connections can be called by name.
@@ -68,8 +65,5 @@ $scripting->query()->loggedOnUser()->get();
 ### Connections with static calls
 
 ```php
-use PhpWinTools\WmiScripting\Connection;
-PhpWinTools\WmiScripting\Models\LoggedOnUser;
-
 LoggedOnUser::query(Connection::defaultNamespace('server1', 'user', 'password'))->get();
 ```
