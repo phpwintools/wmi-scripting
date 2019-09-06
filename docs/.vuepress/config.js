@@ -7,7 +7,11 @@ module.exports = {
         ['link', { rel: 'icon', href: `/wmi-squares.png` }],
     ],
 
+    markdown: {
+        lineNumbers: true
+    },
     themeConfig: {
+        bottom: "MIT Licensed | Copyright © 2019-present Joe Springe | This library is not in any way associated with nor endorsed by Microsoft™.",
         logo: '/wmi-squares.svg',
         nav: [
             { text: 'Home', link: '/' },
