@@ -27,7 +27,7 @@ matrix:
 
 cache:
   - composer.phar
-  - ocular.phar -> appveyor.xml
+  - ocular.phar
   - node_modules -> package.json
   - c:\projects\wmi-scripting\vendor -> composer.json
   - c:\tools\%PHP_DIR%
@@ -57,13 +57,13 @@ install:
 
   - IF "%DEPLOY_DOCS%" == "true" (
       powershell -command "&{
-        $fileContent = '-----BEGIN RSA PRIVATE KEY-----`n';
-        $fileContent += $env:priv_key.Replace(' ', '`n');
-        $fileContent += '`n-----END RSA PRIVATE KEY-----`n';
+        $fileContent = \"-----BEGIN RSA PRIVATE KEY-----`n\";
+        $fileContent += $env:priv_key.Replace(' ', \"`n\");
+        $fileContent += \"`n-----END RSA PRIVATE KEY-----`n\";
         Set-Content $env:userprofile\.ssh\id_rsa $fileContent }" &&
       git submodule update --init --recursive &&
       git config --global user.email "%GIT_EMAIL%" &&
-      git config --global user.name "%GIT_EMAIL%" &&
+      git config --global user.name "%GIT_USER%" &&
       yarn install &&
       yarn docs:deploy:windows:ci
     )
