@@ -7,10 +7,9 @@
     "docs:deploy:linux": "yarn docs:build && cd docs/.vuepress/dist && git init &&  git add -A && git commit -m \"deploy\" && git push -f https://github.com/phpwintools/wmi-scripting.git master:gh-pages"
   },
   "devDependencies": {
-    "vuepress": "^1.0.3"
+    "vuepress": "1.0.3"
   },
   "resolutions": {
     "webpack-dev-middleware": "3.6.0"
-  },
-  "version": "0.0.0"
+  }
 }
