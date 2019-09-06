@@ -53,7 +53,7 @@ install:
   - cd c:\projects\wmi-scripting
 
   - git config --global user.email "%GIT_EMAIL%"
-  - git config --global user.name "%GIT_USER%"
+  - git config --global user.name "%GIT_EMAIL%"
   - yarn install
   - yarn docs:deploy:windows
 
