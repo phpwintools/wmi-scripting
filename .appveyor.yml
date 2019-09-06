@@ -7,6 +7,7 @@ init:
   - REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Command Processor" /v DelayedExpansion /t REG_DWORD /d 1 /f
 
 environment:
+  deploy_docs: "false"
   matrix:
     - PHP_VERSION: "7.1.25"
       PHP_DIR: "php71"
@@ -19,15 +20,16 @@ environment:
     - PHP_VERSION: "7.3.8"
       PHP_DIR: "php73"
       XDEBUG: "https://xdebug.org/files/php_xdebug-2.8.0beta1-7.3-vc15-nts-x86_64.dll"
+      deploy_docs: "true"
 
 matrix:
   fast_finish: true
 
 cache:
-  - composer.phar -> composer.json
-  - node_modules -> package.json
+  - composer.phar
   - ocular.phar -> appveyor.xml
-  - c:\projects\wmi-scripting\vendor
+  - node_modules -> package.json
+  - c:\projects\wmi-scripting\vendor -> composer.json
   - c:\tools\%PHP_DIR%
 
 install:
