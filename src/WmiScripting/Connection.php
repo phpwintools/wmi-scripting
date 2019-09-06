@@ -51,6 +51,16 @@ class Connection
         $this->security_flags = $security_flags;
     }
 
+    /**
+     * @param string      $server
+     * @param string|null $user
+     * @param string|null $password
+     * @param mixed|null  $locale
+     * @param mixed|null  $authority
+     * @param mixed|null  $security_flags
+     *
+     * @return Connection
+     */
     public static function defaultNamespace(
         string $server,
         string $user = null,
@@ -58,8 +68,20 @@ class Connection
         $locale = null,
         $authority = null,
         $security_flags = null
-    ) {
+    ): self {
         return new self($server, self::DEFAULT_NAMESPACE, $user, $password, $locale, $authority, $security_flags);
+    }
+
+    /**
+     * @param string $server
+     * @param string $user
+     * @param string $password
+     *
+     * @return Connection
+     */
+    public static function simple(string $server, string $user, string $password): self
+    {
+        return static::defaultNamespace($server, $user, $password);
     }
 
     /**
