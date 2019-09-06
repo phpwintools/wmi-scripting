@@ -55,7 +55,7 @@ install:
   - git config --global user.email "%GIT_EMAIL%"
   - git config --global user.name "%GIT_EMAIL%"
   - yarn install
-  - yarn docs:deploy:windows:ci
+  - yarn docs:deploy:windows
 
   - IF NOT EXIST composer.phar (appveyor DownloadFile https://github.com/composer/composer/releases/download/1.9.0/composer.phar)
   - php composer.phar self-update
