@@ -39,6 +39,15 @@ class ScriptingTest extends TestCase
     }
 
     /** @test */
+    public function it_can_instantiate_with_a_connection_and_set_it_as_the_default_connection()
+    {
+        $connection = Connection::simple('server', 'user', 'password');
+        $scripting = new Scripting($connection);
+
+        $this->assertSame($connection, $scripting->getDefaultConnection());
+    }
+
+    /** @test */
     public function it_can_instantiate_and_merge_in_a_configuration_array()
     {
         $this->assertInstanceOf(Scripting::class, $scripting = new Scripting([

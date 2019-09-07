@@ -25,7 +25,7 @@ module.exports = {
                     collapsable: false,
                     children: [
                         ['documentation/', 'How It Works'],
-                        ['documentation/getting-started/', 'Getting Started']
+                        ['documentation/getting-started', 'Getting Started']
                     ]
                 }
             ]

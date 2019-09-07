@@ -33,7 +33,7 @@ The `ModelCollection` extends https://github.com/tightenco/collect / [Laravel Co
 You can also instantiate `Scripting`:
 
     $scripting = new PhpWinTools\WmiScripting\Scripting;
-    $scripting->addConnection('remote', PhpWinTools\WmiScripting\Connection::defaultNamespace('server', 'user', 'password'));
+    $scripting->addConnection('remote', PhpWinTools\WmiScripting\Connection::simple('server', 'user', 'password'));
     $scripting->query('remote')->loggedOnUser()->get();
 
 Whether you use `$scripting->query($connection = null)->modelName()` or `::query($connection = null)` you are dropped into a basic query

@@ -28,6 +28,11 @@ class Scripting
             $this->config = $config;
         }
 
+        if ($config instanceof Connection) {
+            $this->config = Config::instance();
+            $this->setDefaultConnection('default', $config);
+        }
+
         if (is_array($config)) {
             $this->config = Config::instance($config);
         }
@@ -80,13 +85,13 @@ class Scripting
     public function addConnection(string $name, $connection): self
     {
         if ($connection instanceof Connection) {
-            $this->config->addConnection($name, $connection);
+            $this->getConfig()->addConnection($name, $connection);
 
             return $this;
         }
 
         if (is_array($connection)) {
-            $this->config->addConnection($name, new Connection(
+            $this->getConfig()->addConnection($name, new Connection(
                 $connection['server'] ?? Connection::DEFAULT_SERVER,
                 $connection['namespace'] ?? Connection::DEFAULT_NAMESPACE,
                 $connection['user'] ?? null,
@@ -116,8 +121,26 @@ class Scripting
             $this->addConnection($name, $connection);
         }
 
-        $this->config->setDefaultConnection($name);
+        $this->getConfig()->setDefaultConnection($name);
 
         return $this;
+    }
+
+    /**
+     * @param string|null $name
+     *
+     * @return Connection|null
+     */
+    public function getConnection(string $name = null)
+    {
+        return $this->getConfig()->getConnection($name);
+    }
+
+    /**
+     * @return Connection|null
+     */
+    public function getDefaultConnection()
+    {
+        return $this->getConnection();
     }
 }

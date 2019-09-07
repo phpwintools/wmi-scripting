@@ -50,8 +50,8 @@ composer require phpwintools/wmi-scripting
 $scripting = new Scripting;
 
 // These connections can be called by name.
-$scripting->addConnection('server1', Connection::defaultNamespace('server1', 'user', 'password'));
-$scripting->addConnection('server2', Connection::defaultNamespace('server2', 'user', 'password'));
+$scripting->addConnection('server1', Connection::simple('server1', 'user', 'password'));
+$scripting->addConnection('server2', Connection::simple('server2', 'user', 'password'));
 
 $scripting->query('server2')->loggedOnUser()->get();
 
@@ -65,5 +65,5 @@ $scripting->query()->loggedOnUser()->get();
 ### Connections with static calls
 
 ```php
-LoggedOnUser::query(Connection::defaultNamespace('server1', 'user', 'password'))->get();
+LoggedOnUser::query(Connection::simple('server1', 'user', 'password'))->get();
 ```
