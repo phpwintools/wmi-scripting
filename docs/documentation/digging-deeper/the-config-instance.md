@@ -9,8 +9,8 @@ you need to access the `Config` directly you should do so using the `::instance(
 
 ## Defaults
 
-The only default that is currently expected to be used is the default `Connection`. This is set to the local machine
-that `PHP` is running on.
+The only default setting that I'm currently outlining is the connection. If not defined then the default connection is
+the machine that is currently running PHP.
 
 ``` php
 # config/connections.php
@@ -65,7 +65,7 @@ new Config($connections);
 
 Either method above will instantiate the `Config` object to be used later. Again, be sure to do this prior to any
 calls to assure predictable behavior. If you use `Config::instance($connections)` the new connections will simply be
-merged in to an already started instance.
+merged in to an already started instance, if one exists, or a new instance will be started with the given configuration.
 
 Accessing the configuration object in the following way keeps you from trampling over the current configuration and
 allows you to make global changes.
