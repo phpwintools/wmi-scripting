@@ -22,16 +22,23 @@ module.exports = {
         sidebar: {
             '/documentation': [
                 {
-                    title: 'Documentation',
+                    title: 'Quick Start',
                     collapsable: false,
                     children: [
                         ['documentation/', 'How It Works'],
                         ['documentation/getting-started', 'Getting Started'],
-                        ['documentation/configuration', 'Configuration'],
-                        ['documentation/the-config-instance', 'The Config Instance'],
+                        // ['documentation/configuration', 'Configuration'],
                     ]
-                }
-            ]
+                },
+                {
+                    title: 'Digging Deeper',
+                    collapsable: false,
+                    children: [
+                        ['documentation/digging-deeper/', 'Introduction'],
+                        ['documentation/digging-deeper/the-config-instance', 'The Config Instance'],
+                    ]
+                },
+            ],
         }
     }
 };

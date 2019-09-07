@@ -1,4 +1,4 @@
-## The Configuration Instance
+# The Config Instance
 
 The configuration instance, `Config`, is the core of this library. Upon instantiation of, either a model or `Scripting`,
 an instance of `Config` gets created.
@@ -7,7 +7,7 @@ an instance of `Config` gets created.
 Due to the usage of this pattern you typically would not `new` the `Config` object directly. However, if you feel
 you need to access the `Config` directly you should do so using the `::instance()` static method.
 
-### Defaults
+## Defaults
 
 The only default that is currently expected to be used is the default `Connection`. This is set to the local machine
 that `PHP` is running on.
@@ -75,10 +75,11 @@ allows you to make global changes.
 $config = Config::instance();
 ```
 
-### Config Methods
+## Config Methods
 
 While not all of the `Config` methods are outlined here below are the ones that may be most useful to you.
 
+### instance
 #### `Config::instance(array $items = [], Resolver $resolver = null)`
 
 If called without any arguments this will either return the currently instantiated instance or return a new instance
@@ -89,6 +90,7 @@ If called with the `$items` array set this will merge the given configuration in
 If called with `$resolver` set then it will replace the current `Resolver` instance with the one given. You shouldn't
 need to override this, but it could be useful when testing.
 
+### newInstance
 #### `Config::newInstance(array $items = [], Resolver $resolver = null)`
 
 Operates the same as above with the exception that this will always return a brand new instance. This is also useful
@@ -107,6 +109,7 @@ class FeatureTest extends TestCase
 }
 ```
 
+### getConnection
 #### `$config->getConnection(string $name = null)`
 
 Returns a connection from the `Config` container by name. If `$name` is not provided or set to `'default'` then it will
@@ -114,19 +117,24 @@ return the default connection.
 
 If a connection is not found it will simply return `null`.
 
+### addConnection
 #### `$config->addConnection(string $name, Connection $connection)`
 
 Add a connection to the `Config` instance.
 
+### setDefaultConnection
 #### `$config->setDefaultConnection(string $name)`
 
 This will set the default connection by its name. If the connection name does not exist then it will throw an 
 `InvalidConnectionException`.
 
-#### `$config->getDefaultConnection()`
 
-Returns the currently set default connection.
-
+### getDefaultConnectionName
 #### `$config->getDefaultConnectionName()`
 
 Returns the currently set default connection name.
+
+### getDefaultConnection
+#### `$config->getDefaultConnection()`
+
+Returns the currently set default connection.
