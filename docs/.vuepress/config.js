@@ -28,6 +28,7 @@ module.exports = {
                         ['documentation/', 'How It Works'],
                         ['documentation/getting-started', 'Getting Started'],
                         ['documentation/configuration', 'Configuration'],
+                        ['documentation/the-config-instance', 'The Config Instance'],
                     ]
                 }
             ]
