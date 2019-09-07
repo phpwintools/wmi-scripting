@@ -11,16 +11,17 @@
 
 ### Current Version: 0.0.1-alpha
 
-This is currently under heavy development. Until version 1.0.0 I do not expect to follow SemVer.
-I will try, but understand this library is subject to major changes until 1.0.0 or further adoption/notice.
+This is currently under heavy development and no release candidate has be marked at this point.
+You are free to use this in production with relatively low-risk as the library itself is fully functional,
+and is READ-ONLY so there should be no side-effects from its usage.
+
+### [Documentation (WIP)](https://phpwintools.github.io/wmi-scripting/)
 
 ### Install
 
 `composer require phpwintools/wmi-scripting`
 
-### Usage
-
-#### @Todo: Finish Docs
+### Basic Usage
 
 Basic usage is to call `::query($connection = null)` on an available model from
 https://github.com/phpwintools/wmi-scripting/tree/master/src/WmiScripting/Models.
@@ -42,7 +43,7 @@ to guide me on how this query builder should look please contact me.
 
 #### Testing
 
+This is still an area that is under development.
+
 You can call `Scripting::fake($testCase)->win32Model($class_name);` to create a fake for testing without
 actually creating a real connection to a WMI service.
-
-#### @Todo: Finish Docs

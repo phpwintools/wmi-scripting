@@ -1,7 +1,7 @@
 module.exports = {
     base: `/wmi-scripting/`,
     title: 'WMI Scripting',
-    description: 'WMI Scripting in PHP made easy.',
+    description: 'WMI Scripting and Querying made easy.',
 
     head: [
         ['link', { rel: 'icon', href: `/wmi-squares.png` }],
