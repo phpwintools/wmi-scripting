@@ -320,6 +320,20 @@ class Config
     }
 
     /**
+     * @param string $name
+     *
+     * @return Connection|null
+     */
+    public function getConnection(string $name = null)
+    {
+        if ($name === 'default' || is_null($name)) {
+            $name = $this->get('wmi.connections.default');
+        }
+
+        return $this->connections()->get($name);
+    }
+
+    /**
      * @param string     $name
      * @param Connection $connection
      *
@@ -330,6 +344,11 @@ class Config
         $this->connections()->set($name, $connection);
 
         return $this;
+    }
+
+    public function getDefaultConnection()
+    {
+        return $this->getConnection($this->getDefaultConnectionName());
     }
 
     public function getDefaultConnectionName()
@@ -346,20 +365,6 @@ class Config
         $this->set('wmi.connections.default', $name);
 
         return $this;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return Connection|null
-     */
-    public function getConnection(string $name = null)
-    {
-        if ($name === 'default' || is_null($name)) {
-            $name = $this->get('wmi.connections.default');
-        }
-
-        return $this->connections()->get($name);
     }
 
     public function get($key, $default = null)

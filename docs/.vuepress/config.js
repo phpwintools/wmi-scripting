@@ -18,6 +18,7 @@ module.exports = {
             { text: 'Documentation', link: '/documentation/' },
             { text: 'GitHub', link: 'https://github.com/phpwintools/wmi-scripting' },
         ],
+        sidebarDepth: 2,
         sidebar: {
             '/documentation': [
                 {
@@ -25,7 +26,8 @@ module.exports = {
                     collapsable: false,
                     children: [
                         ['documentation/', 'How It Works'],
-                        ['documentation/getting-started', 'Getting Started']
+                        ['documentation/getting-started', 'Getting Started'],
+                        ['documentation/configuration', 'Configuration'],
                     ]
                 }
             ]
