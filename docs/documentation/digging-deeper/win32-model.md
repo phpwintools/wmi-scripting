@@ -88,7 +88,7 @@ Attribute methods are getter methods that are named after the associated propert
 This is very similar and absolutely inspired by Laravel's Eloquent attribute mutator.
 
 ```php
-function getSomePropertyAttribute($value)
+public function getSomePropertyAttribute($value)
 {
     return strtoupper($value);
 }
