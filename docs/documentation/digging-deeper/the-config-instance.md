@@ -9,11 +9,11 @@ you need to access the `Config` directly you should do so using the `::instance(
 
 ## Defaults
 
-The only default setting that I'm currently outlining are the connection. If not defined, the default connection is
+The only default setting that I'm currently outlining are the connections. If not defined, the default connection is
 the machine that is currently running PHP.
 
 ``` php
-# config/connections.php
+config/connections.php
 
 return [
     'default' => 'local',
@@ -43,15 +43,23 @@ $connections = [
 
             'servers' => [
                 'computer-one' => [
-                    'server' => 'computer1',
-                    'user' => 'admin',
-                    'password' => 'password',
+                    'server'          => 'computer1',
+                    'user'            => 'admin',
+                    'password'        => 'password',
+                    // All options below are optional.
+                    'namespace'       => null,
+                    'locale'          => null,
+                    'authority'       => null,
+                    'security_flags'  => null,
                 ],
 
                 'computer-two' => [
-                    'server' => 'computer2',
-                    'user' => 'admin',
-                    'password' => 'password',
+                    'server'          => 'computer2',
+                    'user'            => 'admin',
+                    'password'        => 'password',
+                    'locale'          => null,
+                    'authority'       => null,
+                    'security_flags'  => null,
                 ],
             ]
         ]

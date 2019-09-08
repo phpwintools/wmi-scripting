@@ -35,6 +35,7 @@ module.exports = {
                     collapsable: false,
                     children: [
                         ['documentation/digging-deeper/', 'Introduction'],
+                        ['documentation/digging-deeper/win32-model', 'Win32Model'],
                         ['documentation/digging-deeper/the-config-instance', 'The Config Instance'],
                     ]
                 },
