@@ -1,4 +1,4 @@
-# Introduction
+# How It Works
 
 The basic goal of this library is to make querying information from Windows systems on your network as easy as possible.
 This is accomplished by adopting an active record approach similar to
@@ -13,6 +13,10 @@ I also take advantage of [Laravel's Collections](https://laravel.com/docs/5.8/co
 [TightenCo](https://github.com/tightenco/collect), so you are not bound directly to the Laravel framework. Anytime you
 query a model you will get back an instance of `ModelCollection` which extends Laravel's `Collection`. This allows for
 fluent access to this data: `$modelCollection->map->getAttribute('name);` returns a collection of only the model names.
+
+The Win32Models extend either another Win32 model, or more likely, a
+[CIM](https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/cimwin32-wmi-providers) object. This follows the way
+that Win32 models are composed.
 
 ## Todo
 

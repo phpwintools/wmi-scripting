@@ -27,7 +27,7 @@ $scripting = new Scripting;
 $local = $scripting->query()->loggedOnUser()->get();
 ```
 
-If no configuration is provided then the library's default connection is localhost.
+If no configuration is provided, the library's default connection is localhost.
 
 ### Static call on Win32Model class
 ``` php

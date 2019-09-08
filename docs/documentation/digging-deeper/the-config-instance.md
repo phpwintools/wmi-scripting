@@ -1,15 +1,15 @@
 # The Config Instance
 
-The configuration instance, `Config`, is the core of this library. Upon instantiation of, either a model or `Scripting`,
-an instance of `Config` gets created.
+The configuration instance, `Config`, is the core of this library. Upon instantiation of a model or the `Scripting`
+object an instance of `Config` will be created.
 
-`Config` uses a singleton-like pattern to make querying on a model directly possible.
-Due to the usage of this pattern you typically would not `new` the `Config` object directly. However, if you feel
+`Config` uses a singleton-like pattern to make directly querying on a model possible.
+Due to the usage of this pattern, you typically would not `new` the `Config` object directly. However, if you feel
 you need to access the `Config` directly you should do so using the `::instance()` static method.
 
 ## Defaults
 
-The only default setting that I'm currently outlining is the connection. If not defined then the default connection is
+The only default setting that I'm currently outlining are the connection. If not defined, the default connection is
 the machine that is currently running PHP.
 
 ``` php
@@ -64,8 +64,9 @@ new Config($connections);
 ```
 
 Either method above will instantiate the `Config` object to be used later. Again, be sure to do this prior to any
-calls to assure predictable behavior. If you use `Config::instance($connections)` the new connections will simply be
-merged in to an already started instance, if one exists, or a new instance will be started with the given configuration.
+calls to `Config` to assure predictable behavior. If you use `Config::instance($connections)` the new connections will
+simply be merged i to an already started instance, if one exists, or a new instance will be started with the given
+configuration.
 
 Accessing the configuration object in the following way keeps you from trampling over the current configuration and
 allows you to make global changes.
