@@ -17,8 +17,8 @@ PHPWinTools\WmiScripting\Models\UserAccount
 ## Properties and Attributes
 
 While each model has all of its possible properties defined, the intended method to get the value of these properties
-is [`getAttribute`](#getattribute). This allows for mutating or casting the value upon retrieval via an
-[attribute method](#attribute-methods), as well as, defining calculated attributes.
+is [`getAttribute`](#getattribute). This allows for mutating or [casting](#attribute-casting) the value upon retrieval
+via an [attribute method](#attribute-methods), as well as, defining [calculated attributes](#calculated-attributes).
 
 There are also a couple of properties that should be considered when extending from an existing model.
 
