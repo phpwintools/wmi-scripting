@@ -17,7 +17,7 @@ PHPWinTools\WmiScripting\Models\UserAccount
 ## Properties and Attributes
 
 While each model has all of its possible properties defined, the intended method to get the value of these properties
-is via [`getAttribute`](#getattribute). This allows for mutating or casting the value open retrieval via an
+is [`getAttribute`](#getattribute). This allows for mutating or casting the value upon retrieval via an
 [attribute method](#attribute-methods), as well as, defining calculated attributes.
 
 There are also a couple of properties that should be considered when extending from an existing model.
@@ -31,14 +31,16 @@ without providing a value for `$connection`.
 ### $wmi_class_name
 #### `protected $wmi_class_name`
 
-This is an optional property, but only if the model you are calling extends an existing `Win32Model`.
+This is an optional property, but only if the model you are calling extends an existing `Win32Model`. If you do not
+define this property and a class name cannot determine the WMI class name an exception will be thrown.
 
 ### $attribute_casting
 #### `protected $attribute_casting = []`
 
 Attributes will attempted to be casted to the given type if defined within this array. All definitions of
 `$attribute_casting` are merged from the models ancestors by default. This allows you to define `$attribute_casting` in
-both a parent and a child without risk of having the values overridden.
+both a parent and a child without risk of having the values overridden. In the case where both the child and parent
+class both define the same attribute to be casteds the child casting will be used.
 
 ```php
 Available castings
