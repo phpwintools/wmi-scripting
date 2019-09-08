@@ -88,7 +88,7 @@ This is very similar and absolutely inspired by Laravel's Eloquent attribute mut
 ```php
 function getSomePropertyAttribute($value)
 {
-    return strtoupper($value);   
+    return strtoupper($value);
 }
 ```
 
