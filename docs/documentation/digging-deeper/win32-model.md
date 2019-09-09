@@ -124,7 +124,7 @@ Win32Model::query();
 Win32Model::query('named_connection');
 
 // Uses the connection as is.
-Win32Model::query(Connection::simple('computer', 'user', 'password');
+Win32Model::query(Connection::simple('computer', 'user', 'password'));
 ```
 
 If you pass a `Connection` instance it will not be stored in the `Config` container. This can be useful if you have a
