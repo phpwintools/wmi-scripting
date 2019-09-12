@@ -11,6 +11,9 @@ class Connection
 
     const DEFAULT_NAMESPACE = 'Root\CIMv2';
 
+    /** @var float */
+    private $time_to_connect = 0.0;
+
     /** @var string */
     private $server;
 
@@ -90,10 +93,20 @@ class Connection
     public function connect(): Services
     {
         if (is_null($this->services)) {
+            $start = microtime(true);
             $this->services = resolve()->locator()->connectServer($this);
+            $this->time_to_connect = microtime(true) - $start;
         }
 
         return $this->services;
+    }
+
+    /**
+     * @return float
+     */
+    public function getTimeToConnect()
+    {
+        return $this->time_to_connect;
     }
 
     /**
@@ -142,10 +155,34 @@ class Connection
     }
 
     /**
+     * @param $authority
+     *
+     * @return self
+     */
+    public function setAuthority($authority)
+    {
+        $this->authority = $authority;
+
+        return $this;
+    }
+
+    /**
      * @return null
      */
     public function getSecurityFlags()
     {
         return $this->security_flags;
+    }
+
+    /**
+     * @param int $flags
+     *
+     * @return self
+     */
+    public function setSecurityFlags(int $flags)
+    {
+        $this->security_flags = $flags;
+
+        return $this;
     }
 }
