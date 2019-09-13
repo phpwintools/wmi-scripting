@@ -79,9 +79,9 @@ class Scripting
      * @param string                   $name
      * @param ComConnection|array|null $connection
      *
-     * @return self
-     *@throws InvalidConnectionException
+     * @throws InvalidConnectionException
      *
+     * @return self
      */
     public function addConnection(string $name, $connection): self
     {
@@ -112,9 +112,9 @@ class Scripting
      * @param string                   $name
      * @param ComConnection|array|null $connection
      *
-     * @return self
-     *@throws InvalidConnectionException
+     * @throws InvalidConnectionException
      *
+     * @return self
      */
     public function setDefaultConnection(string $name, $connection = null): self
     {
