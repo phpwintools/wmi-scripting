@@ -5,6 +5,7 @@ namespace PhpWinTools\WmiScripting;
 use PHPUnit\Framework\TestCase;
 use PhpWinTools\WmiScripting\Testing\FakeFactory;
 use PhpWinTools\WmiScripting\Configuration\Config;
+use PhpWinTools\WmiScripting\Connections\ComConnection;
 use PhpWinTools\WmiScripting\Testing\CallStacks\ComCallStack;
 use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
 use PhpWinTools\WmiScripting\Testing\CallStacks\ApiObjectCallStack;
@@ -28,7 +29,7 @@ class Scripting
             $this->config = $config;
         }
 
-        if ($config instanceof Connection) {
+        if ($config instanceof ComConnection) {
             $this->config = Config::instance();
             $this->setDefaultConnection('default', $config);
         }
@@ -65,7 +66,7 @@ class Scripting
     }
 
     /**
-     * @param Connection|string|null $connection
+     * @param ComConnection|string|null $connection
      *
      * @return WmiQueryFactory
      */
@@ -76,24 +77,24 @@ class Scripting
 
     /**
      * @param string                $name
-     * @param Connection|array|null $connection
-     *
-     * @throws InvalidConnectionException
+     * @param ComConnection|array|null $connection
      *
      * @return self
+     *@throws InvalidConnectionException
+     *
      */
     public function addConnection(string $name, $connection): self
     {
-        if ($connection instanceof Connection) {
+        if ($connection instanceof ComConnection) {
             $this->getConfig()->addConnection($name, $connection);
 
             return $this;
         }
 
         if (is_array($connection)) {
-            $this->getConfig()->addConnection($name, new Connection(
-                $connection['server'] ?? Connection::DEFAULT_SERVER,
-                $connection['namespace'] ?? Connection::DEFAULT_NAMESPACE,
+            $this->getConfig()->addConnection($name, new ComConnection(
+                $connection['server'] ?? ComConnection::DEFAULT_SERVER,
+                $connection['namespace'] ?? ComConnection::DEFAULT_NAMESPACE,
                 $connection['user'] ?? null,
                 $connection['password'] ?? null,
                 $connection['locale'] ?? null,
@@ -109,11 +110,11 @@ class Scripting
 
     /**
      * @param string                $name
-     * @param Connection|array|null $connection
-     *
-     * @throws InvalidConnectionException
+     * @param ComConnection|array|null $connection
      *
      * @return self
+     *@throws InvalidConnectionException
+     *
      */
     public function setDefaultConnection(string $name, $connection = null): self
     {
@@ -129,7 +130,7 @@ class Scripting
     /**
      * @param string|null $name
      *
-     * @return Connection|null
+     * @return ComConnection|null
      */
     public function getConnection(string $name = null)
     {
@@ -137,7 +138,7 @@ class Scripting
     }
 
     /**
-     * @return Connection|null
+     * @return ComConnection|null
      */
     public function getDefaultConnection()
     {

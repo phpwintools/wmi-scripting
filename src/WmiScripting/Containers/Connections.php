@@ -2,7 +2,7 @@
 
 namespace PhpWinTools\WmiScripting\Containers;
 
-use PhpWinTools\WmiScripting\Connection;
+use PhpWinTools\WmiScripting\Connections\ComConnection;
 use PhpWinTools\WmiScripting\Configuration\Config;
 
 class Connections extends Container
@@ -12,9 +12,9 @@ class Connections extends Container
         $items = [];
 
         foreach ($config->get('wmi.connections.servers') as $key => $value) {
-            $items[$key] = new Connection(
-                $value['server'] ?? Connection::DEFAULT_SERVER,
-                $value['namespace'] ?? Connection::DEFAULT_NAMESPACE,
+            $items[$key] = new ComConnection(
+                $value['server'] ?? ComConnection::DEFAULT_SERVER,
+                $value['namespace'] ?? ComConnection::DEFAULT_NAMESPACE,
                 $value['user'] ?? null,
                 $value['password'] ?? null,
                 $value['locale'] ?? null,
@@ -26,7 +26,7 @@ class Connections extends Container
         parent::__construct($items);
     }
 
-    public function set($key, Connection $connection)
+    public function set($key, ComConnection $connection)
     {
         $this->offsetSet($key, $connection);
 
@@ -35,9 +35,9 @@ class Connections extends Container
 
     /**
      * @param string                $key
-     * @param mixed|Connection|null $default
+     * @param mixed|ComConnection|null $default
      *
-     * @return Connection|null
+     * @return ComConnection|null
      */
     public function get($key, $default = null)
     {

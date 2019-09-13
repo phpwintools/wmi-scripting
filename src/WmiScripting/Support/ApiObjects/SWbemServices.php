@@ -2,10 +2,10 @@
 
 namespace PhpWinTools\WmiScripting\Support\ApiObjects;
 
-use PhpWinTools\WmiScripting\Connection;
 use PhpWinTools\WmiScripting\Flags\WbemFlags;
 use PhpWinTools\Support\COM\ComVariantWrapper;
 use function PhpWinTools\WmiScripting\Support\resolve;
+use PhpWinTools\WmiScripting\Connections\ComConnection;
 use function PhpWinTools\WmiScripting\Support\connection;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Services;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectSet;
@@ -24,7 +24,7 @@ class SWbemServices extends AbstractWbemObject implements Services
     /** @var ComVariantWrapper|ServicesVariant */
     protected $object;
 
-    public function __construct(ComVariantWrapper $object = null, Connection $connection = null)
+    public function __construct(ComVariantWrapper $object = null, ComConnection $connection = null)
     {
         $connection = connection($connection);
         $object = $object ?? resolve()->comWrapper(

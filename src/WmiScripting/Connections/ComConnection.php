@@ -1,11 +1,11 @@
 <?php
 
-namespace PhpWinTools\WmiScripting;
+namespace PhpWinTools\WmiScripting\Connections;
 
 use function PhpWinTools\WmiScripting\Support\resolve;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Services;
 
-class Connection
+class ComConnection
 {
     const DEFAULT_SERVER = '.';
 
@@ -62,7 +62,7 @@ class Connection
      * @param mixed|null  $authority
      * @param mixed|null  $security_flags
      *
-     * @return Connection
+     * @return ComConnection
      */
     public static function defaultNamespace(
         string $server,
@@ -80,7 +80,7 @@ class Connection
      * @param string $user
      * @param string $password
      *
-     * @return Connection
+     * @return ComConnection
      */
     public static function simple(string $server, string $user, string $password): self
     {

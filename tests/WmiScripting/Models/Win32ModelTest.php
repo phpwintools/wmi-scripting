@@ -4,11 +4,11 @@ namespace Tests\WmiScripting\Models;
 
 use Tests\TestCase;
 use PhpWinTools\WmiScripting\Scripting;
-use PhpWinTools\WmiScripting\Connection;
 use PhpWinTools\WmiScripting\Query\Builder;
 use PhpWinTools\WmiScripting\Models\Win32Model;
 use PhpWinTools\WmiScripting\Models\LogicalDisk;
 use PhpWinTools\WmiScripting\MappingStrings\Mappings;
+use PhpWinTools\WmiScripting\Connections\ComConnection;
 use PhpWinTools\WmiScripting\Collections\ModelCollection;
 use PhpWinTools\WmiScripting\Exceptions\InvalidArgumentException;
 use PhpWinTools\WmiScripting\Exceptions\WmiClassNotFoundException;
@@ -71,7 +71,7 @@ class Win32ModelTest extends TestCase
             }
         };
 
-        $connection = $this->getMockBuilder(Connection::class)->getMock();
+        $connection = $this->getMockBuilder(ComConnection::class)->getMock();
         $connection->expects($this->once())->method('connect');
 
         $builder = $this->getMockBuilder(Builder::class)->setConstructorArgs([$wmiClass, $connection])->getMock();
@@ -91,7 +91,7 @@ class Win32ModelTest extends TestCase
     public function it_has_a_default_connection_of_default()
     {
         $this->assertSame('default', LogicalDisk::newInstance()->getConnectionName());
-        $this->assertInstanceOf(Connection::class, LogicalDisk::newInstance()->getConnection());
+        $this->assertInstanceOf(ComConnection::class, LogicalDisk::newInstance()->getConnection());
     }
 
     /** @test */

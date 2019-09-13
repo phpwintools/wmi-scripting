@@ -3,9 +3,9 @@
 namespace PhpWinTools\WmiScripting\Support {
 
     use ReflectionClass;
-    use PhpWinTools\WmiScripting\Connection;
     use PhpWinTools\WmiScripting\Configuration\Config;
     use PhpWinTools\WmiScripting\Configuration\Resolver;
+    use PhpWinTools\WmiScripting\Connections\ComConnection;
     use PhpWinTools\WmiScripting\Collections\ArrayCollection;
     use PhpWinTools\WmiScripting\Exceptions\InvalidArgumentException;
     use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
@@ -21,11 +21,11 @@ namespace PhpWinTools\WmiScripting\Support {
     }
 
     /**
-     * @param Connection|string|null $connection
-     * @param Connection|string|null $default
+     * @param ComConnection|string|null $connection
+     * @param ComConnection|string|null $default
      * @param Config|null            $config
      *
-     * @return Connection|string|null
+     * @return ComConnection|string|null
      */
     function connection($connection = null, $default = null, Config $config = null)
     {
@@ -37,11 +37,11 @@ namespace PhpWinTools\WmiScripting\Support {
             $connection = core($config)->getConnection($connection);
         }
 
-        if (!$connection instanceof Connection && $default) {
+        if (!$connection instanceof ComConnection && $default) {
             return connection($default, null, core($config));
         }
 
-        if (!$connection instanceof Connection) {
+        if (!$connection instanceof ComConnection) {
             throw InvalidConnectionException::new($connection);
         }
 

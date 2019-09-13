@@ -4,8 +4,8 @@ namespace PhpWinTools\WmiScripting\Testing\Wmi;
 
 use Faker\Factory;
 use Faker\Generator;
-use PhpWinTools\WmiScripting\Connection;
 use PhpWinTools\WmiScripting\Models\Win32Model;
+use PhpWinTools\WmiScripting\Connections\ComConnection;
 use PhpWinTools\WmiScripting\Collections\ArrayCollection;
 use PhpWinTools\WmiScripting\Support\ApiObjects\SWbemServices;
 
@@ -58,7 +58,7 @@ class Win32ModelFactory
                     'is_class'          => false,
                     'is_singleton'      => false,
                     'keys'              => [],
-                    'namespace'         => Connection::DEFAULT_NAMESPACE,
+                    'namespace'         => ComConnection::DEFAULT_NAMESPACE,
                     'parent_namespace'  => 'Root',
                     'path'              => '\\\server\\namespace:'
                         . "{$class_name::newInstance()->getWmiClassNameAttribute()}.DeviceID=\"something:\"",

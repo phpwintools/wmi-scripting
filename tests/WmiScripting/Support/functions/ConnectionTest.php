@@ -3,8 +3,8 @@
 namespace Tests\WmiScripting\Support\functions;
 
 use Tests\TestCase;
-use PhpWinTools\WmiScripting\Connection;
 use PhpWinTools\WmiScripting\Configuration\Config;
+use PhpWinTools\WmiScripting\Connections\ComConnection;
 use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
 
 use function PhpWinTools\WmiScripting\Support\connection;
@@ -59,12 +59,12 @@ class ConnectionTest extends TestCase
     /** @test */
     public function it_returns_the_given_connection_if_it_is_an_instance_of_connection()
     {
-        $this->assertEquals($connection = Connection::defaultNamespace('some server'), connection($connection));
+        $this->assertEquals($connection = ComConnection::defaultNamespace('some server'), connection($connection));
     }
 
     /** @test */
     public function it_returns_the_default_parameter_connection_if_it_is_an_instance_of_connection_and_the_given_isnt()
     {
-        $this->assertEquals($connection = Connection::defaultNamespace('some server'), connection('test', $connection));
+        $this->assertEquals($connection = ComConnection::defaultNamespace('some server'), connection('test', $connection));
     }
 }

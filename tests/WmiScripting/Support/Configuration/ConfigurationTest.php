@@ -3,9 +3,9 @@
 namespace Tests\WmiScripting\Support\Configuration;
 
 use Tests\TestCase;
-use PhpWinTools\WmiScripting\Connection;
 use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Configuration\Resolver;
+use PhpWinTools\WmiScripting\Connections\ComConnection;
 use PhpWinTools\Support\COM\Testing\ComVariantWrapperFake;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Locator;
 use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
@@ -55,16 +55,16 @@ class ConfigurationTest extends TestCase
             ]
         ];
 
-        $this->assertInstanceOf(Connection::class, Config::newInstance($connection)->getConnection('local'));
-        $this->assertInstanceOf(Connection::class, Config::instance()->getConnection('test'));
-        $this->assertInstanceOf(Connection::class, Config::instance()->getConnection('default'));
+        $this->assertInstanceOf(ComConnection::class, Config::newInstance($connection)->getConnection('local'));
+        $this->assertInstanceOf(ComConnection::class, Config::instance()->getConnection('test'));
+        $this->assertInstanceOf(ComConnection::class, Config::instance()->getConnection('default'));
     }
 
     /** @test */
     public function it_sets_the_default_local_connection()
     {
-        $this->assertEquals(Connection::DEFAULT_SERVER, Config::newInstance()->getConnection()->getServer());
-        $this->assertEquals(Connection::DEFAULT_NAMESPACE, Config::instance()->getConnection()->getNamespace());
+        $this->assertEquals(ComConnection::DEFAULT_SERVER, Config::newInstance()->getConnection()->getServer());
+        $this->assertEquals(ComConnection::DEFAULT_NAMESPACE, Config::instance()->getConnection()->getNamespace());
         $this->assertEquals(Config::instance()->connections()->get('local'), Config::instance()->getConnection());
         $this->assertEquals(Config::instance()->getConnection('local'), Config::instance()->getConnection('default'));
     }
@@ -72,7 +72,7 @@ class ConfigurationTest extends TestCase
     /** @test */
     public function it_returns_the_same_instance_when_available()
     {
-        $config = Config::newInstance()->addConnection('test', new Connection());
+        $config = Config::newInstance()->addConnection('test', new ComConnection());
 
         $this->assertInstanceOf(Config::class, $config);
         $this->assertEquals($config, Config::instance());
@@ -81,7 +81,7 @@ class ConfigurationTest extends TestCase
     /** @test */
     public function it_can_return_a_new_instance_statically()
     {
-        $config = Config::newInstance()->addConnection('test', new Connection());
+        $config = Config::newInstance()->addConnection('test', new ComConnection());
 
         $this->assertInstanceOf(Config::class, $config);
         $this->assertNotEquals($config, Config::newInstance());
