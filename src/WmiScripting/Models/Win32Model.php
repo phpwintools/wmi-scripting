@@ -106,9 +106,9 @@ class Win32Model implements Arrayable, Jsonable, HasAttributes, HidesAttributes,
     /**
      * @param ComConnection|string|null $connection
      *
-     * @return ComConnection
-     *@throws InvalidConnectionException
+     * @throws InvalidConnectionException
      *
+     * @return ComConnection
      */
     public function getConnection($connection = null)
     {

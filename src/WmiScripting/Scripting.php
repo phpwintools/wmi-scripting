@@ -76,7 +76,7 @@ class Scripting
     }
 
     /**
-     * @param string                $name
+     * @param string                   $name
      * @param ComConnection|array|null $connection
      *
      * @return self
@@ -109,7 +109,7 @@ class Scripting
     }
 
     /**
-     * @param string                $name
+     * @param string                   $name
      * @param ComConnection|array|null $connection
      *
      * @return self

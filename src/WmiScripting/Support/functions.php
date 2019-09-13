@@ -23,7 +23,7 @@ namespace PhpWinTools\WmiScripting\Support {
     /**
      * @param ComConnection|string|null $connection
      * @param ComConnection|string|null $default
-     * @param Config|null            $config
+     * @param Config|null               $config
      *
      * @return ComConnection|string|null
      */

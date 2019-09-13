@@ -217,7 +217,7 @@ class Resolver
 
     /**
      * @param ComVariantWrapper|null $com
-     * @param ComConnection|null        $connection
+     * @param ComConnection|null     $connection
      * @param Config|null            $config
      *
      * @return Services

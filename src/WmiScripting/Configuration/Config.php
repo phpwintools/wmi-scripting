@@ -334,7 +334,7 @@ class Config
     }
 
     /**
-     * @param string     $name
+     * @param string        $name
      * @param ComConnection $connection
      *
      * @return Config

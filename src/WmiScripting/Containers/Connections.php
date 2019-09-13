@@ -2,8 +2,8 @@
 
 namespace PhpWinTools\WmiScripting\Containers;
 
-use PhpWinTools\WmiScripting\Connections\ComConnection;
 use PhpWinTools\WmiScripting\Configuration\Config;
+use PhpWinTools\WmiScripting\Connections\ComConnection;
 
 class Connections extends Container
 {
@@ -34,7 +34,7 @@ class Connections extends Container
     }
 
     /**
-     * @param string                $key
+     * @param string                   $key
      * @param mixed|ComConnection|null $default
      *
      * @return ComConnection|null
