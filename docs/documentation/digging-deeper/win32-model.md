@@ -40,7 +40,7 @@ define this property and a class name cannot determine the WMI class name an exc
 Attributes will attempted to be casted to the given type if defined within this array. All definitions of
 `$attribute_casting` are merged from the models ancestors by default. This allows you to define `$attribute_casting` in
 both a parent and a child without risk of having the values overridden. In the case where both the child and parent
-class both define the same attribute to be casteds the child casting will be used.
+class both define the same attribute to be casted the child casting will be used.
 
 ```php
 Available castings
@@ -121,10 +121,10 @@ argument that can be provided in a number of ways.
 Win32Model::query();
 
 // Finds the connection by its name.
-Win32Model::('named_connection');
+Win32Model::query('named_connection');
 
 // Uses the connection as is.
-Win32Model::(Connection::simple('computer', 'user', 'password');
+Win32Model::query(Connection::simple('computer', 'user', 'password'));
 ```
 
 If you pass a `Connection` instance it will not be stored in the `Config` container. This can be useful if you have a

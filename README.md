@@ -9,7 +9,7 @@
     <a href="https://packagist.org/packages/phpwintools/wmi-scripting"><img src="https://img.shields.io/github/license/phpwintools/wmi-scripting" alt="License"></a>
 </p>
 
-### Current Version: 0.0.1-alpha
+### Current Version: 0.1.1-alpha
 
 This is currently under heavy development and no release candidate has be marked at this point.
 You are free to use this in production with relatively low-risk as the library itself is fully functional,

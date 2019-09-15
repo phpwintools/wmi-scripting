@@ -16,11 +16,12 @@ use PhpWinTools\WmiScripting\Models\SystemDevices;
 use PhpWinTools\WmiScripting\Models\ComputerSystem;
 use PhpWinTools\WmiScripting\Models\OperatingSystem;
 use PhpWinTools\WmiScripting\Models\TemperatureProbe;
+use PhpWinTools\WmiScripting\Connections\ComConnection;
 use PhpWinTools\WmiScripting\Models\ProgramGroupContents;
 
 class WmiQueryFactory
 {
-    /** @var Connection|string|null */
+    /** @var ComConnection|string|null */
     protected $connection;
 
     public function __construct($connection = null)

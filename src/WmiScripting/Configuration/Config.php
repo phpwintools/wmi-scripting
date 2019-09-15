@@ -4,10 +4,10 @@ namespace PhpWinTools\WmiScripting\Configuration;
 
 use Illuminate\Support\Arr;
 use PhpWinTools\Support\COM\ComWrapper;
-use PhpWinTools\WmiScripting\Connection;
 use PhpWinTools\Support\COM\VariantWrapper;
 use PhpWinTools\Support\COM\ComVariantWrapper;
 use PhpWinTools\WmiScripting\Containers\Connections;
+use PhpWinTools\WmiScripting\Connections\ComConnection;
 use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
 use PhpWinTools\WmiScripting\Exceptions\UnresolvableClassException;
 
@@ -322,7 +322,7 @@ class Config
     /**
      * @param string $name
      *
-     * @return Connection|null
+     * @return ComConnection|null
      */
     public function getConnection(string $name = null)
     {
@@ -334,12 +334,12 @@ class Config
     }
 
     /**
-     * @param string     $name
-     * @param Connection $connection
+     * @param string        $name
+     * @param ComConnection $connection
      *
      * @return Config
      */
-    public function addConnection(string $name, Connection $connection): self
+    public function addConnection(string $name, ComConnection $connection): self
     {
         $this->connections()->set($name, $connection);
 

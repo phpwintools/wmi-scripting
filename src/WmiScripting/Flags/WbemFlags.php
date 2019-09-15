@@ -11,4 +11,7 @@ abstract class WbemFlags
     const RETURN_IMMEDIATELY = 0x10;
     const RETURN_WHEN_COMPLETE = 0x0;
     const USE_AMENDED_QUALIFIERS = 0x20000;
+
+    /** ConnectServer Flag: https://docs.microsoft.com/en-us/windows/win32/wmisdk/swbemlocator-connectserver */
+    const CONNECT_FLAG_USE_MAX_WAIT = 0x80;
 }

@@ -2,9 +2,9 @@
 
 namespace PhpWinTools\WmiScripting\Support\ApiObjects\Contracts;
 
-use PhpWinTools\WmiScripting\Connection;
+use PhpWinTools\WmiScripting\Connections\ComConnection;
 
 interface Locator extends WbemObject
 {
-    public function connectServer(Connection $connection = null): Services;
+    public function connectServer(ComConnection $connection = null): Services;
 }

@@ -5,10 +5,10 @@ namespace PhpWinTools\WmiScripting\Configuration;
 use COM;
 use VARIANT;
 use PhpWinTools\Support\COM\ComWrapper;
-use PhpWinTools\WmiScripting\Connection;
 use PhpWinTools\Support\COM\VariantWrapper;
 use PhpWinTools\Support\COM\Testing\COMFake;
 use PhpWinTools\Support\COM\ComVariantWrapper;
+use PhpWinTools\WmiScripting\Connections\ComConnection;
 use PhpWinTools\WmiScripting\Testing\Support\VARIANTFake;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Locator;
 use PhpWinTools\WmiScripting\Exceptions\UnresolvableClassException;
@@ -217,12 +217,12 @@ class Resolver
 
     /**
      * @param ComVariantWrapper|null $com
-     * @param Connection|null        $connection
+     * @param ComConnection|null     $connection
      * @param Config|null            $config
      *
      * @return Services
      */
-    public function services(ComVariantWrapper $com = null, Connection $connection = null, Config $config = null)
+    public function services(ComVariantWrapper $com = null, ComConnection $connection = null, Config $config = null)
     {
         return $this->make($this->config->getApiObject(Services::class), $com, $connection, $config ?? $this->config);
     }

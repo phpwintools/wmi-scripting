@@ -4,9 +4,9 @@ namespace Tests\WmiScripting;
 
 use Tests\TestCase;
 use PhpWinTools\WmiScripting\Scripting;
-use PhpWinTools\WmiScripting\Connection;
 use PhpWinTools\WmiScripting\Models\LogicalDisk;
 use PhpWinTools\WmiScripting\Configuration\Config;
+use PhpWinTools\WmiScripting\Connections\ComConnection;
 use PhpWinTools\WmiScripting\Collections\ModelCollection;
 use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
 use PhpWinTools\WmiScripting\Exceptions\InvalidConfigArgumentException;
@@ -41,7 +41,7 @@ class ScriptingTest extends TestCase
     /** @test */
     public function it_can_instantiate_with_a_connection_and_set_it_as_the_default_connection()
     {
-        $connection = Connection::simple('server', 'user', 'password');
+        $connection = ComConnection::simple('server', 'user', 'password');
         $scripting = new Scripting($connection);
 
         $this->assertSame($connection, $scripting->getDefaultConnection());
@@ -79,7 +79,7 @@ class ScriptingTest extends TestCase
     public function it_can_fake_a_defined_model_response()
     {
         $extendedModel = new class extends LogicalDisk {};
-        $connection = Connection::defaultNamespace('fake server', 'fake user name', 'fake password');
+        $connection = ComConnection::defaultNamespace('fake server', 'fake user name', 'fake password');
 
         $response = Scripting::fake($this)->win32Model($model = get_class($extendedModel));
         $modelCollection = $extendedModel::query($connection)->get();
@@ -94,7 +94,7 @@ class ScriptingTest extends TestCase
     {
         $scripting = new Scripting();
         $response = Scripting::fake($this)->win32Model(LogicalDisk::class);
-        $connection = Connection::defaultNamespace('fake server', 'fake user name', 'fake password');
+        $connection = ComConnection::defaultNamespace('fake server', 'fake user name', 'fake password');
         $model = $scripting->query($connection)->logicalDisk()->get()->first();
 
         $response->assertConnectionWasUsed($connection);
@@ -130,7 +130,7 @@ class ScriptingTest extends TestCase
     public function it_can_add_a_connection_from_an_instance()
     {
         $scripting = new Scripting();
-        $scripting->addConnection('test', Connection::defaultNamespace('server'));
+        $scripting->addConnection('test', ComConnection::defaultNamespace('server'));
 
         $connection = Config::instance()->getConnection('test');
         $this->assertEquals('server', $connection->getServer());
@@ -140,7 +140,7 @@ class ScriptingTest extends TestCase
     public function it_can_set_a_defined_connection_as_default()
     {
         $scripting = new Scripting();
-        $scripting->addConnection('test', $connection = Connection::defaultNamespace('server'));
+        $scripting->addConnection('test', $connection = ComConnection::defaultNamespace('server'));
         $scripting->setDefaultConnection('test');
 
         $this->assertSame($connection, Config::instance()->getConnection());
@@ -150,7 +150,7 @@ class ScriptingTest extends TestCase
     public function it_can_add_and_set_a_connection_as_default()
     {
         $scripting = new Scripting();
-        $scripting->setDefaultConnection('testing', Connection::defaultNamespace('server'));
+        $scripting->setDefaultConnection('testing', ComConnection::defaultNamespace('server'));
 
         $connection = Config::instance()->getConnection('default');
         $this->assertSame($connection, Config::instance()->getConnection());

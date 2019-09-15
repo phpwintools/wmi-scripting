@@ -2,8 +2,8 @@
 
 namespace PhpWinTools\WmiScripting\Query;
 
-use PhpWinTools\WmiScripting\Connection;
 use PhpWinTools\WmiScripting\Models\Win32Model;
+use PhpWinTools\WmiScripting\Connections\ComConnection;
 use PhpWinTools\WmiScripting\Collections\ModelCollection;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectSet;
 
@@ -21,7 +21,7 @@ class Builder
 
     protected $relationships = [];
 
-    public function __construct(Win32Model $model, Connection $connection)
+    public function __construct(Win32Model $model, ComConnection $connection)
     {
         $this->model = $model;
         $this->from = $model->getWmiClassNameAttribute();
