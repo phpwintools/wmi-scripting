@@ -1,10 +1,13 @@
 <?php
 
+use PhpWinTools\WmiScripting\Connections\ComConnection;
+
 return [
     'default' => 'local',
 
     'servers' => [
         'local' => [
+            'type'            => ComConnection::class,
             'server'          => '.',
             'namespace'       => 'Root\CIMv2',
             'user'            => null,
