@@ -2,12 +2,12 @@
 
 namespace PhpWinTools\WmiScripting\Support\Bus\Events;
 
+use PhpWinTools\WmiScripting\Support\Bus\Context;
 use PhpWinTools\WmiScripting\Support\Bus\CommandBus;
 use PhpWinTools\WmiScripting\Support\Bus\Commands\Command;
-use PhpWinTools\WmiScripting\Support\Bus\Context;
 use PhpWinTools\WmiScripting\Support\Bus\Middleware\CommandMiddleware;
 
-abstract class CommandBusEvent extends Event
+abstract class CommandBusPreEvent extends Event
 {
     protected $bus;
 

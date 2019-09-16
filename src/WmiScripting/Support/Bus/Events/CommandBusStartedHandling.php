@@ -2,6 +2,6 @@
 
 namespace PhpWinTools\WmiScripting\Support\Bus\Events;
 
-class BusStartedHandling extends CommandBusEvent
+class CommandBusStartedHandling extends CommandBusPreEvent
 {
 }

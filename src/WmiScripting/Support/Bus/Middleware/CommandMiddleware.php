@@ -3,20 +3,11 @@
 namespace PhpWinTools\WmiScripting\Support\Bus\Middleware;
 
 use Closure;
-use PhpWinTools\WmiScripting\Support\Bus\Commands\Command;
 
 class CommandMiddleware
 {
-    protected $originalCommand;
-
-    protected $command;
-
-    protected $results;
-
-    protected $next;
-
-    public function handle(Command $command, Closure $next)
+    public function handle($subject, Closure $next)
     {
-        return $next($command);
+        return $next($subject);
     }
 }
