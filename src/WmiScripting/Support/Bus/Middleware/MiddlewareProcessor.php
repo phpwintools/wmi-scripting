@@ -41,4 +41,9 @@ class MiddlewareProcessor
 
         return $command;
     }
+
+    public function fired()
+    {
+        return $this->fired;
+    }
 }

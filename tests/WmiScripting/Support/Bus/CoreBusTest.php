@@ -52,8 +52,7 @@ class CoreBusTest extends TestCase
         };
 
         $bus = CoreBus::instance()->registerMiddleware(get_class($middleware), get_class($command));
-
-        dump($bus->handle($command));
-        dd(MiddlewareProcessor::instance());
+        $bus->handle($command);
+        dd(MiddlewareProcessor::instance()->fired());
     }
 }
