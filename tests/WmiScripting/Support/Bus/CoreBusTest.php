@@ -30,15 +30,23 @@ class CoreBusTest extends TestCase
         $command = new class extends Command {};
 
         $middleware = new class extends PreCommandMiddleware {
-            public static $has_run = false;
+            public static $instance;
 
-            public $has_run_instance;
+            public $has_run_instance = false;
+
+            public function __construct()
+            {
+                self::$instance = $this;
+            }
+
+            public static function instance()
+            {
+                return self::$instance ?? self::$instance = new self();
+            }
 
             public function resolve(Command $command, Closure $next)
             {
-                self::$has_run = true;
-
-                $this->has_run_instance = self::$has_run;
+                $this->has_run_instance = true;
                 return $next($command);
             }
         };
