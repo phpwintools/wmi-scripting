@@ -2,22 +2,16 @@
 
 namespace PhpWinTools\WmiScripting\Support\Bus;
 
-use PhpWinTools\WmiScripting\Configuration\Config;
-use PhpWinTools\WmiScripting\Exceptions\InvalidArgumentException;
 use PhpWinTools\WmiScripting\Support\Bus\Commands\Command;
+use PhpWinTools\WmiScripting\Exceptions\InvalidArgumentException;
 use PhpWinTools\WmiScripting\Support\Bus\Middleware\CommandMiddleware;
-use PhpWinTools\WmiScripting\Support\Bus\Middleware\FailureCommandMiddleware;
 use PhpWinTools\WmiScripting\Support\Bus\Middleware\MiddlewareProcessor;
 use PhpWinTools\WmiScripting\Support\Bus\Middleware\PreCommandMiddleware;
+use PhpWinTools\WmiScripting\Support\Bus\Middleware\FailureCommandMiddleware;
 use PhpWinTools\WmiScripting\Support\Bus\Middleware\SuccessCommandMiddleware;
 
 class CoreBus extends CommandBus
 {
-    /** @var self|null */
-    protected static $instance = null;
-
-    protected $config;
-
     /** @var array|CommandHandler[][] */
     protected $bus;
 
@@ -28,28 +22,6 @@ class CoreBus extends CommandBus
     protected $success_middleware = [];
 
     protected $failure_middleware = [];
-
-    protected $parent = null;
-
-    protected $children = [];
-
-    public function __construct(Config $config = null, CommandBus $parent = null)
-    {
-        $this->config = $config ?? Config::instance();
-        $this->parent = $parent;
-
-        static::$instance = $this;
-    }
-
-    public static function instance(Config $config = null)
-    {
-        return static::$instance ?? new static($config ?? Config::instance());
-    }
-
-    public function getConfig()
-    {
-        return $this->config;
-    }
 
     public function assignHandler($command, CommandHandler $commandHandler, CommandBus $bus = null)
     {
@@ -85,24 +57,24 @@ class CoreBus extends CommandBus
         $parents = class_parents($middleware);
 
         if (array_key_exists(PreCommandMiddleware::class, $parents)) {
-            $this->pre_middleware[$command] = $middleware;
+            $this->pre_middleware[$command][] = $middleware;
 
             return $this;
         }
 
         if (array_key_exists(SuccessCommandMiddleware::class, $parents)) {
-            $this->success_middleware[$command] = $middleware;
+            $this->success_middleware[$command][] = $middleware;
 
             return $this;
         }
 
         if (array_key_exists(FailureCommandMiddleware::class, $parents)) {
-            $this->failure_middleware[$command] = $middleware;
+            $this->failure_middleware[$command][] = $middleware;
 
             return $this;
         }
 
-        $this->post_middleware[$command] = $middleware;
+        $this->post_middleware[$command][] = $middleware;
 
         return $this;
     }
@@ -112,7 +84,8 @@ class CoreBus extends CommandBus
         // Pre-Middleware -> Post-Middleware (Any, Success, Failure)
         // Core: Middleware -> (Inner Bus -> Inner Middleware) -> CommandHandler - (Inner Bus -> CommandHandler) -> Middleware
 
-        MiddlewareProcessor::process($this->pre_middleware, $command);
+        $result = MiddlewareProcessor::process($this->pre_middleware[get_class($command)], $command);
+        dump($result);
 
         return $this;
     }
@@ -140,10 +113,5 @@ class CoreBus extends CommandBus
     protected function doesNotExtendMiddleware($middleware)
     {
         return $this->extendsMiddleware($middleware) === false;
-    }
-
-    protected function classExtends($class, $parent)
-    {
-        return array_key_exists($parent, class_parents($class));
     }
 }

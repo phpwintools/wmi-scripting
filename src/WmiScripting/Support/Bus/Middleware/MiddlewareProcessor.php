@@ -2,6 +2,7 @@
 
 namespace PhpWinTools\WmiScripting\Support\Bus\Middleware;
 
+use Closure;
 use PhpWinTools\WmiScripting\Support\Bus\Commands\Command;
 
 class MiddlewareProcessor
@@ -23,23 +24,31 @@ class MiddlewareProcessor
     /**
      * @param array|CommandMiddleware[] $middleware_array
      * @param Command                   $command
+     * @param Closure|null              $core
      *
      * @return Command
      */
-    public static function process(array $middleware_array, Command $command)
+    public static function process(array $middleware_array, Command $command, Closure $core = null)
     {
         $processor = static::instance();
+        $core = $core ?? function (Command $command) {
+            dump('core');
+            return $command;
+        };
 
-        array_map(function ($middleware) use (&$command, $processor) {
-            /** @var string|CommandMiddleware $middleware */
+        $middleware_array = array_reverse($middleware_array);
+
+        $stack = array_reduce($middleware_array, function ($next, $middleware) use ($command, $processor) {
+            /** @var CommandMiddleware $middleware */
             $middleware = new $middleware();
-            $processor->fired[get_class($middleware)][] = new FiredMiddleware($middleware, $command);
-            $command = $middleware->resolve($command, function () {
-                //
-            });
-        }, $middleware_array);
 
-        return $command;
+            return function ($command) use ($next, $middleware, $processor) {
+                $processor->fired[] = new FiredMiddleware($middleware, $command);
+                return $middleware->handle($command, $next);
+            };
+        }, $core);
+
+        return $stack($command);
     }
 
     public function fired()

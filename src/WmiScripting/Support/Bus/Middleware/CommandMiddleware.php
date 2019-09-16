@@ -15,7 +15,7 @@ class CommandMiddleware
 
     protected $next;
 
-    public function resolve(Command $command, Closure $next)
+    public function handle(Command $command, Closure $next)
     {
         return $next($command);
     }
