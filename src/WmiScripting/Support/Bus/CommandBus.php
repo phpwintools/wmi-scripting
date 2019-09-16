@@ -6,10 +6,9 @@ use Closure;
 use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Support\Bus\Commands\Command;
 use PhpWinTools\WmiScripting\Exceptions\InvalidArgumentException;
+use PhpWinTools\WmiScripting\Support\Bus\Middleware\MiddlewareStack;
 use PhpWinTools\WmiScripting\Support\Bus\Middleware\CommandMiddleware;
-use PhpWinTools\WmiScripting\Support\Bus\Middleware\MiddlewareProcessor;
 use PhpWinTools\WmiScripting\Support\Bus\Middleware\PreCommandMiddleware;
-use PhpWinTools\WmiScripting\Support\Bus\Middleware\PostCommandMiddleware;
 use PhpWinTools\WmiScripting\Support\Bus\Middleware\FailureCommandMiddleware;
 use PhpWinTools\WmiScripting\Support\Bus\Middleware\SuccessCommandMiddleware;
 
@@ -24,21 +23,22 @@ class CommandBus
     /** @var array|CommandHandler[] */
     protected $handlers = [];
 
-    /** @var array|PreCommandMiddleware[] */
-    protected $pre_middleware = [];
+    /** @var MiddlewareStack */
+    protected $preMiddleware;
 
-    /** @var array|PostCommandMiddleware[] */
-    protected $post_middleware = [];
+    /** @var MiddlewareStack */
+    protected $postMiddleware = [];
 
-    /** @var array|SuccessCommandMiddleware[] */
-    protected $success_middleware = [];
+    /** @var MiddlewareStack */
+    protected $failureMiddleware = [];
 
-    /** @var array|FailureCommandMiddleware[] */
-    protected $failure_middleware = [];
+    /** @var MiddlewareStack */
+    protected $successMiddleware = [];
 
     public function __construct(Config $config = null)
     {
         $this->config = $config ?? Config::instance();
+        $this->boot();
 
         static::$instance = $this;
     }
@@ -55,7 +55,7 @@ class CommandBus
 
     public function assignHandler($command, CommandHandler $commandHandler)
     {
-        if ($this->doesNotExtendCommand($command)) {
+        if ($this->invalidCommand($command)) {
             throw new InvalidArgumentException("{$command} must extend " . Command::class);
         }
 
@@ -66,35 +66,35 @@ class CommandBus
 
     public function registerMiddleware($middleware, $command)
     {
-        if ($this->doesNotExtendCommand($command)) {
+        if ($this->invalidCommand($command)) {
             throw new InvalidArgumentException("{$command} must extend " . Command::class);
         }
 
-        if ($this->doesNotExtendMiddleware($middleware)) {
+        if ($this->invalidMiddleware($middleware)) {
             throw new InvalidArgumentException("{$middleware} must extend " . CommandMiddleware::class);
         }
 
         $parents = class_parents($middleware);
 
         if (array_key_exists(PreCommandMiddleware::class, $parents)) {
-            $this->pre_middleware[$command][] = $middleware;
+            $this->preMiddleware->add($middleware, $command);
 
             return $this;
         }
 
         if (array_key_exists(SuccessCommandMiddleware::class, $parents)) {
-            $this->success_middleware[$command][] = $middleware;
+            $this->successMiddleware->add($middleware, $command);
 
             return $this;
         }
 
         if (array_key_exists(FailureCommandMiddleware::class, $parents)) {
-            $this->failure_middleware[$command][] = $middleware;
+            $this->failureMiddleware->add($middleware, $command);
 
             return $this;
         }
 
-        $this->post_middleware[$command][] = $middleware;
+        $this->postMiddleware->add($middleware, $command);
 
         return $this;
     }
@@ -103,7 +103,7 @@ class CommandBus
     {
         $command_name = get_class($command);
 
-        $pre = $this->processMiddleware($this->pre_middleware[$command_name] ?? [], $command, $core_callback);
+        $pre = $this->preMiddleware->process($command, $core_callback);
         $command_failure = true;
         $result = null;
 
@@ -113,40 +113,43 @@ class CommandBus
             $command_failure = $handler->getFailureResult() === $result;
         }
 
-        $result = $this->processMiddleware($this->post_middleware[$command_name] ?? [], $result, $core_callback);
+        $result = $this->postMiddleware->process($command, $core_callback);
 
         if ($command_failure) {
-            $result = $this->processMiddleware($this->failure_middleware[$command_name] ?? [], $result, $core_callback);
+            $result = $this->failureMiddleware->process($result, $core_callback);
         } else {
-            $result = $this->processMiddleware($this->success_middleware[$command_name] ?? [], $result, $core_callback);
+            $result = $this->successMiddleware->process($result, $core_callback);
         }
 
         return $result;
     }
 
-    protected function extendsCommand($command)
+    protected function boot()
     {
-        return $this->classExtends($command, Command::class);
+        $this->preMiddleware = new MiddlewareStack();
+        $this->postMiddleware = new MiddlewareStack();
+        $this->failureMiddleware = new MiddlewareStack();
+        $this->successMiddleware = new MiddlewareStack();
     }
 
-    protected function doesNotExtendCommand($command)
+    protected function validCommand($command)
     {
-        return $this->extendsCommand($command) === false;
+        return $command = '*' || $this->classExtends($command, Command::class);
     }
 
-    protected function extendsMiddleware($middleware)
+    protected function invalidCommand($command)
     {
-        return $this->classExtends($middleware, CommandMiddleware::class);
+        return $this->validCommand($command) === false;
     }
 
-    protected function doesNotExtendMiddleware($middleware)
+    protected function validMiddleware($middleware)
     {
-        return $this->extendsMiddleware($middleware) === false;
+        return $middleware instanceof Closure || $this->classExtends($middleware, CommandMiddleware::class);
     }
 
-    protected function processMiddleware(array $stack, $subject, Closure $core_callback = null)
+    protected function invalidMiddleware($middleware)
     {
-        return MiddlewareProcessor::process($stack, $subject, $core_callback);
+        return $this->validMiddleware($middleware) === false;
     }
 
     protected function classExtends($class, $parent)
