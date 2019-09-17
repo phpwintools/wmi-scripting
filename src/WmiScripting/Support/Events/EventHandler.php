@@ -20,8 +20,7 @@ class EventHandler
 
     public function __construct(Config $config = null)
     {
-        $this->config = $config ?? Config::instance();
-        $this->fired = new FiredEvents($config);
+        $this->fired = new FiredEvents($this->config = $config ?? Config::instance());
 
         static::$instance = $this;
     }
