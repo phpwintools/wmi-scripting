@@ -5,13 +5,12 @@ namespace Tests\WmiScripting\Support\Bus;
 use Closure;
 use Tests\TestCase;
 use PhpWinTools\WmiScripting\Configuration\Config;
+use PhpWinTools\WmiScripting\Support\Events\Event;
 use PhpWinTools\WmiScripting\Support\Bus\CommandBus;
-use PhpWinTools\WmiScripting\Support\Bus\Events\Event;
+use PhpWinTools\WmiScripting\Support\Events\Listener;
 use PhpWinTools\WmiScripting\Support\Bus\CommandHandler;
-use PhpWinTools\WmiScripting\Support\Bus\Events\Listener;
 use PhpWinTools\WmiScripting\Support\Bus\Commands\Command;
-use PhpWinTools\WmiScripting\Support\Bus\Events\EventHandler;
-use PhpWinTools\WmiScripting\Support\Bus\Events\CommandBusPreEvent;
+use PhpWinTools\WmiScripting\Support\Bus\Events\CommandBusEvent;
 use PhpWinTools\WmiScripting\Support\Bus\Middleware\PreCommandMiddleware;
 
 class CommandBusTest extends TestCase
@@ -142,7 +141,7 @@ class CommandBusTest extends TestCase
         $bus = (new CommandBus())
             ->assignHandler(get_class($command), $handler)
             ->registerMiddleware(get_class($middleware), get_class($command))
-            ->registerMiddleware($closure, get_class($command));
+            ->registerMiddleware($closure, get_class($command), PreCommandMiddleware::class);
 
         $expected = [
             'middleware',
@@ -156,27 +155,8 @@ class CommandBusTest extends TestCase
     }
 
     /** @test */
-    public function it_takes_a_closure_as_valid_middleware()
-    {
-
-    }
-
-    /** @test */
     public function it_fires_an_event_before_any_pre_middleware()
     {
-        $eventHandler = new EventHandler();
-
-        $listener = new class extends Listener {
-            public $reacted = false;
-
-            public function react(Event $event)
-            {
-                $this->reacted = true;
-            }
-        };
-
-        $eventHandler->subscribe(CommandBusPreEvent::class, $listener);
-
         $command = new class extends Command {
             public $processed = [];
         };
@@ -207,13 +187,28 @@ class CommandBusTest extends TestCase
             }
         };
 
-        $bus = (new CommandBus())
+        $bus = (new CommandBus(Config::newInstance()))
             ->assignHandler(get_class($command), $handler)
             ->registerMiddleware(get_class($first_middleware), '*')
             ->registerMiddleware(get_class($second_middleware), get_class($command));
 
+        $listener = new class extends Listener {
+            public $reacted = false;
+
+            public function react(Event $event)
+            {
+                $this->reacted = true;
+            }
+        };
+
+        $bus->getConfig()->events()->subscribe(CommandBusEvent::class, $listener);
+
+        $this->assertFalse($listener->reacted);
+        $this->assertFalse($bus->getConfig()->events()->history()->happened(CommandBusEvent::class));
+
         $bus->handle($command);
 
-        $this->assertTrue($listener->reacted, 'Listener did not react to command event');
+        $this->assertTrue($listener->reacted);
+        $this->assertTrue($bus->getConfig()->events()->history()->happened(CommandBusEvent::class));
     }
 }

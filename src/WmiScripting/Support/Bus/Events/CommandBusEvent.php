@@ -3,26 +3,23 @@
 namespace PhpWinTools\WmiScripting\Support\Bus\Events;
 
 use PhpWinTools\WmiScripting\Support\Bus\Context;
+use PhpWinTools\WmiScripting\Support\Events\Event;
 use PhpWinTools\WmiScripting\Support\Bus\CommandBus;
 use PhpWinTools\WmiScripting\Support\Bus\Commands\Command;
-use PhpWinTools\WmiScripting\Support\Bus\Middleware\CommandMiddleware;
 
-abstract class CommandBusPreEvent extends Event
+abstract class CommandBusEvent extends Event
 {
     protected $bus;
 
     protected $command;
 
-    protected $middleware;
-
-    public function __construct(CommandBus $bus, Command $command = null, CommandMiddleware $middleware = null)
+    public function __construct(CommandBus $bus, Command $command = null)
     {
         $this->bus = $bus;
         $this->command = $command;
-        $this->middleware = $middleware;
 
         parent::__construct((new Context())
-                ->add('bus', $this->bus)->add('command', $this->command)->add('middleware', $this->middleware));
+                ->add('bus', $this->bus)->add('command', $this->command));
     }
 
     public function bus()
@@ -33,10 +30,5 @@ abstract class CommandBusPreEvent extends Event
     public function command()
     {
         return $this->command;
-    }
-
-    public function middleware()
-    {
-        return $this->middleware;
     }
 }

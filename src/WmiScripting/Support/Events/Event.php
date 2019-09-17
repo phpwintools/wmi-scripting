@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpWinTools\WmiScripting\Support\Bus\Events;
+namespace PhpWinTools\WmiScripting\Support\Events;
 
 use PhpWinTools\WmiScripting\Support\Bus\Context;
 
@@ -13,8 +13,18 @@ abstract class Event
         $this->context = $context;
     }
 
+    public static function fire(Context $context)
+    {
+        return new static($context);
+    }
+
     public function context(): Context
     {
         return $this->context;
+    }
+
+    public function ancestry()
+    {
+        return class_parents(get_called_class());
     }
 }

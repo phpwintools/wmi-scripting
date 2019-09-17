@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpWinTools\WmiScripting\Support\Bus\Events;
+namespace PhpWinTools\WmiScripting\Support\Events;
 
 abstract class Listener
 {

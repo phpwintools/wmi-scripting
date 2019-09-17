@@ -10,6 +10,7 @@ use PhpWinTools\WmiScripting\Containers\Connections;
 use PhpWinTools\WmiScripting\Connections\ComConnection;
 use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
 use PhpWinTools\WmiScripting\Exceptions\UnresolvableClassException;
+use PhpWinTools\WmiScripting\Support\Events\EventHandler;
 
 class Config
 {
@@ -21,6 +22,8 @@ class Config
     protected $config;
 
     protected $resolver;
+
+    protected $eventHandler;
 
     protected $resolve_stack = [];
 
@@ -272,6 +275,14 @@ class Config
     }
 
     /**
+     * @return EventHandler|null
+     */
+    public function events()
+    {
+        return $this->eventHandler ?? $this->eventHandler = EventHandler::instance($this);
+    }
+
+    /**
      * @return string
      */
     public function getComClass()
@@ -394,6 +405,7 @@ class Config
         $this->merge(include(__DIR__ . '/../config/bootstrap.php'));
 
         $this->bootConnections();
+        $this->bootEventSystem();
     }
 
     protected function merge(array $config)
@@ -406,5 +418,11 @@ class Config
     protected function bootConnections()
     {
         Arr::set($this->config, 'wmi.connections.servers', new Connections($this));
+    }
+
+    protected function bootEventSystem()
+    {
+        $handler = $this->get('events.handler');
+        $this->eventHandler = new $handler($this);
     }
 }
