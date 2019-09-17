@@ -16,6 +16,7 @@ return [
 
     'events' => [
         'handler' => EventHandler::class,
+        'track'   => false,
     ],
 
     'wmi' => include('wmi.php'),

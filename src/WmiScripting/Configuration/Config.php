@@ -282,6 +282,25 @@ class Config
         return $this->eventHandler ?? $this->eventHandler = EventHandler::instance($this);
     }
 
+    public function shouldTrackEvents()
+    {
+        return $this->get('events.track', false);
+    }
+
+    public function trackEvents()
+    {
+        $this->set('events.track', true);
+
+        return $this;
+    }
+
+    public function doNotTrackEvents()
+    {
+        $this->set('events.track', false);
+
+        return $this;
+    }
+
     /**
      * @return string
      */

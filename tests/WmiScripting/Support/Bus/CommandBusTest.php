@@ -201,7 +201,8 @@ class CommandBusTest extends TestCase
             }
         };
 
-        $bus->getConfig()->events()->subscribe(CommandBusEvent::class, $listener);
+        Config::instance()->trackEvents();
+        Config::instance()->events()->subscribe(CommandBusEvent::class, $listener);
 
         $this->assertFalse($listener->reacted);
         $this->assertFalse($bus->getConfig()->events()->history()->happened(CommandBusEvent::class));
