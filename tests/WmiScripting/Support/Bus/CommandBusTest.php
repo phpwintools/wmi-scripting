@@ -3,6 +3,7 @@
 namespace Tests\WmiScripting\Support\Bus;
 
 use Closure;
+use PhpWinTools\WmiScripting\Support\Events\EventHandler;
 use Tests\TestCase;
 use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Support\Events\Event;
@@ -15,6 +16,16 @@ use PhpWinTools\WmiScripting\Support\Bus\Middleware\PreCommandMiddleware;
 
 class CommandBusTest extends TestCase
 {
+    /** @var Config */
+    protected $config;
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->config = Config::newInstance();
+    }
+
     /** @test */
     public function it_can_instantiate()
     {
@@ -122,8 +133,6 @@ class CommandBusTest extends TestCase
             }
         };
 
-
-
         $middleware = new class extends PreCommandMiddleware {
             public $name = 'middleware';
             public function handle($subject, Closure $next)
@@ -187,7 +196,7 @@ class CommandBusTest extends TestCase
             }
         };
 
-        $bus = (new CommandBus(Config::newInstance()))
+        $bus = (new CommandBus($this->config))
             ->assignHandler(get_class($command), $handler)
             ->registerMiddleware(get_class($first_middleware), '*')
             ->registerMiddleware(get_class($second_middleware), get_class($command));
@@ -201,15 +210,16 @@ class CommandBusTest extends TestCase
             }
         };
 
-        Config::instance()->trackEvents();
-        Config::instance()->events()->subscribe(CommandBusEvent::class, $listener);
+        $this->config->trackEvents();
+        $events = $this->config->events();
+        $events->subscribe(CommandBusEvent::class, $listener);
 
         $this->assertFalse($listener->reacted);
-        $this->assertFalse($bus->getConfig()->events()->history()->happened(CommandBusEvent::class));
+        $this->assertFalse($events->history()->happened(CommandBusEvent::class));
 
         $bus->handle($command);
 
         $this->assertTrue($listener->reacted);
-        $this->assertTrue($bus->getConfig()->events()->history()->happened(CommandBusEvent::class));
+        $this->assertTrue($events->history()->happened(CommandBusEvent::class));
     }
 }

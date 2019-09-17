@@ -47,7 +47,7 @@ class EventHandler
     {
         $listeners = array_merge(
             $this->listeners[$event_name = get_class($event)] ?? [],
-            $this->fireFromAncestry($event)
+            $this->getAncestorListeners($event)
         );
 
         $this->fired->add($event, $listeners);
@@ -62,7 +62,7 @@ class EventHandler
         return $this->fired;
     }
 
-    protected function fireFromAncestry(Event $event)
+    protected function getAncestorListeners(Event $event)
     {
         $ancestors = class_parents($event);
         $listeners = [];
