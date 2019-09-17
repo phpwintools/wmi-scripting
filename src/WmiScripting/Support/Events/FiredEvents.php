@@ -2,8 +2,6 @@
 
 namespace PhpWinTools\WmiScripting\Support\Events;
 
-use PhpWinTools\WmiScripting\Support\Bus\Context;
-
 class FiredEvents
 {
     protected $events = [];

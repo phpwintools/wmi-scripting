@@ -3,19 +3,18 @@
 namespace PhpWinTools\WmiScripting\Support\Bus;
 
 use Closure;
+use PhpWinTools\WmiScripting\Support\Events\Event;
 use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Support\Bus\Commands\Command;
 use PhpWinTools\WmiScripting\Exceptions\InvalidArgumentException;
-use PhpWinTools\WmiScripting\Support\Bus\Events\CommandHandlerEnded;
-use PhpWinTools\WmiScripting\Support\Bus\Events\CommandHandlerStarted;
 use PhpWinTools\WmiScripting\Support\Bus\Events\PreMiddlewareEnded;
-use PhpWinTools\WmiScripting\Support\Bus\Events\CommandBusEvent;
-use PhpWinTools\WmiScripting\Support\Bus\Events\PreMiddlewareStarted;
-use PhpWinTools\WmiScripting\Support\Events\Event;
+use PhpWinTools\WmiScripting\Support\Bus\Events\CommandHandlerEnded;
 use PhpWinTools\WmiScripting\Support\Bus\Middleware\MiddlewareStack;
+use PhpWinTools\WmiScripting\Support\Bus\Events\PreMiddlewareStarted;
+use PhpWinTools\WmiScripting\Support\Bus\Events\CommandHandlerStarted;
 use PhpWinTools\WmiScripting\Support\Bus\Middleware\CommandMiddleware;
-use PhpWinTools\WmiScripting\Support\Bus\Middleware\PostCommandMiddleware;
 use PhpWinTools\WmiScripting\Support\Bus\Middleware\PreCommandMiddleware;
+use PhpWinTools\WmiScripting\Support\Bus\Middleware\PostCommandMiddleware;
 use PhpWinTools\WmiScripting\Support\Bus\Middleware\FailureCommandMiddleware;
 use PhpWinTools\WmiScripting\Support\Bus\Middleware\SuccessCommandMiddleware;
 
