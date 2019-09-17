@@ -4,7 +4,7 @@ namespace PhpWinTools\WmiScripting\Support\Events;
 
 use PhpWinTools\WmiScripting\Configuration\Config;
 
-class EventHandler
+class EventProvider
 {
     /** @var self|null */
     protected static $instance;
@@ -15,14 +15,16 @@ class EventHandler
     /** @var array|Listener[][] */
     protected $listeners = [];
 
-    /** @var FiredEvents */
-    protected $fired;
+    /** @var EventHistoryProvider */
+    protected $history;
 
     public function __construct(Config $config = null)
     {
-        $this->fired = new FiredEvents($this->config = $config ?? Config::instance());
+        $this->config = $config ?? Config::instance();
 
-        static::$instance = $this;
+        $this->history = $this->config->eventHistoryProvider();
+
+        static::$instance = $this->config->registerProvider('event', $this);
     }
 
     public static function instance(Config $config = null)
@@ -50,16 +52,30 @@ class EventHandler
             $this->getAncestorListeners($event)
         );
 
-        $this->fired->add($event, $listeners);
+        $this->history->add($event, $listeners);
 
         array_map(function (Listener $listener) use ($event) {
             $listener->react($event);
         }, $listeners);
     }
 
+    public function trackEvents()
+    {
+        $this->config->trackEvents();
+
+        return $this;
+    }
+
+    public function doNotTrackEvents()
+    {
+        $this->config->doNotTrackEvents();
+
+        return $this;
+    }
+
     public function history()
     {
-        return $this->fired;
+        return $this->history;
     }
 
     protected function getAncestorListeners(Event $event)

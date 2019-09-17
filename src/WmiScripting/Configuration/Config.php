@@ -7,10 +7,12 @@ use PhpWinTools\Support\COM\ComWrapper;
 use PhpWinTools\Support\COM\VariantWrapper;
 use PhpWinTools\Support\COM\ComVariantWrapper;
 use PhpWinTools\WmiScripting\Containers\Connections;
+use PhpWinTools\WmiScripting\Support\Bus\CommandBus;
 use PhpWinTools\WmiScripting\Connections\ComConnection;
+use PhpWinTools\WmiScripting\Support\Events\EventProvider;
+use PhpWinTools\WmiScripting\Support\Events\EventHistoryProvider;
 use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
 use PhpWinTools\WmiScripting\Exceptions\UnresolvableClassException;
-use PhpWinTools\WmiScripting\Support\Events\EventHandler;
 
 class Config
 {
@@ -23,7 +25,7 @@ class Config
 
     protected $resolver;
 
-    protected $eventHandler;
+    protected $eventProvider;
 
     protected $resolve_stack = [];
 
@@ -275,11 +277,44 @@ class Config
     }
 
     /**
-     * @return EventHandler|null
+     * @return EventProvider
      */
-    public function events()
+    public function eventProvider()
     {
-        return $this->eventHandler ?? $this->eventHandler = EventHandler::instance($this);
+        return $this->getProvider('event');
+    }
+
+    /**
+     * @return EventHistoryProvider
+     */
+    public function eventHistoryProvider()
+    {
+        return $this->getProvider('event_history');
+    }
+
+    /**
+     * @return CommandBus
+     */
+    public function commandBus()
+    {
+        return $this->getProvider('bus');
+    }
+
+    /**
+     * Return an already registered provider or instantiate it from configuration when $default is null.
+     *
+     * @param string     $alias
+     * @param null|mixed $default
+     *
+     * @return mixed
+     */
+    public function getProvider($alias, $default = null)
+    {
+        $default = $default ?? function () use ($alias) {
+            return $this->registerProvider($alias);
+        };
+
+        return $this->get("providers.registered.{$alias}", $default);
     }
 
     public function shouldTrackEvents()
@@ -392,9 +427,19 @@ class Config
             throw InvalidConnectionException::new($name);
         }
 
-        $this->set('wmi.connections.default', $name);
+        return $this->set('wmi.connections.default', $name);
+    }
 
-        return $this;
+    public function registerProvider($provider_alias, $instance = null)
+    {
+        if (!is_object($instance) && ($instance = $this->getProvider($provider_alias, false)) === false) {
+            $instance = $this->get("providers.{$provider_alias}");
+            $instance = new $instance($this);
+        }
+
+        $this->set("providers.registered.{$provider_alias}", $instance);
+
+        return $instance;
     }
 
     public function get($key, $default = null)
@@ -409,6 +454,8 @@ class Config
         foreach ($keys as $key => $value) {
             Arr::set($this->config, $key, $value);
         }
+
+        return $this;
     }
 
     protected function boot(array $config)
@@ -423,8 +470,18 @@ class Config
 
         $this->merge(include(__DIR__ . '/../config/bootstrap.php'));
 
+        $this->registerProviders();
+
         $this->bootConnections();
-        $this->bootEventSystem();
+    }
+
+    protected function registerProviders()
+    {
+        array_map(function ($alias) {
+            if ($alias !== 'registered') {
+                $this->registerProvider($alias);
+            }
+        }, array_keys($this->get('providers', [])));
     }
 
     protected function merge(array $config)
@@ -437,11 +494,5 @@ class Config
     protected function bootConnections()
     {
         Arr::set($this->config, 'wmi.connections.servers', new Connections($this));
-    }
-
-    protected function bootEventSystem()
-    {
-        $handler = $this->get('events.handler');
-        $this->eventHandler = new $handler($this);
     }
 }

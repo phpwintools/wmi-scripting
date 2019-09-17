@@ -3,7 +3,6 @@
 use PhpWinTools\Support\COM\ComWrapper;
 use PhpWinTools\Support\COM\VariantWrapper;
 use PhpWinTools\Support\COM\ComVariantWrapper;
-use PhpWinTools\WmiScripting\Support\Events\EventHandler;
 
 return [
     'com' => [
@@ -15,9 +14,10 @@ return [
     ],
 
     'events' => [
-        'handler' => EventHandler::class,
-        'track'   => false,
+        'track' => false,
     ],
+
+    'providers' => include('providers.php'),
 
     'wmi' => include('wmi.php'),
 ];

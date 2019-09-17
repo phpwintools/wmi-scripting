@@ -44,9 +44,10 @@ class CommandBus
     public function __construct(Config $config = null)
     {
         $this->config = $config ?? Config::instance();
+
         $this->boot();
 
-        static::$instance = $this;
+        static::$instance = $this->config->registerProvider('bus', $this);
     }
 
     public static function instance(Config $config = null)
@@ -174,12 +175,7 @@ class CommandBus
 
     protected function fire(Event $event)
     {
-        $this->events()->fire($event);
-    }
-
-    protected function events()
-    {
-        return $this->getConfig()->events();
+        $this->getConfig()->eventProvider()->fire($event);
     }
 
     protected function boot()

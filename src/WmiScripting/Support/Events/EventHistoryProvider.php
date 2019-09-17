@@ -4,7 +4,7 @@ namespace PhpWinTools\WmiScripting\Support\Events;
 
 use PhpWinTools\WmiScripting\Configuration\Config;
 
-class FiredEvents
+class EventHistoryProvider
 {
     protected $events = [];
 
@@ -46,13 +46,6 @@ class FiredEvents
     {
         return array_key_exists($event, $this->event_cache)
             || array_key_exists($event, $this->event_ancestry_cache);
-    }
-
-    public function toStringArray()
-    {
-        return array_map(function ($event) {
-            return [key($event) => $event[key($event)]->listenerTypes()];
-        }, $this->events);
     }
 
     protected function track()
