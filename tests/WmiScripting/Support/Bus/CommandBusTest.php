@@ -3,6 +3,7 @@
 namespace Tests\WmiScripting\Support\Bus;
 
 use Closure;
+use PhpWinTools\WmiScripting\Support\Bus\Events\PreMiddlewareStarted;
 use PhpWinTools\WmiScripting\Support\Events\EventHandler;
 use Tests\TestCase;
 use PhpWinTools\WmiScripting\Configuration\Config;
@@ -158,48 +159,26 @@ class CommandBusTest extends TestCase
             'command',
         ];
 
-        $this->assertSame(
-            $expected, $bus->handle($command)->processed, 'Failed to fire wildcard middleware before named middleware'
-        );
+        $this->assertSame($expected, $bus->handle($command)->processed);
     }
 
     /** @test */
     public function it_fires_an_event_before_any_pre_middleware()
     {
-        $command = new class extends Command {
-            public $processed = [];
-        };
+        $command = new class extends Command {};
 
         $handler = new class extends CommandHandler {
             public function handle(Command $command)
             {
-                $command->processed[] = 'command';
                 return $command;
             }
         };
 
-        $first_middleware = new class extends PreCommandMiddleware {
-            public $name = '*';
-            public function handle($subject, Closure $next)
-            {
-                $subject->processed[] = $this->name;
-                return parent::handle($subject, $next);
-            }
-        };
-
-        $second_middleware = new class extends PreCommandMiddleware {
-            public $name = 'named';
-            public function handle($subject, Closure $next)
-            {
-                $subject->processed[] = $this->name;
-                return parent::handle($subject, $next);
-            }
-        };
+        $middleware = new class extends PreCommandMiddleware {};
 
         $bus = (new CommandBus($this->config))
             ->assignHandler(get_class($command), $handler)
-            ->registerMiddleware(get_class($first_middleware), '*')
-            ->registerMiddleware(get_class($second_middleware), get_class($command));
+            ->registerMiddleware(get_class($middleware), get_class($command));
 
         $listener = new class extends Listener {
             public $reacted = false;
@@ -211,8 +190,9 @@ class CommandBusTest extends TestCase
         };
 
         $this->config->trackEvents();
+        /** TODO: All singletons need to register themselves with the Config */
         $events = $this->config->events();
-        $events->subscribe(CommandBusEvent::class, $listener);
+        $events->subscribe(PreMiddlewareStarted::class, $listener);
 
         $this->assertFalse($listener->reacted);
         $this->assertFalse($events->history()->happened(CommandBusEvent::class));
@@ -221,5 +201,6 @@ class CommandBusTest extends TestCase
 
         $this->assertTrue($listener->reacted);
         $this->assertTrue($events->history()->happened(CommandBusEvent::class));
+        $this->assertTrue($events->history()->happened(PreMiddlewareStarted::class));
     }
 }

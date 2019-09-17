@@ -2,6 +2,6 @@
 
 namespace PhpWinTools\WmiScripting\Support\Bus\Events;
 
-class PreMiddlewareStarted extends CommandMiddlewareEvent
+class CommandMiddlewareEvent extends CommandBusEvent
 {
 }
