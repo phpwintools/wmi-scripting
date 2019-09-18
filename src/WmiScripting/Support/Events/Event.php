@@ -2,9 +2,9 @@
 
 namespace PhpWinTools\WmiScripting\Support\Events;
 
-use PhpWinTools\WmiScripting\Support\Bus\Context;
+use PhpWinTools\WmiScripting\Support\Events\Context;
 
-abstract class Event
+class Event
 {
     protected $context;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpWinTools\WmiScripting\Support\Bus;
+namespace PhpWinTools\WmiScripting\Support\Events;
 
 class Context
 {

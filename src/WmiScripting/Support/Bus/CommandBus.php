@@ -3,16 +3,22 @@
 namespace PhpWinTools\WmiScripting\Support\Bus;
 
 use Closure;
-use PhpWinTools\WmiScripting\Support\Events\Event;
 use PhpWinTools\WmiScripting\Configuration\Config;
+use PhpWinTools\WmiScripting\Support\Events\Event;
 use PhpWinTools\WmiScripting\Support\Bus\Commands\Command;
 use PhpWinTools\WmiScripting\Exceptions\InvalidArgumentException;
 use PhpWinTools\WmiScripting\Support\Bus\Events\PreMiddlewareEnded;
 use PhpWinTools\WmiScripting\Support\Bus\Events\CommandHandlerEnded;
+use PhpWinTools\WmiScripting\Support\Bus\Events\PostMiddlewareEnded;
 use PhpWinTools\WmiScripting\Support\Bus\Middleware\MiddlewareStack;
 use PhpWinTools\WmiScripting\Support\Bus\Events\PreMiddlewareStarted;
 use PhpWinTools\WmiScripting\Support\Bus\Events\CommandHandlerStarted;
+use PhpWinTools\WmiScripting\Support\Bus\Events\PostMiddlewareStarted;
 use PhpWinTools\WmiScripting\Support\Bus\Middleware\CommandMiddleware;
+use PhpWinTools\WmiScripting\Support\Bus\Events\FailureMiddlewareEnded;
+use PhpWinTools\WmiScripting\Support\Bus\Events\SuccessMiddlewareEnded;
+use PhpWinTools\WmiScripting\Support\Bus\Events\FailureMiddlewareStarted;
+use PhpWinTools\WmiScripting\Support\Bus\Events\SuccessMiddlewareStarted;
 use PhpWinTools\WmiScripting\Support\Bus\Middleware\PreCommandMiddleware;
 use PhpWinTools\WmiScripting\Support\Bus\Middleware\PostCommandMiddleware;
 use PhpWinTools\WmiScripting\Support\Bus\Middleware\FailureCommandMiddleware;
@@ -45,7 +51,7 @@ class CommandBus
     {
         $this->config = $config ?? Config::instance();
 
-        $this->boot();
+        $this->bootMiddlewareStack();
 
         static::$instance = $this->config->registerProvider('bus', $this);
     }
@@ -112,25 +118,19 @@ class CommandBus
 
     public function handle(Command $command, Closure $core_callback = null)
     {
+        $result = null;
+        $command_failure = true;
         $command_name = get_class($command);
 
-        $this->firePreMiddlewareStartEvent($command);
-
         $pre = $this->preMiddleware->process($command, $core_callback);
-        $command_failure = true;
-        $result = null;
-
-        $this->firePreMiddleEndEvent($command);
 
         if (array_key_exists($command_name, $this->handlers)) {
             $handler = $this->handlers[$command_name];
 
-            $this->fireCommandHandlerStartEvent($command, $handler);
-
+            $this->fireEvent(new CommandHandlerStarted($this, $command, $handler));
             $result = $handler->handle($pre);
             $command_failure = $handler->getFailureResult() === $result;
-
-            $this->fireCommandHandlerEndEvent($command, $handler);
+            $this->fireEvent(new CommandHandlerEnded($this, $command, $handler));
         }
 
         $result = $this->postMiddleware->process($command, $core_callback);
@@ -144,46 +144,36 @@ class CommandBus
         return $result;
     }
 
-    protected function firePreMiddlewareStartEvent(Command $command)
-    {
-        $this->fire(new PreMiddlewareStarted($this, $command));
-
-        return $this;
-    }
-
-    protected function firePreMiddleEndEvent(Command $command)
-    {
-        $this->fire(new PreMiddlewareEnded($this, $command));
-
-        return $this;
-    }
-
-    protected function fireCommandHandlerStartEvent(Command $command, CommandHandler $handler)
-    {
-        $this->fire(new CommandHandlerStarted($this, $command, $handler));
-
-        return $this;
-    }
-
-    protected function fireCommandHandlerEndEvent(Command $command, CommandHandler $handler)
-    {
-        $this->fire(new CommandHandlerEnded($this, $command, $handler));
-
-        return $this;
-    }
-
-
-    protected function fire(Event $event)
+    protected function fireEvent(Event $event)
     {
         $this->getConfig()->eventProvider()->fire($event);
     }
 
-    protected function boot()
+    protected function bootMiddlewareStack()
     {
-        $this->preMiddleware = new MiddlewareStack();
-        $this->postMiddleware = new MiddlewareStack();
-        $this->failureMiddleware = new MiddlewareStack();
-        $this->successMiddleware = new MiddlewareStack();
+        $this->preMiddleware = new MiddlewareStack(
+            $this->getConfig(),
+            PreMiddlewareStarted::class,
+            PreMiddlewareEnded::class
+        );
+
+        $this->postMiddleware = new MiddlewareStack(
+            $this->getConfig(),
+            PostMiddlewareStarted::class,
+            PostMiddlewareEnded::class
+        );
+
+        $this->failureMiddleware = new MiddlewareStack(
+            $this->getConfig(),
+            FailureMiddlewareStarted::class,
+            FailureMiddlewareEnded::class
+        );
+
+        $this->successMiddleware = new MiddlewareStack(
+            $this->getConfig(),
+            SuccessMiddlewareStarted::class,
+            SuccessMiddlewareEnded::class
+        );
     }
 
     protected function validCommand($command)

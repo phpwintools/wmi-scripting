@@ -2,7 +2,6 @@
 
 namespace Tests\WmiScripting\Support\Bus;
 
-use Closure;
 use Tests\TestCase;
 use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Support\Events\Event;
@@ -10,8 +9,6 @@ use PhpWinTools\WmiScripting\Support\Bus\CommandBus;
 use PhpWinTools\WmiScripting\Support\Events\Listener;
 use PhpWinTools\WmiScripting\Support\Bus\CommandHandler;
 use PhpWinTools\WmiScripting\Support\Bus\Commands\Command;
-use PhpWinTools\WmiScripting\Support\Bus\Events\PreMiddlewareStarted;
-use PhpWinTools\WmiScripting\Support\Bus\Middleware\PreCommandMiddleware;
 
 class CommandBusTest extends TestCase
 {
@@ -53,97 +50,6 @@ class CommandBusTest extends TestCase
         $this->assertSame(['command'], $this->bus->handle($command)->order);
     }
 
-    /** @test */
-    public function it_runs_pre_middleware_before_the_handler()
-    {
-        $command = $this->makeCommand();
-        $handler = $this->makeCommandHandler();
-
-        $first_middleware = new class extends PreCommandMiddleware {
-            public $name = 'first';
-            public function handle($subject, Closure $next)
-            {
-                $subject->order[] = $this->name;
-                return parent::handle($subject, $next);
-            }
-        };
-
-        $second_middleware = new class extends PreCommandMiddleware {
-            public $name = 'second';
-            public function handle($subject, Closure $next)
-            {
-                $subject->order[] = $this->name;
-                return parent::handle($subject, $next);
-            }
-        };
-
-        $after_middleware = new class extends PreCommandMiddleware {
-            public $name = 'first after';
-            public function handle($subject, Closure $next)
-            {
-                $result = parent::handle($subject, $next);
-                $subject->order[] = $this->name;
-                return $result;
-            }
-        };
-
-        $this->bus->assignHandler(get_class($command), $handler)
-            ->registerMiddleware(get_class($after_middleware), get_class($command))
-            ->registerMiddleware(get_class($first_middleware), get_class($command))
-            ->registerMiddleware(get_class($second_middleware), get_class($command));
-
-        $this->assertEquals(['first', 'second', 'first after', 'command'], $this->bus->handle($command)->order);
-    }
-
-    /** @test */
-    public function it_can_accept_a_closure_as_middleware()
-    {
-        $command = $this->makeCommand();
-        $handler = $this->makeCommandHandler();
-
-        $middleware = new class extends PreCommandMiddleware {
-            public $name = 'middleware';
-            public function handle($subject, Closure $next)
-            {
-                $subject->order[] = $this->name;
-                return parent::handle($subject, $next);
-            }
-        };
-
-        $closure = function ($subject, Closure $next) {
-            $subject->order[] = 'closure';
-            return $next($subject);
-        };
-
-        $this->bus->assignHandler(get_class($command), $handler)
-            ->registerMiddleware(get_class($middleware), get_class($command))
-            ->registerMiddleware($closure, get_class($command), PreCommandMiddleware::class);
-
-        $this->assertSame(['middleware', 'closure', 'command'], $this->bus->handle($command)->order);
-    }
-
-    /** @test */
-    public function it_fires_an_event_before_any_pre_middleware()
-    {
-        $command = $this->makeCommand();
-
-        $middleware = new class extends PreCommandMiddleware {
-            public function handle($command, Closure $next)
-            {
-                $command->order[] = 'middleware';
-                return parent::handle($command, $next);
-            }
-        };
-
-        $this->bus->assignHandler(get_class($command), $this->makeCommandHandler())
-            ->registerMiddleware(get_class($middleware), get_class($command));
-
-        $this->config->eventProvider()
-            ->subscribe(PreMiddlewareStarted::class, $this->makeListener('listener', $command));
-
-        $this->assertSame(['listener', 'middleware', 'command'], $this->bus->handle($command)->order);
-    }
-
     protected function makeCommand()
     {
         return new class extends Command {
@@ -151,12 +57,27 @@ class CommandBusTest extends TestCase
         };
     }
 
-    protected function makeCommandHandler()
+    protected function makeCommandHandler($failure_result = null, bool $trigger_failure = false)
     {
-        return new class extends CommandHandler {
+        return new class($failure_result, $trigger_failure) extends CommandHandler {
+            protected $failure_result;
+
+            protected $trigger_failure = false;
+
+            public function __construct($failure_result, $trigger_failure)
+            {
+                $this->failure_result = $failure_result;
+                $this->trigger_failure = $trigger_failure;
+            }
+
             public function handle(Command $command)
             {
                 $command->order[] = 'command';
+
+                if ($this->trigger_failure) {
+                    return $this->failure_result;
+                }
+
                 return $command;
             }
         };
