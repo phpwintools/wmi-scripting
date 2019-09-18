@@ -11,7 +11,7 @@ class Event
         $this->context = $context;
     }
 
-    public static function fire(Context $context)
+    public static function new(Context $context)
     {
         return new static($context);
     }
@@ -19,10 +19,5 @@ class Event
     public function context(): Context
     {
         return $this->context;
-    }
-
-    public function ancestry()
-    {
-        return class_parents(get_called_class());
     }
 }

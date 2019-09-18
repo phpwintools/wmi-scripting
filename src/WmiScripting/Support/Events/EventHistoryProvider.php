@@ -2,24 +2,37 @@
 
 namespace PhpWinTools\WmiScripting\Support\Events;
 
+use Closure;
+use Countable;
 use PhpWinTools\WmiScripting\Configuration\Config;
 
-class EventHistoryProvider
+class EventHistoryProvider implements Countable
 {
+    /** @var Config */
+    protected $config;
+
     /** @var array|FiredEvent[] */
     protected $fired_events = [];
 
-    protected $event_cache = [];
+    /** @var array */
+    protected $event_cache = [
+        'actual' => [],
+        'ancestors' => [],
+        'listeners' => [],
+    ];
 
-    protected $event_ancestry_cache = [];
-
-    protected $listener_cache = [];
-
-    protected $config;
+    protected $eventContainer;
 
     public function __construct(Config $config = null)
     {
         $this->config = $config ?? Config::instance();
+
+        $this->eventContainer = new EventCacheContainer();
+    }
+
+    public function container()
+    {
+        return $this->eventContainer;
     }
 
     /**
@@ -28,7 +41,7 @@ class EventHistoryProvider
      *
      * @return self
      */
-    public function add(Event $event, $listeners = []): self
+    public function add(Event $event, array $listeners = []): self
     {
         if ($this->shouldNotTrack()) {
             return $this;
@@ -36,51 +49,7 @@ class EventHistoryProvider
 
         $this->fired_events[] = new FiredEvent($event, $listeners);
 
-        $this->event_cache[get_class($event)][] = count($this->fired_events) - 1;
-
-        array_map(function ($parent) {
-            $this->event_ancestry_cache[$parent][] = count($this->fired_events) - 1;
-        }, class_parents($event));
-
-        array_map(function (Listener $listener) {
-            $this->listener_cache[get_class($listener)][] = count($this->fired_events) - 1;
-        }, $listeners);
-
-        return $this;
-    }
-
-    /**
-     * @param string     $event
-     * @param null|mixed $default
-     *
-     * @return array|FiredEvent[]|mixed
-     */
-    public function get(string $event, $default = [])
-    {
-        $events = array_values(array_map(function ($event_key) {
-            return $this->fired_events[$event_key];
-        }, $this->getFiredEventKeys($event)));
-
-        if (empty($events)) {
-            return is_callable($default) ? $default() : $default;
-        }
-
-        return $events;
-    }
-
-    public function getFiredEventKeys(string $event)
-    {
-        $keys = [];
-
-        if ($this->wasFiredByName($event)) {
-            $keys = $this->event_cache[$event];
-        }
-
-        if ($this->wasFiredByDescendant($event)) {
-            $keys = array_merge($keys, $this->event_ancestry_cache[$event]);
-        }
-
-        return $keys;
+        return $this->cacheEvent($event, $listeners);
     }
 
     /**
@@ -92,27 +61,71 @@ class EventHistoryProvider
     }
 
     /**
+     * @param string              $event
+     * @param array|Closure|mixed $default
+     *
+     * @return array|FiredEvent[]|mixed
+     */
+    public function get(string $event, $default = [])
+    {
+        return $this->findEvents($this->getFiredEventKeys($event), $default);
+    }
+
+    /**
+     * @param string              $listener
+     * @param array|Closure|mixed $default
+     *
+     * @return array|FiredEvent[]|mixed
+     */
+    public function getFromListener(string $listener, $default = [])
+    {
+        return $this->findEvents($this->event_cache['listeners'][$listener] ?? [], $default);
+    }
+
+    /**
      * @param string $event
      *
-     * @return int
+     * @return array|mixed
      */
-    public function eventCount(string $event): int
+    public function getFiredEventKeys(string $event)
     {
-        $count = 0;
-
-        if ($this->doNotHappen($event)) {
-            return $count;
-        }
+        $keys = [];
 
         if ($this->wasFiredByName($event)) {
-            $count = count($this->event_cache[$event]);
+            $keys = $this->event_cache['actual'][$event];
         }
 
         if ($this->wasFiredByDescendant($event)) {
-            $count += count($this->event_ancestry_cache[$event]);
+            $keys = array_merge($keys, $this->event_cache['ancestors'][$event]);
         }
 
-        return $count;
+        return $keys;
+    }
+
+    /**
+     * @return int
+     */
+    public function count(): int
+    {
+        return count($this->fired_events);
+    }
+
+    /**
+     * @param string|null $event
+     *
+     * @return int
+     */
+    public function eventCount(string $event = null): int
+    {
+        return is_null($event) ? $this->count() : count($this->get($event));
+    }
+
+    /**
+     * @return int
+     */
+    public function lastIndex(): int
+    {
+        return $this->count() - 1;
     }
 
     /**
@@ -120,7 +133,7 @@ class EventHistoryProvider
      *
      * @return bool
      */
-    public function happened(string $event): bool
+    public function hasFired(string $event): bool
     {
         return $this->wasFiredByName($event) || $this->wasFiredByDescendant($event);
     }
@@ -130,9 +143,9 @@ class EventHistoryProvider
      *
      * @return bool
      */
-    public function doNotHappen(string $event): bool
+    public function hasNotFired(string $event): bool
     {
-        return $this->happened($event) === false;
+        return $this->hasFired($event) === false;
     }
 
     /**
@@ -142,7 +155,7 @@ class EventHistoryProvider
      */
     public function wasFiredByName(string $event): bool
     {
-        return array_key_exists($event, $this->event_cache);
+        return array_key_exists($event, $this->event_cache['actual']);
     }
 
     /**
@@ -152,14 +165,67 @@ class EventHistoryProvider
      */
     public function wasFiredByDescendant(string $event): bool
     {
-        return array_key_exists($event, $this->event_ancestry_cache);
+        return array_key_exists($event, $this->event_cache['ancestors']);
     }
 
+    /**
+     * @param array               $event_keys
+     * @param array|Closure|mixed $default
+     *
+     * @return array|FiredEvent[]|mixed
+     */
+    protected function findEvents(array $event_keys = [], $default = [])
+    {
+        $events = array_values(array_map(function ($event_key) {
+            return $this->fired_events[$event_key];
+        }, $event_keys));
+
+        if (empty($events)) {
+            return is_callable($default) ? $default() : $default;
+        }
+
+        return $events;
+    }
+
+    /**
+     * @param Event            $event
+     * @param array|Listener[] $listeners
+     *
+     * @return self
+     */
+    protected function cacheEvent(Event $event, array $listeners = []): self
+    {
+        $this->event_cache['actual'][get_class($event)][] = $this->lastIndex();
+
+        $this->cacheEventSet($event, 'ancestors', class_parents($event), function ($item) {
+            return $item;
+        });
+
+        $this->cacheEventSet($event, 'listeners', $listeners, function (Listener $listener) {
+            return get_class($listener);
+        });
+
+        return $this;
+    }
+
+    protected function cacheEventSet(Event $event, string $set_name, array $set, Closure $getItemKey)
+    {
+        array_map(function ($item) use ($set_name, $getItemKey) {
+            $this->event_cache[$set_name][$getItemKey($item)][] = $this->lastIndex();
+        }, $set);
+    }
+
+    /**
+     * @return bool
+     */
     protected function shouldTrack(): bool
     {
         return $this->config->shouldTrackEvents();
     }
 
+    /**
+     * @return bool
+     */
     protected function shouldNotTrack(): bool
     {
         return $this->shouldTrack() === false;

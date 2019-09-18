@@ -7,6 +7,7 @@ use PhpWinTools\Support\COM\ComWrapper;
 use PhpWinTools\Support\COM\VariantWrapper;
 use PhpWinTools\Support\COM\ComVariantWrapper;
 use PhpWinTools\WmiScripting\Containers\Connections;
+use PhpWinTools\WmiScripting\Containers\Container;
 use PhpWinTools\WmiScripting\Support\Bus\CommandBus;
 use PhpWinTools\WmiScripting\Connections\ComConnection;
 use PhpWinTools\WmiScripting\Support\Events\EventProvider;
@@ -14,14 +15,12 @@ use PhpWinTools\WmiScripting\Support\Events\EventHistoryProvider;
 use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
 use PhpWinTools\WmiScripting\Exceptions\UnresolvableClassException;
 
-class Config
+class Config extends Container
 {
     /** @var Config|null */
     protected static $instance = null;
 
     protected static $test_mode = false;
-
-    protected $config;
 
     protected $resolver;
 
@@ -49,7 +48,7 @@ class Config
     public static function instance(array $items = [], Resolver $resolver = null)
     {
         if (static::$instance && !empty($items)) {
-            return static::newInstance(array_merge(static::$instance->config, $items), $resolver);
+            return static::newInstance(array_merge(static::$instance->container, $items), $resolver);
         }
 
         if (static::$instance && $resolver) {
@@ -442,22 +441,6 @@ class Config
         return $instance;
     }
 
-    public function get($key, $default = null)
-    {
-        return Arr::get($this->config, $key, $default);
-    }
-
-    public function set($key, $value = null)
-    {
-        $keys = is_array($key) ? $key : [$key => $value];
-
-        foreach ($keys as $key => $value) {
-            Arr::set($this->config, $key, $value);
-        }
-
-        return $this;
-    }
-
     protected function boot(array $config)
     {
         if (static::$test_mode) {
@@ -468,11 +451,9 @@ class Config
             $this->merge($config);
         }
 
-        $this->merge(include(__DIR__ . '/../config/bootstrap.php'));
-
-        $this->registerProviders();
-
-        $this->bootConnections();
+        $this->merge(include(__DIR__ . '/../config/bootstrap.php'))
+            ->registerProviders()
+            ->bootConnections();
     }
 
     protected function registerProviders()
@@ -482,17 +463,14 @@ class Config
                 $this->registerProvider($alias);
             }
         }, array_keys($this->get('providers', [])));
-    }
 
-    protected function merge(array $config)
-    {
-        foreach (Arr::dot($config) as $key => $value) {
-            $this->config = Arr::add($this->config, $key, $value);
-        }
+        return $this;
     }
 
     protected function bootConnections()
     {
-        Arr::set($this->config, 'wmi.connections.servers', new Connections($this));
+        Arr::set($this->container, 'wmi.connections.servers', new Connections($this));
+
+        return $this;
     }
 }

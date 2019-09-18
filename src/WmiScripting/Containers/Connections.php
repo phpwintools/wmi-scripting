@@ -5,7 +5,7 @@ namespace PhpWinTools\WmiScripting\Containers;
 use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Connections\ComConnection;
 
-class Connections extends Container
+class Connections extends Collection
 {
     public function __construct(Config $config)
     {

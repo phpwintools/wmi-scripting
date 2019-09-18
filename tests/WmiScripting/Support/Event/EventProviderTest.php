@@ -2,11 +2,11 @@
 
 namespace Tests\WmiScripting\Support\Event;
 
-use PhpWinTools\WmiScripting\Support\Events\Context;
-use PhpWinTools\WmiScripting\Support\Events\Event;
-use PhpWinTools\WmiScripting\Support\Events\Listener;
 use Tests\TestCase;
 use PhpWinTools\WmiScripting\Configuration\Config;
+use PhpWinTools\WmiScripting\Support\Events\Event;
+use PhpWinTools\WmiScripting\Support\Events\Context;
+use PhpWinTools\WmiScripting\Support\Events\Listener;
 use PhpWinTools\WmiScripting\Support\Events\EventProvider;
 use PhpWinTools\WmiScripting\Support\Events\EventHistoryProvider;
 
@@ -61,7 +61,7 @@ class EventProviderTest extends TestCase
 
         $this->event->subscribe(get_class($child), $this->makeListener('listener', $subject));
 
-        $this->event->fire(Event::fire(new Context()));
+        $this->event->fire(Event::new(new Context()));
         $this->assertEmpty($subject->order);
 
         $this->event->fire($child);
