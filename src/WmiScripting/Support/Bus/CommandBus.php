@@ -178,7 +178,7 @@ class CommandBus
 
     protected function validCommand($command)
     {
-        return $command = '*' || $this->classExtends($command, Command::class);
+        return $command === '*' || $this->classExtends($command, Command::class);
     }
 
     protected function invalidCommand($command)

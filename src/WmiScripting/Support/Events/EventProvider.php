@@ -48,7 +48,7 @@ class EventProvider
     public function fire(Event $event): void
     {
         $listeners = array_merge(
-            $this->listeners[$event_name = get_class($event)] ?? [],
+            $this->listeners[get_class($event)] ?? [],
             $this->getAncestorListeners($event)
         );
 

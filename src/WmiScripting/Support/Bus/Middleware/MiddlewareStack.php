@@ -50,7 +50,7 @@ class MiddlewareStack
             return $subject;
         };
 
-        $stack = array_reduce($this->get($subject), function ($next, $middleware) use ($subject) {
+        $stack = array_reduce($this->get($subject), function ($next, $middleware) {
             if ($middleware instanceof Closure) {
                 return function ($command) use ($next, $middleware) {
                     return $middleware($command, $next);
