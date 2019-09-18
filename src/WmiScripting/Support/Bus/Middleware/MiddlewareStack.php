@@ -47,7 +47,7 @@ class MiddlewareStack
         }
 
         $core = $core ?? function ($subject) {
-                return $subject;
+            return $subject;
         };
 
         $stack = array_reduce($this->get($subject), function ($next, $middleware) use ($subject) {

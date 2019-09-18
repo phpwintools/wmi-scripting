@@ -45,7 +45,7 @@ class EventHistoryProvider
         array_map(function (Listener $listener) {
             $this->listener_cache[get_class($listener)][] = count($this->fired_events) - 1;
         }, $listeners);
-        
+
         return $this;
     }
 
