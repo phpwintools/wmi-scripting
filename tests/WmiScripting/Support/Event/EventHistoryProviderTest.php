@@ -38,7 +38,8 @@ class EventHistoryProviderTest extends EventProviderTest
         $this->event->fire(new Event(new Context()));
         $this->event->fire(new Event(new Context()));
 
-//        dd($this->history->container());
+        dump($this->history->cache());
+        dd($this->history->container());
 
         $this->assertEquals(3, $this->history->count());
         $this->assertEquals(3, $this->history->eventCount());

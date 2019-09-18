@@ -3,6 +3,7 @@
 namespace PhpWinTools\WmiScripting\Containers;
 
 use Illuminate\Support\Arr;
+use PhpWinTools\WmiScripting\Exceptions\InvalidArgumentException;
 
 class Container
 {
@@ -15,9 +16,23 @@ class Container
 
     public function append($key, $value)
     {
-        if (is_null($this->get($key))) {
-            //
+        $index = null;
+
+        if (is_null($array = $this->get($key))) {
+            $index = 0;
         }
+
+        if ($array && Arr::isAssoc($array)) {
+            throw new InvalidArgumentException("Cannot append to {$key} because it is associative.");
+        }
+
+        if ($array) {
+            $index = count($array) - 1;
+        }
+
+        $this->set("{$key}.{$index}", $value);
+
+        return $this;
     }
 
     public function set($key, $value = null)

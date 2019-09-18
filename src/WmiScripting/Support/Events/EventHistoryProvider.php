@@ -35,6 +35,11 @@ class EventHistoryProvider implements Countable
         return $this->eventContainer;
     }
 
+    public function cache()
+    {
+        return $this->event_cache;
+    }
+
     /**
      * @param Event            $event
      * @param array|Listener[] $listeners
@@ -196,6 +201,7 @@ class EventHistoryProvider implements Countable
     protected function cacheEvent(Event $event, array $listeners = []): self
     {
         $this->event_cache['actual'][get_class($event)][] = $this->lastIndex();
+        $this->eventContainer->addActual(get_class($event), $this->lastIndex());
 
         $this->cacheEventSet($event, 'ancestors', class_parents($event), function ($item) {
             return $item;
