@@ -40,7 +40,7 @@ class Config extends Container
      * Returns current instance if available and merges any available configuration.
      * This is the method used throughout the library to retrieve configuration.
      *
-     * @param array         $items
+     * @param array $items
      * @param Resolver|null $resolver
      *
      * @return Config
@@ -63,7 +63,7 @@ class Config extends Container
      * to the instance will be lost. If it's in test mode it will remain until you explicitly remove it.
      * You should never need to reference this directly except inside of tests.
      *
-     * @param array         $items
+     * @param array $items
      * @param Resolver|null $resolver
      *
      * @return Config
@@ -76,7 +76,7 @@ class Config extends Container
     /**
      * This merges in a testing configuration. Any instance from this point will use that configuration.
      *
-     * @param array         $items
+     * @param array $items
      * @param Resolver|null $resolver
      *
      * @return Config
@@ -95,7 +95,7 @@ class Config extends Container
     /**
      * Same as endTest, but also returns a fresh instance.
      *
-     * @param array         $items
+     * @param array $items
      * @param Resolver|null $resolver
      *
      * @return Config
@@ -125,7 +125,7 @@ class Config extends Container
      * Returns the Resolver if no class is specified otherwise it attempts to resolve the given class.
      *
      * @param string|null $class
-     * @param mixed       ...$parameters
+     * @param mixed ...$parameters
      *
      * @return Resolver|mixed|null
      */
@@ -232,7 +232,7 @@ class Config extends Container
     }
 
     /**
-     * @param string                 $abstract_class
+     * @param string $abstract_class
      * @param string|callable|object $concrete_class
      *
      * @return Config
@@ -263,7 +263,7 @@ class Config extends Container
     }
 
     /**
-     * @param string                 $abstract_class
+     * @param string $abstract_class
      * @param string|callable|object $concrete_class
      *
      * @return Config
@@ -302,7 +302,7 @@ class Config extends Container
     /**
      * Return an already registered provider or instantiate it from configuration when $default is null.
      *
-     * @param string     $alias
+     * @param string $alias
      * @param null|mixed $default
      *
      * @return mixed
@@ -316,21 +316,30 @@ class Config extends Container
         return $this->get("providers.registered.{$alias}", $default);
     }
 
+    public function getCacheDriver($provider = null)
+    {
+        $provider = is_null($provider) ? $provider : "{$provider}.";
+
+        $driver = $this->get("{$provider}cache.driver");
+
+        return new $driver($this);
+    }
+
     public function shouldTrackEvents()
     {
-        return $this->get('events.track', false);
+        return $this->get('event.track', false);
     }
 
     public function trackEvents()
     {
-        $this->set('events.track', true);
+        $this->set('event.track', true);
 
         return $this;
     }
 
     public function doNotTrackEvents()
     {
-        $this->set('events.track', false);
+        $this->set('event.track', false);
 
         return $this;
     }
@@ -432,7 +441,7 @@ class Config extends Container
     public function registerProvider($provider_alias, $instance = null)
     {
         if (!is_object($instance) && ($instance = $this->getProvider($provider_alias, false)) === false) {
-            $instance = $this->get("providers.{$provider_alias}");
+            $instance = $this->get("providers.bootstrap.{$provider_alias}");
             $instance = new $instance($this);
         }
 
@@ -459,10 +468,8 @@ class Config extends Container
     protected function registerProviders()
     {
         array_map(function ($alias) {
-            if ($alias !== 'registered') {
-                $this->registerProvider($alias);
-            }
-        }, array_keys($this->get('providers', [])));
+            $this->registerProvider($alias);
+        }, array_keys($this->get('providers.bootstrap', [])));
 
         return $this;
     }

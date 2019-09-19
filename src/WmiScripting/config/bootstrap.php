@@ -3,8 +3,14 @@
 use PhpWinTools\Support\COM\ComWrapper;
 use PhpWinTools\Support\COM\VariantWrapper;
 use PhpWinTools\Support\COM\ComVariantWrapper;
+use PhpWinTools\WmiScripting\Support\Cache\ArrayDriver;
+use PhpWinTools\WmiScripting\Support\Events\EventCache;
 
 return [
+    'cache' => [
+        'driver' => ArrayDriver::class,
+    ],
+
     'com' => [
         'com_class'                 => COM::class,
         'variant_class'             => VARIANT::class,
@@ -13,8 +19,11 @@ return [
         VariantWrapper::class       => VariantWrapper::class,
     ],
 
-    'events' => [
-        'track' => false,
+    'event' => [
+        'track'  => false,
+        'cache'  => [
+            'driver' => EventCache::class,
+        ]
     ],
 
     'providers' => include('providers.php'),

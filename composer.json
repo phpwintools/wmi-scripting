@@ -29,7 +29,8 @@
         "ext-com_dotnet": "*",
         "illuminate/contracts": "^5.8",
         "symfony/process": "^4.2",
-        "tightenco/collect": "^5.8"
+        "tightenco/collect": "^5.8",
+        "psr/simple-cache": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.4",

@@ -5,6 +5,7 @@ namespace PhpWinTools\WmiScripting\Support\Events;
 use Closure;
 use Countable;
 use PhpWinTools\WmiScripting\Configuration\Config;
+use PhpWinTools\WmiScripting\Support\Cache\CacheDriver;
 
 class EventHistoryProvider implements Countable
 {
@@ -21,18 +22,17 @@ class EventHistoryProvider implements Countable
         'listeners' => [],
     ];
 
-    protected $eventContainer;
+    protected $eventCache;
 
-    public function __construct(Config $config = null)
+    public function __construct(Config $config = null, CacheDriver $cacheDriver = null)
     {
         $this->config = $config ?? Config::instance();
-
-        $this->eventContainer = new EventCacheContainer();
+        $this->eventCache = $cacheDriver ?? $this->config->getCacheDriver('event');
     }
 
     public function container()
     {
-        return $this->eventContainer;
+        return $this->eventCache;
     }
 
     public function cache()
@@ -201,7 +201,6 @@ class EventHistoryProvider implements Countable
     protected function cacheEvent(Event $event, array $listeners = []): self
     {
         $this->event_cache['actual'][get_class($event)][] = $this->lastIndex();
-        $this->eventContainer->addActual(get_class($event), $this->lastIndex());
 
         $this->cacheEventSet($event, 'ancestors', class_parents($event), function ($item) {
             return $item;
