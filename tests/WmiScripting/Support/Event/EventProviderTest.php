@@ -44,10 +44,10 @@ class EventProviderTest extends TestCase
     public function it_registers_itself_with_the_config_on_instantiation()
     {
         $config = new Config();
-        $configEvent = $config->getProvider('event');
+        $configEvent = $config->getBoundProvider('event');
 
         $this->assertNotSame($configEvent, $newEvent = new EventProvider());
-        $this->assertSame($newEvent, $config->getProvider('event'));
+        $this->assertSame($newEvent, $config->getBoundProvider('event'));
     }
 
     /** @test */

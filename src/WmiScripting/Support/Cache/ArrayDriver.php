@@ -2,6 +2,7 @@
 
 namespace PhpWinTools\WmiScripting\Support\Cache;
 
+use Illuminate\Support\Arr;
 use Psr\SimpleCache\CacheInterface;
 use PhpWinTools\WmiScripting\Exceptions\CacheInvalidArgumentException;
 
@@ -11,24 +12,18 @@ class ArrayDriver extends CacheDriver implements CacheInterface
 
     public function get($key, $default = null)
     {
-        if ($this->has($key)) {
-            return $this->store[$key];
-        }
-
-        return is_callable($default) ? $default() : $default;
+        return Arr::get($this->store, $this->validateKey($key), $default);
     }
 
     public function set($key, $value, $ttl = null)
     {
-        $this->store[$this->validateKey($key)] = $value;
-
-        return true;
+        return is_array(Arr::set($this->store, $this->validateKey($key), $value));
     }
 
     public function delete($key)
     {
         if ($this->has($key)) {
-            unset($this->store[$key]);
+            Arr::forget($this->store, $key);
             return true;
         }
 
@@ -77,7 +72,7 @@ class ArrayDriver extends CacheDriver implements CacheInterface
 
     public function has($key)
     {
-        return array_key_exists($this->validateKey($key), $this->store);
+        return Arr::has($this->store, $this->validateKey($key));
     }
 
     public function exists($key)

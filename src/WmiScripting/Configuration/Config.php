@@ -2,15 +2,17 @@
 
 namespace PhpWinTools\WmiScripting\Configuration;
 
+use Closure;
 use Illuminate\Support\Arr;
 use PhpWinTools\Support\COM\ComWrapper;
 use PhpWinTools\Support\COM\VariantWrapper;
 use PhpWinTools\Support\COM\ComVariantWrapper;
-use PhpWinTools\WmiScripting\Containers\Connections;
 use PhpWinTools\WmiScripting\Containers\Container;
+use PhpWinTools\WmiScripting\Containers\Connections;
 use PhpWinTools\WmiScripting\Support\Bus\CommandBus;
 use PhpWinTools\WmiScripting\Connections\ComConnection;
 use PhpWinTools\WmiScripting\Support\Events\EventProvider;
+use PhpWinTools\WmiScripting\Exceptions\InvalidArgumentException;
 use PhpWinTools\WmiScripting\Support\Events\EventHistoryProvider;
 use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
 use PhpWinTools\WmiScripting\Exceptions\UnresolvableClassException;
@@ -40,7 +42,7 @@ class Config extends Container
      * Returns current instance if available and merges any available configuration.
      * This is the method used throughout the library to retrieve configuration.
      *
-     * @param array $items
+     * @param array         $items
      * @param Resolver|null $resolver
      *
      * @return Config
@@ -63,7 +65,7 @@ class Config extends Container
      * to the instance will be lost. If it's in test mode it will remain until you explicitly remove it.
      * You should never need to reference this directly except inside of tests.
      *
-     * @param array $items
+     * @param array         $items
      * @param Resolver|null $resolver
      *
      * @return Config
@@ -76,7 +78,7 @@ class Config extends Container
     /**
      * This merges in a testing configuration. Any instance from this point will use that configuration.
      *
-     * @param array $items
+     * @param array         $items
      * @param Resolver|null $resolver
      *
      * @return Config
@@ -95,7 +97,7 @@ class Config extends Container
     /**
      * Same as endTest, but also returns a fresh instance.
      *
-     * @param array $items
+     * @param array         $items
      * @param Resolver|null $resolver
      *
      * @return Config
@@ -125,7 +127,7 @@ class Config extends Container
      * Returns the Resolver if no class is specified otherwise it attempts to resolve the given class.
      *
      * @param string|null $class
-     * @param mixed ...$parameters
+     * @param mixed       ...$parameters
      *
      * @return Resolver|mixed|null
      */
@@ -193,12 +195,12 @@ class Config extends Container
     /**
      * Add new resolvable to the end of the stack.
      *
-     * @param $abstract
-     * @param $concrete
+     * @param string $abstract
+     * @param        $concrete
      *
      * @return Config
      */
-    public function addResolvable($abstract, $concrete)
+    public function addResolvable(string $abstract, $concrete)
     {
         $this->resolve_stack[] = [$abstract => $concrete];
 
@@ -208,11 +210,11 @@ class Config extends Container
     /**
      * Check stack for resolvable. There may be a chance for caching pointers for resolvable abstracts.
      *
-     * @param $abstract
+     * @param string $abstract
      *
      * @return bool
      */
-    public function hasResolvable($abstract): bool
+    public function hasResolvable(string $abstract): bool
     {
         foreach ($this->resolve_stack as $key => $resolvable) {
             if (array_key_exists($abstract, $resolvable)) {
@@ -232,7 +234,7 @@ class Config extends Container
     }
 
     /**
-     * @param string $abstract_class
+     * @param string                 $abstract_class
      * @param string|callable|object $concrete_class
      *
      * @return Config
@@ -263,7 +265,7 @@ class Config extends Container
     }
 
     /**
-     * @param string $abstract_class
+     * @param string                 $abstract_class
      * @param string|callable|object $concrete_class
      *
      * @return Config
@@ -280,7 +282,7 @@ class Config extends Container
      */
     public function eventProvider()
     {
-        return $this->getProvider('event');
+        return $this->getBoundProvider('event');
     }
 
     /**
@@ -288,7 +290,7 @@ class Config extends Container
      */
     public function eventHistoryProvider()
     {
-        return $this->getProvider('event_history');
+        return $this->getBoundProvider('event_history');
     }
 
     /**
@@ -296,24 +298,103 @@ class Config extends Container
      */
     public function commandBus()
     {
-        return $this->getProvider('bus');
+        return $this->getBoundProvider('bus');
     }
 
     /**
-     * Return an already registered provider or instantiate it from configuration when $default is null.
+     * Returns the given binding if exists and provided, or all bindings if not given. If the value cannot be found
+     * it will return $default which can be a Closure that can be used to resolve the binding.
      *
-     * @param string $alias
+     * @param string|null $abstract
+     * @param array       $default
+     *
+     * @return mixed
+     */
+    public function bindings(string $abstract = null, $default = [])
+    {
+        $abstract = is_null($abstract) ? $abstract : ".{$abstract}";
+
+        return $this->get("bindings{$abstract}", $default);
+    }
+
+    /**
+     * Stores the given abstract with a reference to the given instance.
+     *
+     * @param string $abstract
+     * @param        $concrete
+     *
+     * @return Config
+     */
+    public function bind(string $abstract, $concrete)
+    {
+        return $this->set("bindings.{$abstract}", $concrete);
+    }
+
+    /**
+     * Resolves the given concrete with either the given constructor arguments. If the first argument is a Closure
+     * it will be used to resolve the given concrete.
+     *
+     * @param          $class
+     * @param mixed ...$constructor
+     *
+     * @return mixed
+     */
+    public function make(string $class, ...$constructor)
+    {
+        if (isset($constructor[0]) && $constructor[0] instanceof Closure) {
+            $make = Arr::pull($constructor, 0);
+        }
+
+        $make = $make ?? function ($class) use ($constructor) {
+            return new $class($this, ...$constructor);
+        };
+
+        return $make($class, $this);
+    }
+
+    /**
+     * @param string|null $alias
+     * @param array       $default
+     *
+     * @return mixed
+     */
+    public function providers(string $alias = null, $default = [])
+    {
+        $alias = is_null($alias) ? $alias : ".{$alias}";
+
+        return $this->get("providers{$alias}", $default);
+    }
+
+    /**
+     * Return an already registered provider or instantiates it from configuration when $default is null.
+     *
+     * @param string     $alias
      * @param null|mixed $default
      *
      * @return mixed
      */
-    public function getProvider($alias, $default = null)
+    public function getBoundProvider($alias, $default = null)
     {
         $default = $default ?? function () use ($alias) {
             return $this->registerProvider($alias);
         };
 
-        return $this->get("providers.registered.{$alias}", $default);
+        return $this->bindings($alias, $default);
+    }
+
+    /**
+     * @param string              $alias
+     * @param array|mixed|Closure ...$constructor
+     *
+     * @return mixed
+     */
+    public function makeProvider(string $alias, ...$constructor)
+    {
+        if (($provider = $this->providers($alias, false)) === false) {
+            throw new InvalidArgumentException("{$alias} is not a valid provider.");
+        }
+
+        return $this->make($provider, ...$constructor);
     }
 
     public function getCacheDriver($provider = null)
@@ -438,14 +519,13 @@ class Config extends Container
         return $this->set('wmi.connections.default', $name);
     }
 
-    public function registerProvider($provider_alias, $instance = null)
+    public function registerProvider($alias, $instance = null)
     {
-        if (!is_object($instance) && ($instance = $this->getProvider($provider_alias, false)) === false) {
-            $instance = $this->get("providers.bootstrap.{$provider_alias}");
-            $instance = new $instance($this);
+        if (!is_object($instance)) {
+            $instance = $this->makeProvider($alias);
         }
 
-        $this->set("providers.registered.{$provider_alias}", $instance);
+        $this->bind("{$alias}", $instance);
 
         return $instance;
     }
@@ -461,6 +541,7 @@ class Config extends Container
         }
 
         $this->merge(include(__DIR__ . '/../config/bootstrap.php'))
+            ->set('bindings', [])
             ->registerProviders()
             ->bootConnections();
     }
@@ -469,7 +550,7 @@ class Config extends Container
     {
         array_map(function ($alias) {
             $this->registerProvider($alias);
-        }, array_keys($this->get('providers.bootstrap', [])));
+        }, array_keys($this->providers()));
 
         return $this;
     }

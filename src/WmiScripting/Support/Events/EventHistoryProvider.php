@@ -5,7 +5,6 @@ namespace PhpWinTools\WmiScripting\Support\Events;
 use Closure;
 use Countable;
 use PhpWinTools\WmiScripting\Configuration\Config;
-use PhpWinTools\WmiScripting\Support\Cache\CacheDriver;
 
 class EventHistoryProvider implements Countable
 {
@@ -22,17 +21,9 @@ class EventHistoryProvider implements Countable
         'listeners' => [],
     ];
 
-    protected $eventCache;
-
-    public function __construct(Config $config = null, CacheDriver $cacheDriver = null)
+    public function __construct(Config $config = null)
     {
         $this->config = $config ?? Config::instance();
-        $this->eventCache = $cacheDriver ?? $this->config->getCacheDriver('event');
-    }
-
-    public function container()
-    {
-        return $this->eventCache;
     }
 
     public function cache()
@@ -202,22 +193,17 @@ class EventHistoryProvider implements Countable
     {
         $this->event_cache['actual'][get_class($event)][] = $this->lastIndex();
 
-        $this->cacheEventSet($event, 'ancestors', class_parents($event), function ($item) {
-            return $item;
-        });
-
-        $this->cacheEventSet($event, 'listeners', $listeners, function (Listener $listener) {
-            return get_class($listener);
-        });
-
-        return $this;
+        return $this->cacheSet($event, 'ancestors', class_parents($event))->cacheSet($event, 'listeners', $listeners);
     }
 
-    protected function cacheEventSet(Event $event, string $set_name, array $set, Closure $getItemKey)
+    protected function cacheSet(Event $event, string $set_name, array $set)
     {
-        array_map(function ($item) use ($set_name, $getItemKey) {
-            $this->event_cache[$set_name][$getItemKey($item)][] = $this->lastIndex();
+        array_map(function ($item) use ($set_name) {
+            $item = is_object($item) ? get_class($item) : $item;
+            $this->event_cache[$set_name][$item][] = $this->lastIndex();
         }, $set);
+
+        return $this;
     }
 
     /**

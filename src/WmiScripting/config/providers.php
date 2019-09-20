@@ -6,10 +6,8 @@ use PhpWinTools\WmiScripting\Support\Events\EventProvider;
 use PhpWinTools\WmiScripting\Support\Events\EventHistoryProvider;
 
 return [
-    'bootstrap' => [
-        'bus'           => CommandBus::class,
-//        'cache'         => CacheProvider::class,
-        'event'         => EventProvider::class,
-        'event_history' => EventHistoryProvider::class,
-    ],
+    'bus'           => CommandBus::class,
+    'cache'         => CacheProvider::class,
+    'event'         => EventProvider::class,
+    'event_history' => EventHistoryProvider::class,
 ];
