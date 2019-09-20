@@ -22,9 +22,10 @@ class EventProvider
     {
         $this->config = $config ?? Config::instance();
 
-        $this->history = $this->config->eventHistoryProvider();
+//        $this->history = $this->config->eventHistoryProvider();
+        $this->history = \PhpWinTools\WmiScripting\Support\resolve(EventHistoryProvider::class);
 
-        static::$instance = $this->config->registerProvider('event', $this);
+        static::$instance = $this->config->registerProvider(EventProvider::class, $this);
     }
 
     public static function instance(Config $config = null)

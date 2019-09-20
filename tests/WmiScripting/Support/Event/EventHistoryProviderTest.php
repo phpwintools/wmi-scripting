@@ -38,8 +38,6 @@ class EventHistoryProviderTest extends EventProviderTest
         $this->event->fire(new Event(new Context()));
         $this->event->fire(new Event(new Context()));
 
-//        dd(Config::instance());
-
         $this->assertEquals(3, $this->history->count());
         $this->assertEquals(3, $this->history->eventCount());
         $this->assertEquals(3, $this->history->eventCount(Event::class));

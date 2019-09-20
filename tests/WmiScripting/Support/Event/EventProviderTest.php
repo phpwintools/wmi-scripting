@@ -20,17 +20,9 @@ class EventProviderTest extends TestCase
 
     protected function setUp()
     {
-        parent::setUp();
-
-        $this->event = new EventProvider();
+        $config = Config::newInstance();
+        $this->event = $config->eventProvider();
         $this->history = $this->event->history();
-    }
-
-    protected function tearDown()
-    {
-        parent::tearDown();
-
-        Config::newInstance();
     }
 
     /** @test */

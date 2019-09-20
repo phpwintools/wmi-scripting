@@ -11,7 +11,10 @@ use PhpWinTools\WmiScripting\Containers\Container;
 use PhpWinTools\WmiScripting\Containers\Connections;
 use PhpWinTools\WmiScripting\Support\Bus\CommandBus;
 use PhpWinTools\WmiScripting\Connections\ComConnection;
+use function PhpWinTools\WmiScripting\Support\is_closure;
+use function PhpWinTools\WmiScripting\Support\if_not_null;
 use PhpWinTools\WmiScripting\Support\Events\EventProvider;
+use function PhpWinTools\WmiScripting\Support\is_not_closure;
 use PhpWinTools\WmiScripting\Exceptions\InvalidArgumentException;
 use PhpWinTools\WmiScripting\Support\Events\EventHistoryProvider;
 use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
@@ -22,20 +25,21 @@ class Config extends Container
     /** @var Config|null */
     protected static $instance = null;
 
+    /** @var bool */
     protected static $test_mode = false;
 
+    /** @var Resolver */
     protected $resolver;
 
-    protected $eventProvider;
-
+    /** @var array */
     protected $resolve_stack = [];
 
     public function __construct(array $config = [], Resolver $resolver = null)
     {
+        static::$instance = $this;
+
         $this->resolver = $resolver ?? new Resolver($this);
         $this->boot($config);
-
-        static::$instance = $this;
     }
 
     /**
@@ -139,6 +143,14 @@ class Config extends Container
 
         if ($this->hasResolvable($class)) {
             return $this->resolveFromStack($class);
+        }
+
+        if ($this->isProviderClass($class)) {
+            return $this->getBoundProvider($class);
+        }
+
+        if (($bound = $this->bindings($class, false)) !== false) {
+            return $bound;
         }
 
         if (array_key_exists($class, $this->apiObjects())) {
@@ -312,9 +324,7 @@ class Config extends Container
      */
     public function bindings(string $abstract = null, $default = [])
     {
-        $abstract = is_null($abstract) ? $abstract : ".{$abstract}";
-
-        return $this->get("bindings{$abstract}", $default);
+        return $this->get('bindings' . if_not_null($abstract, ".{$abstract}"), $default);
     }
 
     /**
@@ -327,6 +337,14 @@ class Config extends Container
      */
     public function bind(string $abstract, $concrete)
     {
+        if (is_object($concrete) && class_exists($abstract) === false && is_not_closure($concrete)) {
+            $this->set('bindings.' . get_class($concrete), $concrete);
+        }
+
+        if ($this->isProviderClass($abstract)) {
+            $this->set('bindings.' . $this->getProviderAlias($abstract), $concrete);
+        }
+
         return $this->set("bindings.{$abstract}", $concrete);
     }
 
@@ -341,7 +359,7 @@ class Config extends Container
      */
     public function make(string $class, ...$constructor)
     {
-        if (isset($constructor[0]) && $constructor[0] instanceof Closure) {
+        if (isset($constructor[0]) && is_closure($constructor[0])) {
             $make = Arr::pull($constructor, 0);
         }
 
@@ -360,13 +378,11 @@ class Config extends Container
      */
     public function providers(string $alias = null, $default = [])
     {
-        $alias = is_null($alias) ? $alias : ".{$alias}";
-
-        return $this->get("providers{$alias}", $default);
+        return $this->get('providers' . if_not_null($alias, ".{$alias}"), $default);
     }
 
     /**
-     * Return an already registered provider or instantiates it from configuration when $default is null.
+     * Returns an already registered provider or instantiates it from configuration when $default is null.
      *
      * @param string     $alias
      * @param null|mixed $default
@@ -399,9 +415,7 @@ class Config extends Container
 
     public function getCacheDriver($provider = null)
     {
-        $provider = is_null($provider) ? $provider : "{$provider}.";
-
-        $driver = $this->get("{$provider}cache.driver");
+        $driver = $this->get(if_not_null($provider, "{$provider}.") . 'cache.driver');
 
         return new $driver($this);
     }
@@ -521,6 +535,10 @@ class Config extends Container
 
     public function registerProvider($alias, $instance = null)
     {
+        if (is_null($instance) && ($bound = $this->getBoundProvider($alias, false)) !== false) {
+            return $bound;
+        }
+
         if (!is_object($instance)) {
             $instance = $this->makeProvider($alias);
         }
@@ -528,6 +546,33 @@ class Config extends Container
         $this->bind("{$alias}", $instance);
 
         return $instance;
+    }
+
+    /**
+     * @param string $abstract
+     *
+     * @return bool
+     */
+    protected function isProvider(string $abstract): bool
+    {
+        return array_key_exists($abstract, $this->providers())
+            || $this->providers($abstract, false)
+            || $this->getProviderAlias($abstract) !== false;
+    }
+
+    protected function getProviderAlias($abstract)
+    {
+        return class_exists($abstract) ? array_search($abstract, $this->providers(), true) : false;
+    }
+
+    /**
+     * @param string $abstract
+     *
+     * @return bool
+     */
+    protected function isProviderClass(string $abstract): bool
+    {
+        return class_exists($abstract) && $this->isProvider($abstract);
     }
 
     protected function boot(array $config)
@@ -541,7 +586,6 @@ class Config extends Container
         }
 
         $this->merge(include(__DIR__ . '/../config/bootstrap.php'))
-            ->set('bindings', [])
             ->registerProviders()
             ->bootConnections();
     }
