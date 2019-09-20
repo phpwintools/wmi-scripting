@@ -16,7 +16,7 @@ class EventHistoryProvider implements Countable
 
     /** @var array */
     protected $event_cache = [
-        'actual' => [],
+        'actual'    => [],
         'ancestors' => [],
         'listeners' => [],
     ];
@@ -26,10 +26,6 @@ class EventHistoryProvider implements Countable
         $this->config = $config ?? Config::instance();
     }
 
-    public function cache()
-    {
-        return $this->event_cache;
-    }
 
     /**
      * @param Event            $event
