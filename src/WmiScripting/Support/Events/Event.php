@@ -4,20 +4,28 @@ namespace PhpWinTools\WmiScripting\Support\Events;
 
 class Event
 {
-    protected $context;
+    protected $payload;
 
-    public function __construct(Context $context)
+    protected $called_class;
+
+    public function __construct(Payload $payload)
     {
-        $this->context = $context;
+        $this->payload = $payload;
+        $this->called_class = get_called_class();
     }
 
-    public static function new(Context $context)
+    public static function new(Payload $payload)
     {
-        return new static($context);
+        return new static($payload);
     }
 
-    public function context(): Context
+    public function payload(): Payload
     {
-        return $this->context;
+        return $this->payload;
+    }
+
+    public function actual(): string
+    {
+        return $this->called_class;
     }
 }

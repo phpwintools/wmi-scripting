@@ -4,7 +4,7 @@ namespace Tests\WmiScripting\Support\Event;
 
 use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Support\Events\Event;
-use PhpWinTools\WmiScripting\Support\Events\Context;
+use PhpWinTools\WmiScripting\Support\Events\Payload;
 use PhpWinTools\WmiScripting\Support\Events\Listener;
 use PhpWinTools\WmiScripting\Support\Bus\Events\CommandBusEvent;
 
@@ -13,7 +13,7 @@ class EventHistoryProviderTest extends EventProviderTest
     /** @test */
     public function it_does_not_track_events_by_default()
     {
-        $this->event->fire(new Event(new Context()));
+        $this->event->fire(new Event(new Payload()));
 
         $this->assertEmpty($this->history->all());
     }
@@ -21,8 +21,8 @@ class EventHistoryProviderTest extends EventProviderTest
     /** @test */
     public function it_can_track_events()
     {
-        $notFired = new class(new Context()) extends Event {};
-        $this->event->trackEvents()->fire(new Event(new Context()));
+        $notFired = new class(new Payload()) extends Event {};
+        $this->event->trackEvents()->fire(new Event(new Payload()));
 
         $this->assertTrue($this->history->hasFired(Event::class));
         $this->assertTrue($this->history->hasNotFired(get_class($notFired)));
@@ -32,11 +32,11 @@ class EventHistoryProviderTest extends EventProviderTest
     public function it_can_count_events()
     {
         $this->event->trackEvents();
-        $child = new class(new Context()) extends Event {};
+        $child = new class(new Payload()) extends Event {};
 
         $this->event->fire($child);
-        $this->event->fire(new Event(new Context()));
-        $this->event->fire(new Event(new Context()));
+        $this->event->fire(new Event(new Payload()));
+        $this->event->fire(new Event(new Payload()));
 
         $this->assertEquals(3, $this->history->count());
         $this->assertEquals(3, $this->history->eventCount());
@@ -49,10 +49,10 @@ class EventHistoryProviderTest extends EventProviderTest
     {
         $this->event->trackEvents();
 
-        $child = new class(new Context()) extends Event {};
+        $child = new class(new Payload()) extends Event {};
 
         $this->event->fire($child);
-        $this->event->fire(Event::new(new Context()));
+        $this->event->fire(Event::new(new Payload()));
 
         $this->assertEquals(1, $this->history->eventCount(get_class($child)));
         $this->assertEquals(2, $this->history->eventCount(Event::class));
@@ -66,7 +66,7 @@ class EventHistoryProviderTest extends EventProviderTest
         $child = new class($bus = Config::instance()->commandBus(), 'test') extends CommandBusEvent {};
         $notFired = new class($bus = Config::instance()->commandBus(), 'nothing') extends CommandBusEvent {};
 
-        $this->event->fire(Event::new(new Context()));
+        $this->event->fire(Event::new(new Payload()));
         $this->event->fire($child);
         $this->event->fire(new CommandBusEvent($bus, 'new test'));
 
@@ -83,8 +83,8 @@ class EventHistoryProviderTest extends EventProviderTest
 
         $child = new class($bus = Config::instance()->commandBus(), 'test') extends CommandBusEvent {};
 
-        $this->event->fire($first = Event::new(new Context()));
-        $this->event->fire($second = Event::new(new Context()));
+        $this->event->fire($first = Event::new(new Payload()));
+        $this->event->fire($second = Event::new(new Payload()));
         $this->event->fire($child);
         $this->event->fire($forth = new CommandBusEvent($bus, 'new test'));
 
@@ -102,8 +102,8 @@ class EventHistoryProviderTest extends EventProviderTest
 
         $child = new class($bus = Config::instance()->commandBus(), 'test') extends CommandBusEvent {};
 
-        $this->event->fire($first = Event::new(new Context()));
-        $this->event->fire($second = Event::new(new Context()));
+        $this->event->fire($first = Event::new(new Payload()));
+        $this->event->fire($second = Event::new(new Payload()));
         $this->event->fire($child);
 
         $this->assertCount(1, $firedEvents = $this->history->get(get_class($child)));
@@ -134,7 +134,7 @@ class EventHistoryProviderTest extends EventProviderTest
 
         $this->event->trackEvents()
             ->subscribe(Event::class, $listener)
-            ->fire($event = Event::new(new Context()));
+            ->fire($event = Event::new(new Payload()));
 
         $this->assertSame($event, $this->history->getFromListener(get_class($listener))[0]->event());
     }

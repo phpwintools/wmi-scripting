@@ -12,6 +12,6 @@ class CommandHandlerEvent extends CommandBusEvent
     {
         parent::__construct($bus, $command);
 
-        $this->context->add('handler', $commandHandler);
+        $this->payload->add('handler', $commandHandler);
     }
 }

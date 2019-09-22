@@ -5,7 +5,7 @@ namespace Tests\WmiScripting\Support\Event;
 use Tests\TestCase;
 use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Support\Events\Event;
-use PhpWinTools\WmiScripting\Support\Events\Context;
+use PhpWinTools\WmiScripting\Support\Events\Payload;
 use PhpWinTools\WmiScripting\Support\Events\Listener;
 use PhpWinTools\WmiScripting\Support\Events\EventProvider;
 use PhpWinTools\WmiScripting\Support\Events\EventHistoryProvider;
@@ -49,11 +49,11 @@ class EventProviderTest extends TestCase
             public $order = [];
         };
 
-        $child = new class(new Context()) extends Event {};
+        $child = new class(new Payload()) extends Event {};
 
         $this->event->subscribe(get_class($child), $this->makeListener('listener', $subject));
 
-        $this->event->fire(Event::new(new Context()));
+        $this->event->fire(Event::new(new Payload()));
         $this->assertEmpty($subject->order);
 
         $this->event->fire($child);
@@ -64,7 +64,7 @@ class EventProviderTest extends TestCase
     public function it_runs_ancestor_listeners_when_a_child_event_is_fired()
     {
         $subject = new class { public $order = []; };
-        $descendant = new class(new Context()) extends Event {};
+        $descendant = new class(new Payload()) extends Event {};
         $listener = $this->makeListener('listener_fired', $subject);
 
         $this->event->trackEvents()

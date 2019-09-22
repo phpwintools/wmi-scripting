@@ -2,7 +2,7 @@
 
 namespace PhpWinTools\WmiScripting\Support\Events;
 
-class Context
+class Payload
 {
     protected $context = [];
 

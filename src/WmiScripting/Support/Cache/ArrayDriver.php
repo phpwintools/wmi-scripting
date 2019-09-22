@@ -4,7 +4,6 @@ namespace PhpWinTools\WmiScripting\Support\Cache;
 
 use Illuminate\Support\Arr;
 use Psr\SimpleCache\CacheInterface;
-use PhpWinTools\WmiScripting\Exceptions\CacheInvalidArgumentException;
 
 class ArrayDriver extends CacheDriver implements CacheInterface
 {
@@ -51,7 +50,7 @@ class ArrayDriver extends CacheDriver implements CacheInterface
     public function setMultiple($values, $ttl = null)
     {
         foreach ($values as $key => $value) {
-            $this->set($key, $value);
+            $this->set($key, $value, $ttl);
         }
 
         return true;
@@ -73,24 +72,5 @@ class ArrayDriver extends CacheDriver implements CacheInterface
     public function has($key)
     {
         return Arr::has($this->store, $this->validateKey($key));
-    }
-
-    public function exists($key)
-    {
-        return $this->has($key);
-    }
-
-    public function doesNotExist($key)
-    {
-        return $this->exists($key) === false;
-    }
-
-    protected function validateKey($key)
-    {
-        if (is_string($key)) {
-            return $key;
-        }
-
-        throw new CacheInvalidArgumentException("{$key} is not a valid key");
     }
 }

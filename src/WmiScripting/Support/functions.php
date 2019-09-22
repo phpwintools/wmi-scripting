@@ -179,6 +179,18 @@ namespace PhpWinTools\WmiScripting\Support {
     }
 
     /**
+     * Reduce value if given a Closure otherwise return value as is.
+     *
+     * @param $value
+     *
+     * @return mixed
+     */
+    function reduce_value($value)
+    {
+        return is_closure($value) ? $value() : $value;
+    }
+
+    /**
      * @param string|null $class
      * @param mixed       $parameters
      *
