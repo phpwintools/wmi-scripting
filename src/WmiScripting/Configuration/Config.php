@@ -352,7 +352,7 @@ class Config extends Container
      * Resolves the given concrete with either the given constructor arguments. If the first argument is a Closure
      * it will be used to resolve the given concrete.
      *
-     * @param          $class
+     * @param       $class
      * @param mixed ...$constructor
      *
      * @return mixed
@@ -371,14 +371,22 @@ class Config extends Container
     }
 
     /**
-     * @param string|null $alias
+     * @param string|null $abstract
      * @param array       $default
      *
      * @return mixed
      */
-    public function providers(string $alias = null, $default = [])
+    public function concreteProviders(string $abstract = null, $default = [])
     {
-        return $this->get('providers' . if_not_null($alias, ".{$alias}"), $default);
+        if (is_null($abstract)) {
+            return $this->get('providers.concrete', $default);
+        }
+
+        if (class_exists($abstract) && array_key_exists($abstract, $this->get('providers.aliases'))) {
+            return $abstract;
+        }
+
+        return $this->get("providers.concrete.{$abstract}", $default);
     }
 
     /**
@@ -399,15 +407,15 @@ class Config extends Container
     }
 
     /**
-     * @param string              $alias
+     * @param string              $abstract
      * @param array|mixed|Closure ...$constructor
      *
      * @return mixed
      */
-    public function makeProvider(string $alias, ...$constructor)
+    public function makeProvider(string $abstract, ...$constructor)
     {
-        if (($provider = $this->providers($alias, false)) === false) {
-            throw new InvalidArgumentException("{$alias} is not a valid provider.");
+        if (($provider = $this->concreteProviders($abstract, false)) === false) {
+            throw new InvalidArgumentException("{$abstract} is not a valid provider.");
         }
 
         return $this->make($provider, ...$constructor);
@@ -555,14 +563,9 @@ class Config extends Container
      */
     protected function isProvider(string $abstract): bool
     {
-        return array_key_exists($abstract, $this->providers())
-            || $this->providers($abstract, false)
+        return array_key_exists($abstract, $this->concreteProviders())
+            || $this->concreteProviders($abstract, false)
             || $this->getProviderAlias($abstract) !== false;
-    }
-
-    protected function getProviderAlias($abstract)
-    {
-        return class_exists($abstract) ? array_search($abstract, $this->providers(), true) : false;
     }
 
     /**
@@ -573,6 +576,16 @@ class Config extends Container
     protected function isProviderClass(string $abstract): bool
     {
         return class_exists($abstract) && $this->isProvider($abstract);
+    }
+
+    /**
+     * @param string $abstract
+     *
+     * @return bool|false|int|string
+     */
+    protected function getProviderAlias(string $abstract)
+    {
+        return class_exists($abstract) ? array_search($abstract, $this->concreteProviders(), true) : false;
     }
 
     protected function boot(array $config)
@@ -594,7 +607,7 @@ class Config extends Container
     {
         array_map(function ($alias) {
             $this->registerProvider($alias);
-        }, array_keys($this->providers()));
+        }, array_keys($this->concreteProviders()));
 
         return $this;
     }

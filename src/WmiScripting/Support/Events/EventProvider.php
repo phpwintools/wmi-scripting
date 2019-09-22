@@ -3,6 +3,7 @@
 namespace PhpWinTools\WmiScripting\Support\Events;
 
 use PhpWinTools\WmiScripting\Configuration\Config;
+use function PhpWinTools\WmiScripting\Support\resolve;
 
 class EventProvider
 {
@@ -22,8 +23,7 @@ class EventProvider
     {
         $this->config = $config ?? Config::instance();
 
-//        $this->history = $this->config->eventHistoryProvider();
-        $this->history = \PhpWinTools\WmiScripting\Support\resolve(EventHistoryProvider::class);
+        $this->history = resolve(EventHistoryProvider::class);
 
         static::$instance = $this->config->registerProvider(EventProvider::class, $this);
     }
