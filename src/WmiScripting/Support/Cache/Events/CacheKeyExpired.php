@@ -2,6 +2,6 @@
 
 namespace PhpWinTools\WmiScripting\Support\Cache\Events;
 
-class CacheKeyExpired extends CacheKeyForgotten
+class CacheKeyExpired extends CacheKeyDeleted
 {
 }

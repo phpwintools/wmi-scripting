@@ -3,7 +3,6 @@
 namespace PhpWinTools\WmiScripting\Support\Cache;
 
 use Closure;
-use DateInterval;
 use Psr\SimpleCache\CacheInterface;
 use Psr\SimpleCache\InvalidArgumentException;
 use PhpWinTools\WmiScripting\Configuration\Config;
@@ -14,8 +13,8 @@ use PhpWinTools\WmiScripting\Support\Cache\Events\CacheHit;
 use PhpWinTools\WmiScripting\Support\Cache\Events\CacheMissed;
 use PhpWinTools\WmiScripting\Support\Cache\Events\CacheCleared;
 use PhpWinTools\WmiScripting\Support\Cache\Events\CacheKeyStored;
+use PhpWinTools\WmiScripting\Support\Cache\Events\CacheKeyDeleted;
 use PhpWinTools\WmiScripting\Support\Cache\Events\CacheKeyExpired;
-use PhpWinTools\WmiScripting\Support\Cache\Events\CacheKeyForgotten;
 use PhpWinTools\WmiScripting\Exceptions\CacheInvalidArgumentException;
 
 class CacheProvider implements CacheInterface
@@ -56,8 +55,7 @@ class CacheProvider implements CacheInterface
         $value = $this->driver()->get($key, null);
 
         if ($this->driver()->expired($key)) {
-            $this->fire(new CacheKeyExpired($this->driver(), $key, $value));
-            $this->delete($key);
+            $this->removeExpired($key, $value);
             $value = null;
         }
 
@@ -72,12 +70,12 @@ class CacheProvider implements CacheInterface
     }
 
     /**
-     * Accepts either a string or a key-value pair array. If the given an array than the second value is used as the
-     * ttl, unless the ttl is explicitly set.
+     * Accepts either a string or a key-value pair array. If given an array then the second value is used as the
+     * ttl, unless $ttl is explicitly set.
      *
-     * @param string|array          $key
-     * @param mixed                 $value
-     * @param null|int|DateInterval $ttl
+     * @param string|array $key
+     * @param mixed        $value
+     * @param null|int     $ttl
      *
      * @throws CacheInvalidArgumentException|InvalidArgumentException
      *
@@ -114,7 +112,7 @@ class CacheProvider implements CacheInterface
         $result = $this->driver()->delete($key);
 
         if ($result) {
-            $this->fire(new CacheKeyForgotten($this->driver(), $key));
+            $this->fire(new CacheKeyDeleted($this->driver(), $key));
         }
 
         return $result;
@@ -135,14 +133,38 @@ class CacheProvider implements CacheInterface
     }
 
     /**
-     * @param iterable           $keys
-     * @param Closure|mixed|null $default
+     * @param iterable $keys
+     * @param null     $default
      *
-     * @return iterable|mixed
+     * @throws InvalidArgumentException|CacheInvalidArgumentException
+     *
+     * @return iterable
      */
     public function getMultiple($keys, $default = null)
     {
-        return $this->multiple('get', $keys) ? $this->driver()->getMultiple($keys, $default) : reduce_value($default);
+        $hit = [];
+
+        foreach ($keys as $key) {
+            if ($this->driver()->expired($key)) {
+                $this->removeExpired($key);
+            }
+
+            if ($this->driver()->canGet($key)) {
+                $hit[$key] = $key;
+            }
+        }
+
+        $results = $this->driver()->getMultiple($keys, $default);
+
+        foreach ($results as $key => $value) {
+            if (array_key_exists($key, $hit)) {
+                $this->fire(new CacheHit($this->driver(), $key, $value));
+            } else {
+                $this->fire(new CacheMissed($this->driver(), $key));
+            }
+        }
+
+        return $results;
     }
 
     /**
@@ -212,16 +234,12 @@ class CacheProvider implements CacheInterface
         foreach ($keys as $key => $value) {
             $result = false;
 
-            if ($method === 'get' && $result = $this->driver()->canGet($value)) {
-                $this->delayedFire(new CacheHit($this->driver, $key, $this->driver()->get($value)));
-            }
-
             if ($method === 'set' && $result = $this->driver()->canSet($key, $value)) {
                 $this->delayedFire(new CacheKeyStored($this->driver, $key, $value, $ttl));
             }
 
             if ($method === 'delete' && $result = $this->driver()->canDelete($value)) {
-                $this->delayedFire(new CacheKeyForgotten($this->driver, $value));
+                $this->delayedFire(new CacheKeyDeleted($this->driver, $value));
             }
 
             if ($result === false) {
@@ -233,6 +251,25 @@ class CacheProvider implements CacheInterface
         $this->flushDelayedEvents();
 
         return true;
+    }
+
+    /**
+     * @param      $key
+     * @param null $value
+     *
+     * @throws CacheInvalidArgumentException|InvalidArgumentException
+     *
+     * @return self
+     */
+    protected function removeExpired($key, $value = null): self
+    {
+        if ($this->driver()->expired($key)) {
+            $this->fire(new CacheKeyExpired($this->driver(), $key, $value));
+            $this->delete($key);
+        }
+
+
+        return $this;
     }
 
     /**

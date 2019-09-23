@@ -2,6 +2,7 @@
 
 namespace Tests\WmiScripting\Support\Cache;
 
+use PhpWinTools\WmiScripting\Support\Cache\Events\CacheMissed;
 use Tests\TestCase;
 use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Support\Cache\ArrayDriver;
@@ -10,8 +11,8 @@ use PhpWinTools\WmiScripting\Support\Cache\Events\CacheHit;
 use PhpWinTools\WmiScripting\Support\Cache\Events\CacheCleared;
 use PhpWinTools\WmiScripting\Support\Cache\Events\CacheKeyStored;
 use PhpWinTools\WmiScripting\Support\Events\EventHistoryProvider;
+use PhpWinTools\WmiScripting\Support\Cache\Events\CacheKeyDeleted;
 use PhpWinTools\WmiScripting\Support\Cache\Events\CacheKeyExpired;
-use PhpWinTools\WmiScripting\Support\Cache\Events\CacheKeyForgotten;
 use PhpWinTools\WmiScripting\Exceptions\CacheInvalidArgumentException;
 
 class ArrayCacheDriverTest extends TestCase
@@ -81,10 +82,16 @@ class ArrayCacheDriverTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_default_value_when_trying_to_get_multiple_keys_and_one_is_invalid_and_doesnt_fire_event()
+    public function it_sets_default_value_to_keys_that_do_not_exist_when_getting_multiple_and_fire_correct_events()
     {
-        $this->assertFalse($this->cache->get(['key2', new \stdClass()], false));
-        $this->assertTrue($this->eventHistory->hasNotFired(CacheHit::class));
+        $results = $this->cache->get(['key2', 'not a key'], false);
+
+        $this->assertSame($this->cached_values['key2'], $results['key2']);
+        $this->assertFalse($results['not a key']);
+        $this->assertCount(1, $hit = $this->eventHistory->get(CacheHit::class));
+        $this->assertCount(1, $miss = $this->eventHistory->get(CacheMissed::class));
+        $this->assertSame($results['key2'], $hit[0]->event()->payload()->get('value'));
+        $this->assertSame('not a key', $miss[0]->event()->payload()->get('key'));
     }
 
     /** @test */
@@ -100,7 +107,7 @@ class ArrayCacheDriverTest extends TestCase
         $this->assertSame($this->cached_values['key2'], $this->cache->get('key2'));
         $this->assertTrue($this->cache->delete('key2'));
         $this->assertFalse($this->cache->get('key2', false));
-        $this->assertTrue($this->eventHistory->hasFired(CacheKeyForgotten::class));
+        $this->assertTrue($this->eventHistory->hasFired(CacheKeyDeleted::class));
     }
 
     /** @test */
@@ -108,7 +115,7 @@ class ArrayCacheDriverTest extends TestCase
     {
         $this->assertTrue($this->cache->notEmpty());
         $this->assertTrue($this->cache->delete(['key1', 'key2', 'key3', 'key4']));
-        $this->assertCount(4, $this->eventHistory->get(CacheKeyForgotten::class));
+        $this->assertCount(4, $this->eventHistory->get(CacheKeyDeleted::class));
         $this->assertTrue($this->cache->empty());
     }
 
@@ -134,6 +141,14 @@ class ArrayCacheDriverTest extends TestCase
         $this->assertTrue($this->cache->clear());
         $this->assertTrue($this->cache->empty());
         $this->assertTrue($this->eventHistory->hasFired(CacheCleared::class));
+    }
+
+    /** @test */
+    public function it_removes_expired_values_when_getting_multiple()
+    {
+        $this->cache->set('test', 'value', -30);
+        $this->assertFalse($this->cache->get(['test'], false)['test']);
+        $this->assertTrue($this->eventHistory->hasFired(CacheKeyExpired::class));
     }
 
     /** @test */

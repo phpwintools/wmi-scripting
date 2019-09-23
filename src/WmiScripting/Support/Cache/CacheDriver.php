@@ -15,13 +15,13 @@ abstract class CacheDriver implements CacheInterface
     /** @var mixed */
     protected $store;
 
-    /** @var string|null */
+    /** @var string */
     protected $name = null;
 
     public function __construct(Config $config = null, string $name = null)
     {
         $this->config = $config ?? Config::instance();
-        $this->name = $name;
+        $this->name = $name ?? get_called_class();
     }
 
     /**
@@ -124,9 +124,9 @@ abstract class CacheDriver implements CacheInterface
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function name()
+    public function name(): string
     {
         return $this->name;
     }
@@ -138,11 +138,7 @@ abstract class CacheDriver implements CacheInterface
      */
     public function canGet($key): bool
     {
-        try {
-            return $this->has($key) && $this->notExpired($key);
-        } catch (CacheInvalidArgumentException $exception) {
-            return false;
-        }
+        return $this->isValidKey($key) && $this->has($key) && $this->notExpired($key);
     }
 
     /**
@@ -154,11 +150,7 @@ abstract class CacheDriver implements CacheInterface
      */
     public function canSet($key, $value, $ttl = null): bool
     {
-        try {
-            return $this->validateKey($key) === $key && $this->isValidValue($value) && $this->isValidTtl($ttl);
-        } catch (CacheInvalidArgumentException $exception) {
-            return false;
-        }
+        return $this->isValidKey($key) && $this->isValidValue($value) && $this->isValidTtl($ttl);
     }
 
     /**
@@ -168,21 +160,17 @@ abstract class CacheDriver implements CacheInterface
      */
     public function canDelete($key): bool
     {
-        try {
-            return $this->has($key);
-        } catch (CacheInvalidArgumentException $exception) {
-            return false;
-        }
+        return $this->isValidKey($key) && $this->has($key);
     }
 
     /**
-     * @param null|int|mixed $ttl
+     * @param string $key
      *
      * @return bool
      */
-    protected function isValidTtl($ttl): bool
+    protected function isValidKey($key): bool
     {
-        return is_null($ttl) || is_int($ttl);
+        return is_string($key);
     }
 
     /**
@@ -196,16 +184,47 @@ abstract class CacheDriver implements CacheInterface
     }
 
     /**
-     * @param string $key
+     * @param null|int|mixed $ttl
+     *
+     * @return bool
+     */
+    protected function isValidTtl($ttl): bool
+    {
+        return is_null($ttl) || is_int($ttl);
+    }
+
+    /**
+     * @param mixed $key
+     *
+     * @throws CacheInvalidArgumentException
      *
      * @return string
      */
     protected function validateKey($key)
     {
-        if (is_string($key)) {
+        if ($this->isValidKey($key)) {
             return $key;
         }
 
-        throw new CacheInvalidArgumentException("Not a valid key.");
+        throw new CacheInvalidArgumentException("'{$this->coerceToString($key)}' is not a valid key.");
+    }
+
+
+    /**
+     * @param mixed $value
+     *
+     * @return string
+     */
+    protected function coerceToString($value): string
+    {
+        if (is_object($value)) {
+            $value = get_class($value);
+        }
+
+        if (is_array($value)) {
+            $value = 'array';
+        }
+
+        return (string) $value;
     }
 }
