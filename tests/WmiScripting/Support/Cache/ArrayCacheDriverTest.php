@@ -2,12 +2,12 @@
 
 namespace Tests\WmiScripting\Support\Cache;
 
-use PhpWinTools\WmiScripting\Support\Cache\Events\CacheMissed;
 use Tests\TestCase;
 use PhpWinTools\WmiScripting\Configuration\Config;
 use PhpWinTools\WmiScripting\Support\Cache\ArrayDriver;
 use PhpWinTools\WmiScripting\Support\Cache\CacheProvider;
 use PhpWinTools\WmiScripting\Support\Cache\Events\CacheHit;
+use PhpWinTools\WmiScripting\Support\Cache\Events\CacheMissed;
 use PhpWinTools\WmiScripting\Support\Cache\Events\CacheCleared;
 use PhpWinTools\WmiScripting\Support\Cache\Events\CacheKeyStored;
 use PhpWinTools\WmiScripting\Support\Events\EventHistoryProvider;
