@@ -11,7 +11,12 @@ class CacheEvent extends Event
     public function __construct(CacheDriver $driver, $key = null, $value = null, $ttl = null)
     {
         parent::__construct(
-            (new Payload())->add('driver', $driver)->add('key', $key)->add('value', $value)->add('ttl', $ttl)
+            (new Payload())
+                ->add('driver', $driver)
+                ->add('name', $driver->name())
+                ->add('key', $key)
+                ->add('value', $value)
+                ->add('ttl', $ttl)
         );
     }
 }

@@ -2,21 +2,30 @@
 
 namespace PhpWinTools\WmiScripting\Support\Cache;
 
+use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Psr\SimpleCache\CacheInterface;
 
 class ArrayDriver extends CacheDriver implements CacheInterface
 {
+    /** @var array */
     protected $store = [];
 
     public function get($key, $default = null)
     {
-        return Arr::get($this->store, $this->validateKey($key), $default);
+        return Arr::get($this->store, "{$this->validateKey($key)}.value", $default);
     }
 
     public function set($key, $value, $ttl = null)
     {
-        return is_array(Arr::set($this->store, $this->validateKey($key), $value));
+        return is_array(Arr::set(
+            $this->store,
+            $this->validateKey($key),
+            [
+                'value' => $value,
+                'expires' => is_null($ttl) ? null : Carbon::now()->addSeconds($ttl)
+            ]
+        ));
     }
 
     public function delete($key)
@@ -67,6 +76,18 @@ class ArrayDriver extends CacheDriver implements CacheInterface
         }
 
         return true;
+    }
+
+    public function expired($key): bool
+    {
+        $expires = Arr::get($this->store, "{$key}.expires");
+
+        return is_null($expires) ? false : Carbon::now()->greaterThan($expires);
+    }
+
+    public function empty(): bool
+    {
+        return empty($this->store);
     }
 
     public function has($key)

@@ -8,6 +8,7 @@ use PhpWinTools\WmiScripting\Support\Cache\ArrayDriver;
 return [
     'cache' => [
         'driver' => ArrayDriver::class,
+        'ttl' => 60 * 5,
     ],
 
     'com' => [
