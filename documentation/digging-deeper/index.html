@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Introduction | WMI Scripting</title>
+    <meta name="description" content="WMI Scripting and Querying made easy.">
+    <link rel="icon" href="/wmi-scripting/wmi-squares.png">
+    
+    <link rel="preload" href="/wmi-scripting/assets/css/0.styles.69febe6e.css" as="style"><link rel="preload" href="/wmi-scripting/assets/js/app.fbd390b3.js" as="script"><link rel="preload" href="/wmi-scripting/assets/js/3.30bc9dac.js" as="script"><link rel="preload" href="/wmi-scripting/assets/js/2.bbe9884b.js" as="script"><link rel="preload" href="/wmi-scripting/assets/js/6.5ba71b34.js" as="script"><link rel="prefetch" href="/wmi-scripting/assets/js/10.26623230.js"><link rel="prefetch" href="/wmi-scripting/assets/js/11.045108de.js"><link rel="prefetch" href="/wmi-scripting/assets/js/12.6a6b2ef0.js"><link rel="prefetch" href="/wmi-scripting/assets/js/4.b2559bf1.js"><link rel="prefetch" href="/wmi-scripting/assets/js/5.4bd79ff2.js"><link rel="prefetch" href="/wmi-scripting/assets/js/7.7458681b.js"><link rel="prefetch" href="/wmi-scripting/assets/js/8.25d2004c.js"><link rel="prefetch" href="/wmi-scripting/assets/js/9.2d3c2ea0.js">
+    <link rel="stylesheet" href="/wmi-scripting/assets/css/0.styles.69febe6e.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/wmi-scripting/" class="home-link router-link-active"><img src="/wmi-scripting/wmi-squares.svg" alt="WMI Scripting" class="logo"> <span class="site-name can-hide">WMI Scripting</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/wmi-scripting/" class="nav-link">Home</a></div><div class="nav-item"><a href="/wmi-scripting/documentation/" class="nav-link router-link-active">Documentation</a></div><div class="nav-item"><a href="https://github.com/phpwintools/wmi-scripting" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/wmi-scripting/" class="nav-link">Home</a></div><div class="nav-item"><a href="/wmi-scripting/documentation/" class="nav-link router-link-active">Documentation</a></div><div class="nav-item"><a href="https://github.com/phpwintools/wmi-scripting" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>Quick Start</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/wmi-scripting/documentation/" class="sidebar-link">How It Works</a></li><li><a href="/wmi-scripting/documentation/getting-started.html" class="sidebar-link">Getting Started</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>Digging Deeper</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/wmi-scripting/documentation/digging-deeper/" class="active sidebar-link">Introduction</a></li><li><a href="/wmi-scripting/documentation/digging-deeper/win32-model.html" class="sidebar-link">Win32Model</a></li><li><a href="/wmi-scripting/documentation/digging-deeper/the-config-instance.html" class="sidebar-link">The Config Instance</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="introduction"><a href="#introduction" aria-hidden="true" class="header-anchor">#</a> Introduction</h1> <p>The following section will dive into the internals of the library. You typically do not need to dive this
+deep, but I feel it would be good to document it for all of our benefit.</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/wmi-scripting/documentation/getting-started.html" class="prev">
+          Getting Started
+        </a></span> <span class="next"><a href="/wmi-scripting/documentation/digging-deeper/win32-model.html">
+          Win32Model
+        </a>
+        →
+      </span></p> <div class="footer" data-v-22968384>
+    MIT Licensed - Copyright © 2019-present Joe Springe - This library is not in any way associated with nor endorsed by Microsoft™.
+</div></div> </main></div><div class="global-ui"></div></div>
+    <script src="/wmi-scripting/assets/js/app.fbd390b3.js" defer></script><script src="/wmi-scripting/assets/js/3.30bc9dac.js" defer></script><script src="/wmi-scripting/assets/js/2.bbe9884b.js" defer></script><script src="/wmi-scripting/assets/js/6.5ba71b34.js" defer></script>
+  </body>
+</html>
