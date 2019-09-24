@@ -33,8 +33,8 @@ class Win32Model implements Arrayable, Jsonable, HasAttributes, HidesAttributes,
     /** @var string */
     protected $uuid;
 
-    /** @var ObjectPath|array|null */
-    protected $objectPath;
+    /** @var array|null */
+    protected $path = [];
 
     protected $qualifiers = [];
 
@@ -59,23 +59,20 @@ class Win32Model implements Arrayable, Jsonable, HasAttributes, HidesAttributes,
 
     protected $wmi_class_name;
 
-    /* TODO: Remove ObjectPath dependency. Should be passed into attributes */
-    public function __construct(array $attributes = [], ObjectPath $objectPath = null)
+    public function __construct(array $attributes = [])
     {
-        $this->objectPath = $objectPath;
         $this->mergeHiddenAttributes($this->hidden_attributes, $this->merge_parent_hidden_attributes);
         $this->fill($attributes);
     }
 
     /**
-     * @param array           $attributes
-     * @param ObjectPath|null $objectPath
+     * @param array $attributes
      *
      * @return Win32Model
      */
-    public static function newInstance(array $attributes = [], ObjectPath $objectPath = null)
+    public static function newInstance(array $attributes = [])
     {
-        return new static($attributes, $objectPath);
+        return new static($attributes);
     }
 
     /**

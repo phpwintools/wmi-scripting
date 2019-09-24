@@ -6,6 +6,7 @@ use Countable;
 use ArrayAccess;
 use PhpWinTools\Support\COM\VariantWrapper;
 use PhpWinTools\Support\COM\ComVariantWrapper;
+use PhpWinTools\WmiScripting\Connections\Response;
 use PhpWinTools\WmiScripting\Models\Win32Model;
 use function PhpWinTools\WmiScripting\Support\resolve;
 use PhpWinTools\WmiScripting\Collections\ModelCollection;
@@ -61,7 +62,6 @@ class SWbemObjectSet extends AbstractWbemObject implements ArrayAccess, Countabl
     {
         $this->set = $this->set->map(function (ObjectItem $item) use ($model) {
             $item->instantiateWin32Model($model);
-
             return $item;
         });
 

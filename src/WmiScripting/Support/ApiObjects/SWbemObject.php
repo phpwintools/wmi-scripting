@@ -42,7 +42,7 @@ class SWbemObject extends AbstractWbemObject implements ObjectItem
         $this->mergedProperties = array_merge(
             $this->propertySet->toArray(),
             ['qualifiers' => $this->qualifierSet->toArray()['qualifiers']],
-            ['objectPath' => $this->path->toArray()],
+            ['path' => $this->path->toArray()],
             ['derivations' => $this->derivations]
         );
 
