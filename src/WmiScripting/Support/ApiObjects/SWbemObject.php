@@ -22,6 +22,8 @@ class SWbemObject extends AbstractWbemObject implements ObjectItem
 
     protected $qualifierSet;
 
+    protected $mergedProperties = [];
+
     protected $path;
 
     /** @var VariantWrapper|ObjectVariant */
@@ -36,6 +38,13 @@ class SWbemObject extends AbstractWbemObject implements ObjectItem
         $this->propertySet = resolve()->propertySet($this->object->Properties_, $resolve_property_sets);
         $this->qualifierSet = resolve()->qualifierSet($this->object->Qualifiers_);
         $this->path = resolve()->objectPath($this->object->Path_);
+
+        $this->mergedProperties = array_merge(
+            $this->propertySet->toArray(),
+            ['qualifiers' => $this->qualifierSet->toArray()['qualifiers']],
+            ['objectPath' => $this->path->toArray()],
+            ['derivations' => $this->derivations]
+        );
 
         $this->instantiateWin32Model();
     }
@@ -56,7 +65,8 @@ class SWbemObject extends AbstractWbemObject implements ObjectItem
             return $this->win32Model;
         }
 
-        return $this->win32Model = new $model($this->propertySet->toArray(), $this->path);
+        return $this->win32Model = new $model($this->mergedProperties);
+//        return $this->win32Model = new $model($this->propertySet->toArray(), $this->path);
     }
 
     protected function buildDerivations()

@@ -61,6 +61,11 @@ class Builder
         return $this->execQuery($this->queryString());
     }
 
+    /**
+     * @param $query
+     *
+     * @return mixed|ObjectSet
+     */
     public function execQuery($query)
     {
         return $this->connection->execQuery($query, $this->model, $this->relationships);
