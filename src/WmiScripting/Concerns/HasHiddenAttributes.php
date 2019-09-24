@@ -15,9 +15,11 @@ trait HasHiddenAttributes
         'attribute_name_replacements',
         'unmapped_attributes',
 
+        'hidden_booted',
         'hidden_attributes',
         'merge_parent_hidden_attributes',
 
+        'casts_booted',
         'attribute_casting',
         'merge_parent_casting',
     ];

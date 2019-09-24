@@ -10,6 +10,8 @@ interface ObjectSet extends WbemObject, ArrayAccess
 {
     public function count();
 
+    public function get();
+
     /**
      * @return Win32Model[]|ModelCollection
      */

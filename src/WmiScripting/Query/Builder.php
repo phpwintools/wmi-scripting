@@ -2,9 +2,8 @@
 
 namespace PhpWinTools\WmiScripting\Query;
 
-use PhpWinTools\WmiScripting\Connections\Connection;
 use PhpWinTools\WmiScripting\Models\Win32Model;
-use PhpWinTools\WmiScripting\Connections\ComConnection;
+use PhpWinTools\WmiScripting\Connections\Connection;
 use PhpWinTools\WmiScripting\Collections\ModelCollection;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectSet;
 
@@ -34,7 +33,14 @@ class Builder
 
     public function all()
     {
-        return $this->execQuery("select * from {$this->from}")->getSet();
+        return $this->hydrate($this->query("select * from {$this->from}"));
+    }
+
+    public function hydrate(array $items = [])
+    {
+        return new ModelCollection(array_map(function ($item) {
+            return $this->model::newInstance($item);
+        }, $items));
     }
 
     /**
@@ -42,23 +48,7 @@ class Builder
      */
     public function get()
     {
-        return $this->getModelCollection();
-    }
-
-    /**
-     * @return ModelCollection|Win32Model[]
-     */
-    public function getModelCollection()
-    {
-        return $this->getObjectSet()->getSet();
-    }
-
-    /**
-     * @return ObjectSet
-     */
-    public function getObjectSet(): ObjectSet
-    {
-        return $this->execQuery($this->queryString());
+        return $this->hydrate($this->query($this->queryString()));
     }
 
     /**
@@ -66,14 +56,9 @@ class Builder
      *
      * @return mixed|ObjectSet
      */
-    public function execQuery($query)
+    public function query($query)
     {
-        return $this->connection->execQuery($query, $this->model, $this->relationships);
-
-//        return $this->services
-//            ->resolvePropertySets($this->relationships)
-//            ->execQuery($query)
-//            ->instantiateModels($this->model);
+        return $this->connection->query($query, $this->model, $this->relationships);
     }
 
     /**

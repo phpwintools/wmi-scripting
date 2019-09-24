@@ -42,7 +42,7 @@ class SWbemObject extends AbstractWbemObject implements ObjectItem
         $this->mergedProperties = array_merge(
             $this->propertySet->toArray(),
             ['qualifiers' => $this->qualifierSet->toArray()['qualifiers']],
-            ['path' => $this->path->toArray()],
+            ['objectPath' => $this->path->toArray()],
             ['derivations' => $this->derivations]
         );
 
@@ -57,6 +57,11 @@ class SWbemObject extends AbstractWbemObject implements ObjectItem
         return $this->getAttribute('win32Model');
     }
 
+    public function get()
+    {
+        return $this->mergedProperties;
+    }
+
     public function instantiateWin32Model(Win32Model $model = null): Win32Model
     {
         $model = $model ?? Classes::getClass($this->path->getAttribute('class'));
@@ -66,7 +71,6 @@ class SWbemObject extends AbstractWbemObject implements ObjectItem
         }
 
         return $this->win32Model = new $model($this->mergedProperties);
-//        return $this->win32Model = new $model($this->propertySet->toArray(), $this->path);
     }
 
     protected function buildDerivations()

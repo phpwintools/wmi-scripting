@@ -101,12 +101,12 @@ class ComConnection implements Connection
         return $this->services;
     }
 
-    public function execQuery($query, $model, $relationships)
+    public function query($query, $model, $relationships)
     {
         return $this->connect()
             ->resolvePropertySets($relationships)
             ->execQuery($query)
-            ->instantiateModels($model);
+            ->get();
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace PhpWinTools\WmiScripting\Concerns;
 
 use Exception;
+use Illuminate\Support\Arr;
 use PhpWinTools\Support\StringModule;
 use PhpWinTools\WmiScripting\Contracts\Arrayable;
 use PhpWinTools\WmiScripting\Collections\ArrayCollection;
@@ -18,6 +19,11 @@ trait HasArrayableAttributes
 
     public function getAttribute($attribute, $default = null)
     {
+//        dump($attribute);
+//        if (strpos($attribute, '.') !== false) {
+//            dump(explode('.', $attribute));
+//        }
+
         if ($this->hasAttributeMethod($attribute)) {
             return $this->getAttributeMethodValue('get' . StringModule::studly($attribute) . 'Attribute', $attribute);
         }
@@ -187,7 +193,7 @@ trait HasArrayableAttributes
         return false;
     }
 
-    protected function transformToArray($value)
+    protected function transformToArray($value, $key = null)
     {
         if (is_object($value) && ($value instanceof Arrayable || $value instanceof IlluminateArrayable)) {
             return $value->toArray();
@@ -202,24 +208,50 @@ trait HasArrayableAttributes
         }
 
         if (is_array($value)) {
-            return $this->iterateAttributes($value);
+            $value = $this->reduceValueArray($value);
+        }
+
+        if (is_array($value)) {
+            return $this->iterateAttributes($value, $key);
         }
 
         return $value;
     }
 
-    protected function iterateAttributes(array $attributes)
+    protected function iterateAttributes(array $attributes, string $current_key = null)
     {
         $results = [];
 
         foreach ($attributes as $key => $value) {
+            $dot_key = is_null($current_key) ? $key : "{$current_key}.{$key}";
+
             if (class_has_trait(get_called_class(), HasHiddenAttributes::class) && $this->isHidden($key)) {
                 continue;
             }
 
-            $results[$this->replaceAttributeName($key)] = $this->transformToArray($this->getAttribute($key, $value));
+            $value = $this->getAttribute($dot_key, $value);
+
+            $results[$this->replaceAttributeName($key)] = $this->transformToArray($value, $dot_key);
         }
 
         return $results;
+    }
+
+    /**
+     * @param $value
+     *
+     * @return mixed
+     */
+    protected function reduceValueArray($value)
+    {
+        if (!is_array($value)) {
+            return $value;
+        }
+
+        if (array_key_exists('value', $value)) {
+            $value = $value['value'];
+        }
+
+        return $value;
     }
 }

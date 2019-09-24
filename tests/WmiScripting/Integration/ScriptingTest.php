@@ -30,5 +30,7 @@ class ScriptingTest extends TestCase
         $this->assertInstanceOf(LogicalDisk::class, $disks->first(function (LogicalDisk $disk) {
             return $disk->getAttribute('deviceID') === 'C:';
         }));
+
+//        dd($disks->first()->toArray());
     }
 }

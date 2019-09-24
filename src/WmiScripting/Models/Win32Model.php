@@ -19,7 +19,6 @@ use function PhpWinTools\WmiScripting\Support\class_has_property;
 use PhpWinTools\WmiScripting\Exceptions\InvalidArgumentException;
 use PhpWinTools\WmiScripting\Exceptions\WmiClassNotFoundException;
 use PhpWinTools\WmiScripting\Exceptions\InvalidConnectionException;
-use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\ObjectPath;
 
 /**
  * @link https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-provider
@@ -34,7 +33,7 @@ class Win32Model implements Arrayable, Jsonable, HasAttributes, HidesAttributes,
     protected $uuid;
 
     /** @var array|null */
-    protected $path = [];
+    protected $objectPath = [];
 
     protected $qualifiers = [];
 
@@ -66,13 +65,20 @@ class Win32Model implements Arrayable, Jsonable, HasAttributes, HidesAttributes,
     }
 
     /**
-     * @param array $attributes
+     * @param array       $attributes
+     * @param string|null $connection
      *
      * @return Win32Model
      */
-    public static function newInstance(array $attributes = [])
+    public static function newInstance(array $attributes = [], string $connection = null)
     {
-        return new static($attributes);
+        $instance = new static($attributes);
+
+        if ($connection) {
+            $instance->setConnection($connection);
+        }
+
+        return $instance;
     }
 
     /**
@@ -113,6 +119,11 @@ class Win32Model implements Arrayable, Jsonable, HasAttributes, HidesAttributes,
     public function getConnection($connection = null)
     {
         return connection($connection, $this->connection);
+    }
+
+    public function setConnection(string $connection)
+    {
+        $this->connection = $connection;
     }
 
     /**
@@ -215,20 +226,6 @@ class Win32Model implements Arrayable, Jsonable, HasAttributes, HidesAttributes,
 
             $this->unmapped_attributes[$key] = $this->cast($key, $value);
         }
-    }
-
-    /**
-     * @param $value
-     *
-     * @return mixed
-     */
-    protected function reduceValueArray($value)
-    {
-        if (is_array($value) && array_key_exists('value', $value)) {
-            $value = $value['value'];
-        }
-
-        return $value;
     }
 
     /**

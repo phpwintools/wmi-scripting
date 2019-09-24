@@ -11,5 +11,7 @@ interface ObjectItem extends WbemObject
      */
     public function getModel(): Win32Model;
 
+    public function get();
+
     public function instantiateWin32Model(Win32Model $model = null): Win32Model;
 }

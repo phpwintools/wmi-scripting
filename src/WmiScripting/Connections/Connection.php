@@ -4,5 +4,5 @@ namespace PhpWinTools\WmiScripting\Connections;
 
 interface Connection
 {
-    public function execQuery($query, $model, $relationships);
+    public function query($query, $model, $relationships);
 }
