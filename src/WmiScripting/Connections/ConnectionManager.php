@@ -2,12 +2,15 @@
 
 namespace PhpWinTools\WmiScripting\Connections;
 
+use PhpWinTools\WmiScripting\Configuration\Config;
+
 class ConnectionManager
 {
-    protected $connection;
+    /** @var Config */
+    protected $config;
 
-    public function __construct(Connection $connection)
+    public function __construct(Config $config = null)
     {
-        $this->connection = $connection;
+        $this->config = $config ?? Config::instance();
     }
 }

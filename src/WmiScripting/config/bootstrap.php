@@ -3,6 +3,7 @@
 use PhpWinTools\Support\COM\ComWrapper;
 use PhpWinTools\Support\COM\VariantWrapper;
 use PhpWinTools\Support\COM\ComVariantWrapper;
+use PhpWinTools\WmiScripting\Connections\ComConnection;
 use PhpWinTools\WmiScripting\Support\Cache\ArrayDriver;
 
 return [
@@ -17,6 +18,10 @@ return [
         ComVariantWrapper::class    => ComVariantWrapper::class,
         ComWrapper::class           => ComWrapper::class,
         VariantWrapper::class       => VariantWrapper::class,
+    ],
+
+    'connection' => [
+        'default_driver' => ComConnection::class,
     ],
 
     'event' => [

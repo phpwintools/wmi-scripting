@@ -2,6 +2,7 @@
 
 namespace PhpWinTools\WmiScripting\Query;
 
+use PhpWinTools\WmiScripting\Connections\Connection;
 use PhpWinTools\WmiScripting\Models\Win32Model;
 use PhpWinTools\WmiScripting\Connections\ComConnection;
 use PhpWinTools\WmiScripting\Collections\ModelCollection;
@@ -11,9 +12,11 @@ class Builder
 {
     protected $model;
 
-    protected $from;
-
     protected $services;
+
+    protected $connection;
+
+    protected $from;
 
     protected $selects = ['*'];
 
@@ -21,9 +24,10 @@ class Builder
 
     protected $relationships = [];
 
-    public function __construct(Win32Model $model, ComConnection $connection)
+    public function __construct(Win32Model $model, Connection $connection)
     {
         $this->model = $model;
+        $this->connection = $connection;
         $this->from = $model->getWmiClassNameAttribute();
         $this->services = $connection->connect();
     }
@@ -57,17 +61,14 @@ class Builder
         return $this->execQuery($this->queryString());
     }
 
-    /**
-     * @param string $query
-     *
-     * @return ObjectSet
-     */
-    public function execQuery($query): ObjectSet
+    public function execQuery($query)
     {
-        return $this->services
-            ->resolvePropertySets($this->relationships)
-            ->execQuery($query)
-            ->instantiateModels($this->model);
+        return $this->connection->execQuery($query, $this->model, $this->relationships);
+
+//        return $this->services
+//            ->resolvePropertySets($this->relationships)
+//            ->execQuery($query)
+//            ->instantiateModels($this->model);
     }
 
     /**

@@ -5,7 +5,7 @@ namespace PhpWinTools\WmiScripting\Connections;
 use function PhpWinTools\WmiScripting\Support\resolve;
 use PhpWinTools\WmiScripting\Support\ApiObjects\Contracts\Services;
 
-class ComConnection
+class ComConnection implements Connection
 {
     const DEFAULT_SERVER = '.';
 
@@ -99,6 +99,14 @@ class ComConnection
         }
 
         return $this->services;
+    }
+
+    public function execQuery($query, $model, $relationships)
+    {
+        return $this->connect()
+            ->resolvePropertySets($relationships)
+            ->execQuery($query)
+            ->instantiateModels($model);
     }
 
     /**

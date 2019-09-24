@@ -177,7 +177,7 @@ class Config extends Container
      *
      * @return array
      */
-    public function resolveStack()
+    public function getResolveStack()
     {
         return $this->resolve_stack;
     }
